@@ -18,19 +18,24 @@ interface LayoutProps {
 
 
 
-
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const { selectedOption, updateSelectedOption } = useSelectedSidebarOption();
-
-    const router=useRouter();
- 
-    const handleOptionClick = (optionValue: SidebarOptionValue) => {
-        router.push(sidebarPaths[optionValue]);
-        updateSelectedOption(optionValue);
+    const [loader, setLoader] = useState(false); // Step 1: Initialize loading state
   
-      
+    const router = useRouter();
+  
+    const handleOptionClick = async (optionValue: SidebarOptionValue) => {
+      try {
+        setLoader(true); // Step 2: Show loader on navigation start
+        await router.push(sidebarPaths[optionValue]);
+        updateSelectedOption(optionValue);
+      } catch (error) {
+        // Handle error if needed
+      } finally {
+        setLoader(false); // Step 3: Hide loader after navigation is complete
+      }
     };
-    
+  
 
     return (
         <div className="flex h-screen overflow-hidden">
@@ -75,11 +80,16 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </div>
             </aside>
             <main className="flex-1 bg-[#f6f7fa] w-full h-full">
-             <ProfileArea></ProfileArea>
-                <div >
-                {children}
-                </div>
-            </main>
+        <ProfileArea />
+        {loader ? (
+          <div className="flex justify-center items-center h-full">
+            {/* Display your loading animation or spinner here */}
+            Loading...
+          </div>
+        ) : (
+          <div>{children}</div>
+        )}
+      </main>
         </div>
     );
 };
