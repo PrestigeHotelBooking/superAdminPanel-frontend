@@ -1,5 +1,7 @@
 import React from 'react';
-
+import Image from 'next/image';
+import Nodata from '../../../assets/common/nodatafound.svg';
+import NoDataFound from '../NoDataFound/NoDataFound';
 interface TableCellProps {
     data: any;
     renderComponent?: React.FC<{ data: any; dataField: string; rowIndex: number; rowData: any }>;
@@ -44,7 +46,7 @@ const PrTable: React.FC<PrTableProps> = ({ headers, data }) => {
                             <col key={index} className={header.width || `w-${100 / headers.length}`} />
                         ))}
                     </colgroup>
-                    <thead className="text-xs bg-blue-300 dark:bg-gray-700 dark:text-gray-200 sticky top-0">
+                    <thead className="text-md h-16 bg-blue-300 dark:bg-gray-700 dark:text-gray-200 sticky top-0">
                         <tr>
                             {headers.map((header, index) => (
                                 <th
@@ -61,38 +63,46 @@ const PrTable: React.FC<PrTableProps> = ({ headers, data }) => {
                 </table>
             </div>
             <div className="overflow-auto max-h-[35rem]">
-                <table className="w-full text-sm text-left text-black dark:text-gray-100 table-fixed">
-                    <colgroup>
-                        <col className="w-8" /> {/* Set width of index column */}
-                        {headers.slice(1).map((header, index) => (
-                            <col key={index} className={header.width || `w-${100 / headers.length}`} />
-                        ))}
-                    </colgroup>
-                    <tbody>
-                        {data.map((row, rowIndex) => (
-                            <tr
-                                key={rowIndex}
-                                className="bg-white border-b-2 hover:bg-[#fffcf0] border-gray-200 dark:border-gray-600"
-                            >
-                                {headers.map((header) => (
-                                    <TableCell
-                                        key={header.id}
-                                        data={row[header.id]}
-                                        renderComponent={header.renderComponent}
-                                        renderProps={{
-                                            dataField: header.id,
-                                            rowIndex,
-                                            rowData: row,
-                                        }}
-                                    />
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                {data.length === 0 ? (
+                    <table className='w-full h-full bg-white'>
+                      <NoDataFound></NoDataFound>
+                    </table>
+                ) : (
+                    <table className="w-full text-sm text-left text-black dark:text-gray-100 table-fixed">
+                        <colgroup>
+                            <col className="w-8" /> {/* Set width of index column */}
+                            {headers.slice(1).map((header, index) => (
+                                <col key={index} className={header.width || `w-${100 / headers.length}`} />
+                            ))}
+                        </colgroup>
+                        <tbody>
+                            {data.map((row, rowIndex) => (
+                                <tr
+                                    key={rowIndex}
+                                    className="bg-white border-b-2 hover:bg-[#fffcf0] border-gray-200 dark:border-gray-600"
+                                >
+                                    {headers.map((header) => (
+                                        <TableCell
+                                            key={header.id}
+                                            data={row[header.id]}
+                                            renderComponent={header.renderComponent}
+                                            renderProps={{
+                                                dataField: header.id,
+                                                rowIndex,
+                                                rowData: row,
+                                            }}
+                                        />
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
             </div>
         </div>
     );
 };
 
 export default PrTable;
+
+

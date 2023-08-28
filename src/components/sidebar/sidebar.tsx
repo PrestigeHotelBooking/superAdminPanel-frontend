@@ -7,6 +7,7 @@ import { useSelectedSidebarOption } from '@/context/useSidebarOption/useSidebarO
 import PrIcon from '../common/PrIcon/PrIcon';
 import PrIconV2 from '../common/PrIcon/PrIconV2';
 import ProfileArea from './profileArea';
+import PrCircularProgressIndicator from '../common/Loader/PrCircularProgressIndicator';
 
 
 
@@ -83,8 +84,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <ProfileArea />
         {loader ? (
           <div className="flex justify-center items-center h-full">
-            {/* Display your loading animation or spinner here */}
-            Loading...
+          <PrCircularProgressIndicator></PrCircularProgressIndicator>
           </div>
         ) : (
           <div>{children}</div>

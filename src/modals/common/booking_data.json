@@ -25,21 +25,6 @@
             "Deluxe Room",
             "Deluxe Room",
             "Deluxe Room",
-         
-         
-         
-          
-          
-          
-       
-       
-       
-       
-       
-         
-         
-         
-         
             "Single Room"
         ],
         "bookingStatus": "upcoming",
@@ -69,12 +54,6 @@
             "Economy Room",
             "Economy Room",
             "Economy Room",
-        
-        
-       
-          
-          
-          
             "Single Room"
         ],
         "bookingStatus": "cancelled",
@@ -110,22 +89,6 @@
             "Economy Room",
             "Economy Room",
             "Economy Room",
-         
-         
-         
-         
-         
-        
-        
-        
-        
-        
-       
-       
-       
-       
-       
-         
             "Executive Room"
         ],
         "bookingStatus": "upcoming",
@@ -166,22 +129,6 @@
             "Economy Room",
             "Economy Room",
             "Economy Room",
-         
-         
-         
-         
-         
-          
-          
-        
-        
-        
-        
-       
-       
-       
-       
-         
             "Single Room"
         ],
         "bookingStatus": "cancelled",
@@ -215,14 +162,6 @@
             "Economy Room",
             "Economy Room",
             "Economy Room",
-         
-        
-        
-        
-       
-         
-         
-         
             "Single Room"
         ],
         "bookingStatus": "completed",
@@ -255,21 +194,6 @@
             "Economy Room",
             "Economy Room",
             "Economy Room",
-         
-         
-         
-         
-         
-          
-          
-          
-          
-          
-        
-       
-         
-         
-         
             "Executive Room"
         ],
         "bookingStatus": "upcoming",
@@ -303,23 +227,6 @@
             "Economy Room",
             "Economy Room",
             "Economy Room",
-         
-         
-         
-         
-         
-          
-        
-        
-        
-        
-       
-         
-         
-         
-         
-          
-          
             "Single Room"
         ],
         "bookingStatus": "cancelled",
@@ -348,28 +255,6 @@
             "Standard Room",
             "Economy Room",
             "Economy Room",
-         
-         
-          
-          
-          
-        
-        
-        
-        
-        
-       
-       
-       
-       
-       
-         
-         
-         
-         
-          
-          
-          
             "Single Room"
         ],
         "bookingStatus": "upcoming",
@@ -409,20 +294,6 @@
             "Standard Room",
             "Economy Room",
             "Economy Room",
-         
-         
-         
-         
-         
-          
-       
-       
-       
-       
-         
-         
-         
-          
             "Single Room"
         ],
         "bookingStatus": "completed",
@@ -454,21 +325,6 @@
             "Standard Room",
             "Standard Room",
             "Standard Room",
-         
-          
-          
-          
-          
-          
-        
-       
-       
-       
-       
-       
-         
-          
-          
             "Single Room"
         ],
         "bookingStatus": "upcoming",
@@ -499,14 +355,6 @@
             "Deluxe Room",
             "Standard Room",
             "Standard Room",
-        
-        
-        
-        
-       
-       
-       
-          
             "Single Room"
         ],
         "bookingStatus": "cancelled",
@@ -536,16 +384,6 @@
             "Luxury Room",
             "Standard Room",
             "Standard Room",
-         
-        
-        
-        
-        
-       
-          
-          
-          
-          
             "Single Room"
         ],
         "bookingStatus": "upcoming",
@@ -579,17 +417,6 @@
             "Economy Room",
             "Economy Room",
             "Economy Room",
-         
-         
-          
-          
-          
-          
-        
-       
-       
-       
-          
             "Single Room"
         ],
         "bookingStatus": "cancelled",
@@ -621,18 +448,6 @@
             "Economy Room",
             "Economy Room",
             "Economy Room",
-         
-         
-         
-          
-          
-          
-          
-        
-        
-         
-          
-          
             "Single Room"
         ],
         "bookingStatus": "upcoming",
@@ -675,18 +490,6 @@
             "Economy Room",
             "Economy Room",
             "Economy Room",
-         
-         
-         
-         
-         
-          
-          
-          
-          
-        
-        
-        
             "Family Room"
         ],
         "bookingStatus": "cancelled",
@@ -723,17 +526,6 @@
             "Standard Room",
             "Economy Room",
             "Economy Room",
-         
-         
-         
-         
-         
-          
-          
-        
-        
-          
-          
             "Single Room"
         ],
         "bookingStatus": "upcoming",
@@ -770,21 +562,6 @@
             "Economy Room",
             "Economy Room",
             "Economy Room",
-         
-         
-         
-          
-          
-          
-          
-        
-        
-        
-       
-       
-         
-          
-          
             "Single Room"
         ],
         "bookingStatus": "cancelled",
@@ -818,18 +595,6 @@
             "Standard Room",
             "Economy Room",
             "Economy Room",
-         
-          
-          
-          
-          
-          
-       
-       
-       
-       
-       
-         
             "Executive Room"
         ],
         "bookingStatus": "upcoming",
@@ -862,17 +627,6 @@
             "Deluxe Room",
             "Economy Room",
             "Economy Room",
-         
-         
-          
-          
-        
-       
-         
-         
-         
-         
-          
             "Single Room"
         ],
         "bookingStatus": "upcoming",
@@ -907,23 +661,6 @@
             "Standard Room",
             "Economy Room",
             "Economy Room",
-         
-         
-         
-         
-          
-        
-        
-        
-        
-       
-       
-       
-         
-         
-         
-         
-          
             "Single Room"
         ],
         "bookingStatus": "completed",
@@ -957,20 +694,6 @@
             "Economy Room",
             "Economy Room",
             "Economy Room",
-         
-         
-          
-          
-          
-          
-        
-        
-        
-       
-       
-       
-          
-          
             "Single Room"
         ],
         "bookingStatus": "completed",
@@ -1005,20 +728,6 @@
             "Economy Room",
             "Economy Room",
             "Economy Room",
-         
-         
-         
-         
-         
-          
-          
-        
-       
-       
-       
-         
-         
-          
             "Single Room"
         ],
         "bookingStatus": "upcoming",
@@ -1051,19 +760,6 @@
             "Standard Room",
             "Standard Room",
             "Economy Room",
-          
-          
-          
-          
-          
-        
-        
-        
-        
-          
-          
-          
-          
             "Single Room"
         ],
         "bookingStatus": "cancelled",
@@ -1096,15 +792,6 @@
             "Standard Room",
             "Standard Room",
             "Economy Room",
-         
-         
-          
-          
-          
-          
-        
-        
-        
             "Executive Room"
         ],
         "bookingStatus": "upcoming",
@@ -1136,16 +823,6 @@
             "Standard Room",
             "Standard Room",
             "Standard Room",
-         
-         
-          
-        
-       
-         
-         
-         
-         
-         
             "Single Room"
         ],
         "bookingStatus": "upcoming",
@@ -1175,22 +852,6 @@
             "Deluxe Room",
             "Deluxe Room",
             "Economy Room",
-         
-         
-         
-         
-         
-          
-          
-          
-          
-        
-       
-       
-       
-         
-         
-          
             "Single Room"
         ],
         "bookingStatus": "completed",
@@ -1224,25 +885,6 @@
             "Standard Room",
             "Standard Room",
             "Economy Room",
-         
-         
-         
-         
-          
-          
-          
-          
-        
-        
-        
-        
-        
-       
-         
-         
-          
-          
-          
             "Single Room"
         ],
         "bookingStatus": "cancelled",
@@ -1278,12 +920,6 @@
             "Standard Room",
             "Standard Room",
             "Economy Room",
-         
-         
-          
-          
-          
-          
             "Garden View Room"
         ],
         "bookingStatus": "cancelled",
@@ -1314,19 +950,6 @@
             "Standard Room",
             "Standard Room",
             "Standard Room",
-         
-         
-         
-          
-        
-       
-       
-       
-       
-       
-         
-         
-         
             "Executive Room"
         ],
         "bookingStatus": "cancelled",
@@ -1364,17 +987,6 @@
             "Economy Room",
             "Economy Room",
             "Economy Room",
-         
-         
-       
-       
-         
-         
-         
-         
-         
-          
-          
             "Single Room"
         ],
         "bookingStatus": "cancelled",
