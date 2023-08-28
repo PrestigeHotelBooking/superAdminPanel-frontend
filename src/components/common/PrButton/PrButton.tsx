@@ -2,6 +2,8 @@ import React from 'react';
 import PrIcon from '../PrIcon/PrIcon'; // Replace with your PrIcon component
 import * as FeatherIcons from 'react-feather';
 
+import { CircularProgress } from '@mui/material';
+
 // Define a custom type for button types
 type ButtonType = 'button' | 'submit' | 'reset';
 
@@ -16,6 +18,7 @@ interface PrButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   buttonType?: ButtonType;
   buttonStyle?: ButtonStyle;
+  loading?:boolean;
 }
 
 const PrButton: React.FC<PrButtonProps> = ({
@@ -26,6 +29,7 @@ const PrButton: React.FC<PrButtonProps> = ({
   label,
   buttonType = 'button',
   buttonStyle = 'primary',
+  loading=false,
   ...props
 }) => {
 
@@ -73,7 +77,7 @@ const PrButton: React.FC<PrButtonProps> = ({
           <PrIcon name={iconName} size={iconSize} color={iconColor} />
         </span>
       )}
-      <span style={labelStyles}>{label}</span>
+      <span style={labelStyles}>{loading ? <CircularProgress></CircularProgress> :null}{label}</span>
     </button>
   );
 };
