@@ -40,7 +40,9 @@ function BasicInfoModal(){
                 <PrInputFieldV2  className="w-[80%]" label={'Address Line 1'}></PrInputFieldV2>
                 <PrInputFieldV2 className='w-[80%]' label={'Pin/Zip Code/Postal Code'}></PrInputFieldV2>
                 <PrInputFieldV2 className='w-[80%]' label={'Address line 2'}></PrInputFieldV2>
-                <PrCountryInputField className='border-b w-[80%]'></PrCountryInputField>
+                <PrCountryInputField className='border-b w-[80%]' value={''} onChange={function (newValue: string): void {
+              throw new Error('Function not implemented.');
+            } }></PrCountryInputField>
 
                 </div>
                 <PrInputFieldV2 className='w-[40%]' label={'City/Town'}></PrInputFieldV2>
