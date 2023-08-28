@@ -8,6 +8,9 @@ import { PrCountryInputField } from '@/components/common/PrCountryInputField/PrC
 import PrMapComponent from '@/components/common/PrMapComponent/PrMapComponent';
 import PrButton from '@/components/common/PrButton/PrButton';
 import AddPropertySuccessFully from '@/components/common/Card/PropertyCard/AddPropertySuccessFully';
+import { API_ENDPOINT } from '@/Global/api/api';
+import { ENDPOINTS } from '@/components/lang/EndPoints';
+import { BackendPost } from '@/components/services/BackendServices';
 
 
 
@@ -16,6 +19,36 @@ interface AddPropertyProps {
     closeModal: () => void;
   }
   
+  interface AddPropertyT {
+    propertyName: string;
+    addressLine1: string;
+    addressLine2: string;
+    city: string;
+    state: string;
+    pincode: string;
+    country: string;
+    latitude: number;
+    longitude: number;
+    totalNoOfRooms: number;
+    username: string;
+    password: string;
+  }
+  
+  // Define an initial object with default values
+  const initialAddProperty: AddPropertyT = {
+    propertyName: '',
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    state: '',
+    pincode: '',
+    country: '',
+    latitude: 0,
+    longitude: 0,
+    totalNoOfRooms: 0,
+    username: '',
+    password: ''
+  };
 
 
 const AddProperty = (props:AddPropertyProps) => {
@@ -23,6 +56,7 @@ const AddProperty = (props:AddPropertyProps) => {
   const [phoneValue, setPhoneValue] = useState('');
   const [selectedCountry, setSelectedCountry] = useState<CountryIso2 | ''>('');
   const [modal,setModal]=useState(false);
+  const [addPropertyData,SetAddPropertyData]=useState<AddPropertyT>(initialAddProperty);
   
   const handlePhoneChange = (phone: string, country: CountryIso2): void => {
     setPhoneValue(phone); // Update the phoneValue state
@@ -31,6 +65,23 @@ const AddProperty = (props:AddPropertyProps) => {
   const ModalChange = ()=>{
     setModal(!modal);
   }
+
+  const handleState = (field: keyof AddPropertyT, value: any) => {
+    SetAddPropertyData((prevData) => ({
+      ...prevData,
+      [field]: value
+    }));
+  };
+
+  const handleAddproperty = async () => {
+    try {
+      const responseData = await BackendPost(ENDPOINTS.PROPERTY.ADD, addPropertyData);
+      console.log('Property added successfully:', responseData);
+    } catch (error) {
+      console.error('Error adding property:', error);
+    }
+  };
+  
   
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 ">
@@ -42,29 +93,29 @@ const AddProperty = (props:AddPropertyProps) => {
 
         <form className='flex'>
             <div>
-            <PRInputField label="Property Name" placeholder="Enter property name" />
+            <PRInputField label="Property Name" value={addPropertyData.propertyName} placeholder="Enter property name" onChange={(e:any)=>handleState('propertyName',e.target.value)}/>
           <div className='text-bg-[#061D30] font-bold text-[1rem] mb-4'>Property Address</div>
-          <PrInputFieldV2 label={'Address Line 1'}></PrInputFieldV2>
-          <PrInputFieldV2 label={'Address Line 2'}></PrInputFieldV2>
-          <PrInputFieldV2 label={'City/Town'}></PrInputFieldV2>
-          <PrInputFieldV2 label={'State/Province/Region'}></PrInputFieldV2>
+          <PrInputFieldV2 label={'Address Line 1'} value={addPropertyData.addressLine1} onChange={(e:any)=>handleState('addressLine1',e.target.value)}></PrInputFieldV2>
+          <PrInputFieldV2 label={'Address Line 2'}  value={addPropertyData.addressLine2} onChange={(e:any)=>handleState('addressLine2',e.target.value)}></PrInputFieldV2>
+          <PrInputFieldV2 label={'City/Town'} value={addPropertyData.city} onChange={(e:any)=>handleState('city',e.target.value)}></PrInputFieldV2>
+          <PrInputFieldV2 label={'State/Province/Region'} value={addPropertyData.state} onChange={(e:any)=>handleState('state',e.target.value)}></PrInputFieldV2>
             </div>
             <div className='ml-12'>
-            <PrInputFieldV2 label={'Pin/Zip/Postal Code'}></PrInputFieldV2>
-            <PrCountryInputField />
+            <PrInputFieldV2 label={'Pin/Zip/Postal Code'} value={addPropertyData.pincode} onChange={(e:any)=>handleState('pincode',e.target.value)}></PrInputFieldV2>
+            <PrCountryInputField value={addPropertyData.country}  onChange={(e)=>handleState('country',e)} />
             <label className='block font-semibold mt-4'>GPS Location</label>
             <PrMapComponent latitude={0} longitude={0} className={'mt-2 w-[20.5rem] h-[10rem]'}></PrMapComponent>
-            <PRInputField label="Total No Of Rooms"  placeholder="Enter number of rooms" />
+            <PRInputField label="Total No Of Rooms" onChange={(e:any)=>handleState('totalNoOfRooms',e.target.value)}  placeholder="Enter number of rooms" />
             </div>
             <div  className='ml-12'>
-            <PRInputField label="Username"  placeholder="The Country Resort I" />
-            <PRInputField label="Create Password"  placeholder="000000000000" />
-            <PRInputField label="Confirm Password"  placeholder="000000000000" />
+            <PRInputField label="Username" onChange={(e:any)=>handleState('username',e.target.value)}  placeholder="The Country Resort I" />
+            <PRInputField label="Create Password" onChange={(e:any)=>handleState('password',e.target.value)}  placeholder="000000000000" />
+            <PRInputField label="Confirm Password" onChange={(e:any)=>handleState('password',e.target.value)} placeholder="000000000000" />
             </div>
        
         </form>
         <div className="flex justify-center mt-6"> 
-          <PrButton label={'Create'} iconName='ArrowUpCircle' buttonStyle='danger' className='rounded-md'></PrButton>
+          <PrButton label={'Create'} iconName='ArrowUpCircle' buttonStyle='danger' className='rounded-md' onClick={handleAddproperty}></PrButton>
         </div>
 
       </div> :

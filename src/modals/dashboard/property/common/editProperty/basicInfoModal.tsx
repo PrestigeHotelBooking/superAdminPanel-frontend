@@ -8,11 +8,13 @@ import { PrCountryInputField } from '@/components/common/PrCountryInputField/PrC
 import PrMapComponent from '@/components/common/PrMapComponent/PrMapComponent';
 import PrButton from '@/components/common/PrButton/PrButton';
 import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
+import { usePropertyData } from '@/redux';
 
 function BasicInfoModal(){
     const [phoneNumber1, setPhoneNumber1] = useState("");
     const [phoneNumber2, setPhoneNumber2] = useState("");
-
+    const data=usePropertyData();
+    console.log(data)
     const handlePhoneNumberChange1 = (phone: string, country: CountryIso2) => {
         setPhoneNumber1(phone);
         // You can perform additional actions here if needed
@@ -40,7 +42,9 @@ function BasicInfoModal(){
                 <PrInputFieldV2  className="w-[80%]" label={'Address Line 1'}></PrInputFieldV2>
                 <PrInputFieldV2 className='w-[80%]' label={'Pin/Zip Code/Postal Code'}></PrInputFieldV2>
                 <PrInputFieldV2 className='w-[80%]' label={'Address line 2'}></PrInputFieldV2>
-                <PrCountryInputField className='border-b w-[80%]'></PrCountryInputField>
+                <PrCountryInputField className='border-b w-[80%]' value={''} onChange={function (newValue: string): void {
+              throw new Error('Function not implemented.');
+            } }></PrCountryInputField>
 
                 </div>
                 <PrInputFieldV2 className='w-[40%]' label={'City/Town'}></PrInputFieldV2>

@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {H1} from '../../../components/common/Header/header';
 import PrSearch from '../../../components/common/PrSearch/PrSearch';
 import PrButton from '../../../components/common/PrButton/PrButton';
 import PrTable from '../../../components/common/PrTable/PrTable';
 import DateFilter from '../../../components/common/DateFilter/dateFilter';
 import { LANG } from '../../../components/lang/Lang';
-import propertydata from '../../common/property_data.json';
 import AddProperty from './common/addProperty';
 import { AddressCell, GpsLocationCell, AvilableCell, ActionCell } from './common/propertyTableComponents';
+import { BackendGet } from '@/components/services/BackendServices';
+import { ENDPOINTS } from '@/components/lang/EndPoints';
+import usePropertyList from '@/hooks/useProperty/usePropertyList';
 
 
 
@@ -15,9 +17,19 @@ import { AddressCell, GpsLocationCell, AvilableCell, ActionCell } from './common
 const PropertyModal = () => {
 
     const [openAddProperty,setOpenAddProperty]=useState(false);
+    const [propertyData,setPropertyData]=useState<any>([]);
     const handleAddProperty = ()=>{
         setOpenAddProperty(!openAddProperty);
     }
+    const {data,loading}=usePropertyList();
+
+    useEffect(()=>{
+        if(!loading){
+            setPropertyData(data)
+        }
+    },[data])
+  
+    
     return (
         <div className="p-3">
             <div className="h-[4rem] flex">
@@ -35,7 +47,7 @@ const PropertyModal = () => {
             <PrTable
                 headers={[
                     {
-                        id: 'id',
+                        id: 'propertyID',
                         name: '#'
                     },
                     {
@@ -56,7 +68,7 @@ const PropertyModal = () => {
                     },
                     {
                         name:'Number Of Rooms',
-                        id:'noOfRooms',
+                        id:'totalNoOfRooms',
                     },
                     {
                         name:'Avilable',
@@ -71,7 +83,7 @@ const PropertyModal = () => {
                         renderProps:{dataField:'Action'}
                     }
                 ]}
-                data={propertydata}
+                data={propertyData}
 
             ></PrTable>
 

@@ -27,7 +27,8 @@ const TableCell: React.FC<TableCellProps> = ({ data, renderComponent: Component,
     if (Component) {
         return (
             <td className="px-6 py-4">
-                <Component data={data} dataField={renderProps?.dataField} rowIndex={renderProps?.rowIndex} rowData={renderProps?.rowData} />
+                <Component data={data} dataField={renderProps?.dataField} 
+                 rowIndex={renderProps?.rowIndex} rowData={renderProps?.rowData} />
             </td>
         );
     }
@@ -65,7 +66,7 @@ const PrTable: React.FC<PrTableProps> = ({ headers, data }) => {
             <div className="overflow-auto max-h-[35rem]">
                 {data.length === 0 ? (
                     <table className='w-full h-full bg-white'>
-                      <NoDataFound></NoDataFound>
+                <tbody>      <NoDataFound></NoDataFound></tbody>
                     </table>
                 ) : (
                     <table className="w-full text-sm text-left text-black dark:text-gray-100 table-fixed">
