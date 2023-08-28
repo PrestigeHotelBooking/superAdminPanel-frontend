@@ -27,7 +27,8 @@ const TableCell: React.FC<TableCellProps> = ({ data, renderComponent: Component,
     if (Component) {
         return (
             <td className="px-6 py-4">
-                <Component data={data} dataField={renderProps?.dataField} rowIndex={renderProps?.rowIndex} rowData={renderProps?.rowData} />
+                <Component data={data} dataField={renderProps?.dataField} 
+                 rowIndex={renderProps?.rowIndex} rowData={renderProps?.rowData} />
             </td>
         );
     }
