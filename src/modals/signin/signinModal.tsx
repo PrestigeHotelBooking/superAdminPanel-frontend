@@ -36,7 +36,7 @@ function SignInModal() {
         const validUser=adminDetail.find((d)=>{ if(d.email===loginData.email && d.password===loginData.password){
             return true;
         } })
-        console.log(validUser);
+   
         if(validUser){
             const auth='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
             Cookies.set('x-access-token', auth);
