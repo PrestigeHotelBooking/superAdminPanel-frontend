@@ -2,6 +2,7 @@ import EditPropertyTabs from "@/components/common/Card/PropertyCard/EditProperty
 import PrIconV2 from "@/components/common/PrIcon/PrIconV2";
 import { useRouter } from "next/router";
 import product from '../../common/booking_data.json';
+import { usePropertyData } from "@/redux";
 
 type Address = {
   addressLine1: string;
@@ -26,16 +27,15 @@ type Property = {
 
 function EditPropertyModal() {
   const router = useRouter();
-
+  const property=usePropertyData();
   const { id } = router.query;
-
+  const data=property.find((d)=>{if(d.propertyID===id){
+    return d;
+  }})
   const handleClick =()=>{
     router.push('/dashboard/property');
   }
-  const data:any=product?.find((d:any)=>{
-    if(d.id===Number(id)){
-      return d;
-  }});
+
 
   return (
     <div className=" w-full h-full p-4">

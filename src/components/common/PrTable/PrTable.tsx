@@ -66,7 +66,7 @@ const PrTable: React.FC<PrTableProps> = ({ headers, data }) => {
             <div className="overflow-auto max-h-[35rem]">
                 {data.length === 0 ? (
                     <table className='w-full h-full bg-white'>
-                      <NoDataFound></NoDataFound>
+                <tbody>      <NoDataFound></NoDataFound></tbody>
                     </table>
                 ) : (
                     <table className="w-full text-sm text-left text-black dark:text-gray-100 table-fixed">

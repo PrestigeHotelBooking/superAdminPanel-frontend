@@ -9,6 +9,7 @@ import AddProperty from './common/addProperty';
 import { AddressCell, GpsLocationCell, AvilableCell, ActionCell } from './common/propertyTableComponents';
 import { BackendGet } from '@/components/services/BackendServices';
 import { ENDPOINTS } from '@/components/lang/EndPoints';
+import usePropertyList from '@/hooks/useProperty/usePropertyList';
 
 
 
@@ -16,29 +17,18 @@ import { ENDPOINTS } from '@/components/lang/EndPoints';
 const PropertyModal = () => {
 
     const [openAddProperty,setOpenAddProperty]=useState(false);
-    const [propertyData,setPropertyData]=useState([]);
+    const [propertyData,setPropertyData]=useState<any>([]);
     const handleAddProperty = ()=>{
         setOpenAddProperty(!openAddProperty);
     }
+    const {data,loading}=usePropertyList();
 
     useEffect(()=>{
-        getPropertyList()
-    },[])
-
-    const getPropertyList = async () => {
-        const data = await BackendGet(ENDPOINTS.PROPERTY.GET);
-        if (typeof data === 'object' && data !== null) {
-            const dataMessageWithAddress = data.responseData['message'].map((d:any) => ({
-                ...d,
-                address: {
-                    addressLine1: d.addressLine1 || '',
-                    addressLine2: d.addressLine2 || ''
-                }
-            }));
-            setPropertyData(dataMessageWithAddress); // Replace YourDataType with the actual data type
+        if(!loading){
+            setPropertyData(data)
         }
-        return data;
-    };
+    },[data])
+  
     
     return (
         <div className="p-3">
