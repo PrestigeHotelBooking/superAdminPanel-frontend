@@ -54,9 +54,9 @@ const PrButtonV2: React.FC<PrButtonV2Props> = ({
     >
      <div> {loading && (
         <CircularProgress
-        thickness={5}
+        thickness={7}
           color={'inherit'} // Adjust color for white button style
-          className="h-full mr-4" // Margin between CircularProgress and label
+          className="h-1 mr-4" // Margin between CircularProgress and label
         />
       )}</div>
      <div className='text-center'> {label}</div>

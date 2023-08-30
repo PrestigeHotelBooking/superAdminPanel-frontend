@@ -12,11 +12,13 @@ import Cookies from 'js-cookie';
 interface UserLoginT {
     email: string;
     password: string;
+    loading:boolean;
 }
 
 const initialUserLogin: UserLoginT = {
     email: '',
-    password: ''
+    password: '',
+    loading:false
 };
 
 function SignInModal() {
@@ -25,14 +27,15 @@ function SignInModal() {
     const passwordInputRef = useRef<HTMLInputElement | null>(null);
     const router=useRouter();
 
-    const handleFieldChange = (field: keyof UserLoginT) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFieldChange = <K extends keyof UserLoginT>(field: K,e:UserLoginT[K]) => {
         setLoginData(prevLoginData => ({
             ...prevLoginData,
-            [field]: e.target.value
+            [field]: e
         }));
     };
 
     const handleLogin = () => {
+        handleFieldChange('loading',true);
         const validUser=adminDetail.find((d)=>{ if(d.email===loginData.email && d.password===loginData.password){
             return true;
         } })
@@ -42,6 +45,7 @@ function SignInModal() {
             Cookies.set('x-access-token', auth);
             router.push('/dashboard')
         }
+        handleFieldChange('loading',false);
     };
 
     useEnterNavigation([emailInputRef, passwordInputRef], handleLogin);
@@ -57,7 +61,7 @@ function SignInModal() {
                             className="w-full"
                             type='email'
                             value={loginData.email}
-                            onChange={handleFieldChange('email')}
+                            onChange={(e)=>handleFieldChange('email',e.target.value)}
                             ref={emailInputRef}
                         />
                         <PrInputField
@@ -65,7 +69,7 @@ function SignInModal() {
                             className="w-full"
                             type='password'
                             value={loginData.password}
-                            onChange={handleFieldChange('password')}
+                            onChange={(e)=>handleFieldChange('password',e.target.value)}
                             ref={passwordInputRef}
                         />
                     </div>
