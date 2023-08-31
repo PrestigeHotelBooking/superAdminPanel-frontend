@@ -17,12 +17,17 @@ export type PropertyDataT = {
   
 
   // Define types and interfaces
-export interface Option {
+export interface OptionT {
   label: string;
   value: string;
 }
 
-export const roomTypes: Option[] = [
+export const yesOrNoOption: OptionT[] = [
+  { label: 'Yes', value: 'YES' },
+  { label: 'No', value: 'NO' }
+];
+
+export const roomTypes: OptionT[] = [
   { label: "Single Room", value: "single" },
   { label: "Double Room", value: "double" },
   { label: "Suite", value: "suite" },
@@ -36,7 +41,7 @@ export const roomTypes: Option[] = [
   // Add more room types as needed
 ];
 
-export const bedTypes: Option[] = [
+export const bedTypes: OptionT[] = [
   { label: "Single Bed", value: "single" },
   { label: "Double Bed", value: "double" },
   { label: "Queen Bed", value: "queen" },
@@ -50,7 +55,7 @@ export const bedTypes: Option[] = [
   // Add more bed types as needed
 ];
 
-export const mealTypes: Option[] = [
+export const mealTypes: OptionT[] = [
   { label: "Breakfast Included", value: "breakfast" },
   { label: "Half Board", value: "half_board" },
   { label: "Full Board", value: "full_board" },

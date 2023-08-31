@@ -21,11 +21,11 @@ function RoomsModal() {
           {Component}
         </div>
       ))}
-      <div className="flex justify-center items-center mt-4 flex-col">
+      <div className="flex justify-center items-center mt-6 flex-col">
         <PrButton
           label={"Add Rooms"}
           iconName='Plus'
-          className="w-[12%]"
+          className="w-[13%]"
           onClick={addRoomComponent}
           iconPosition='right'
         />
