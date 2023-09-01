@@ -7,7 +7,7 @@ function RoomsModal() {
   const [roomComponents, setRoomComponents] = useState<React.ReactNode[]>([]);
 
   const addRoomComponent = () => {
-    setRoomComponents(prevComponents => [...prevComponents, <RoomsContainers key={prevComponents.length} onDelete={deleteRoomComponent(prevComponents.length)} />]);
+    setRoomComponents(prevComponents => [...prevComponents, <RoomsContainers  onDelete={deleteRoomComponent(prevComponents.length)} />]);
   };
 
   const deleteRoomComponent = (indexToDelete: number) => () => {

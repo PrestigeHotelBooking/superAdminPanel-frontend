@@ -10,7 +10,7 @@ import {
 } from "@/modals/dashboard/property/common/property.types";
 import { useState } from "react";
 
-interface roomDetailsT {
+export interface roomDetailsT {
   roomName: string;
   roomType: string;
   noOfRooms: number;
@@ -22,11 +22,11 @@ interface roomDetailsT {
   extraBedAllowed: string;
   noOfExtraBed: number;
   priceNightExtraBed: number;
-  smokeFree: number;
+  smokeFree: string;
   mealOption: string;
 }
 
-const initialRoomDetails: roomDetailsT = {
+export const initialRoomDetails: roomDetailsT = {
   roomName: '',
   roomType: '',
   noOfRooms: 0,
@@ -38,12 +38,13 @@ const initialRoomDetails: roomDetailsT = {
   extraBedAllowed: '',
   noOfExtraBed: 0,
   priceNightExtraBed: 0,
-  smokeFree: 0,
+  smokeFree: '',
   mealOption: '',
 };
 
 export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
-  const [roomData, setRoomData] = useState<roomDetailsT>(initialRoomDetails);
+
+  const [roomDataDetail, setRoomData] = useState<roomDetailsT>(initialRoomDetails);
 
   const handleState = (data: Partial<roomDetailsT>) => {
     setRoomData((prevState) => ({
@@ -60,9 +61,9 @@ export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
         <div className="col-span-4">
           <PrInputField
             className="w-full"
-            type="number"
+            type="text"
             label="Room Name"
-            value={roomData.roomName}
+            value={roomDataDetail.roomName}
             onChange={(e) => handleState({ roomName: e.target.value })}
           />
         </div>
@@ -71,7 +72,7 @@ export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
             label="Room Type"
             options={roomTypes}
             className="w-full font-bold"
-            value={roomData.roomType}
+            value={roomDataDetail.roomType}
             onChange={(value) => handleState({ roomType: value })}
           />
         </div>
@@ -80,7 +81,7 @@ export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
             className="w-full"
             type="number"
             label="No. of Rooms"
-            value={roomData.noOfRooms}
+            value={roomDataDetail.noOfRooms}
             onChange={(e) => handleState({ noOfRooms: parseInt(e.target.value) })}
           />
         </div>
@@ -89,7 +90,7 @@ export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
             className="w-full"
             type="number"
             label="Price/Night"
-            value={roomData.priceNight}
+            value={roomDataDetail.priceNight}
             onChange={(e) => handleState({ priceNight: parseInt(e.target.value) })}
           />
         </div>
@@ -101,7 +102,7 @@ export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
             label="Bed Type"
             options={bedTypes}
             className="w-full font-bold"
-            value={roomData.bedType}
+            value={roomDataDetail.bedType}
             onChange={(value) => handleState({ bedType: value })}
           />
         </div>
@@ -110,7 +111,7 @@ export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
             className="w-full"
             type="text"
             label="Room Size"
-            value={roomData.roomSize}
+            value={roomDataDetail.roomSize}
             onChange={(e) => handleState({ roomSize: e.target.value })}
           />
         </div>
@@ -119,7 +120,7 @@ export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
             className="w-full"
             type="number"
             label="No. of Adults"
-            value={roomData.noOfAdults}
+            value={roomDataDetail.noOfAdults}
             onChange={(e) => handleState({ noOfAdults: parseInt(e.target.value) })}
           />
         </div>
@@ -128,7 +129,7 @@ export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
             className="w-full"
             type="number"
             label="No. of Children"
-            value={roomData.noOfChildren}
+            value={roomDataDetail.noOfChildren}
             onChange={(e) => handleState({ noOfChildren: parseInt(e.target.value) })}
           />
         </div>
@@ -138,7 +139,7 @@ export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
         <PrRadioButton
           options={yesOrNoOption}
           label="Extra Bed Allowed"
-          selectedValue={roomData.extraBedAllowed}
+          selectedValue={roomDataDetail.extraBedAllowed}
           className="w-full"
           onChange={(value) => handleState({ extraBedAllowed: value })}
         />
@@ -147,7 +148,7 @@ export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
             className="w-full"
             type="number"
             label="No. of Extra Bed"
-            value={roomData.noOfExtraBed}
+            value={roomDataDetail.noOfExtraBed}
             onChange={(e) => handleState({ noOfExtraBed: parseInt(e.target.value) })}
           />
         </div>
@@ -156,7 +157,7 @@ export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
             className="w-full"
             type="number"
             label="Price / Extra Bed"
-            value={roomData.priceNightExtraBed}
+            value={roomDataDetail.priceNightExtraBed}
             onChange={(e) => handleState({ priceNightExtraBed: parseInt(e.target.value) })}
           />
         </div>
@@ -166,16 +167,16 @@ export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
         <PrRadioButton
           options={yesOrNoOption}
           label="Smoke Free Room"
-          selectedValue={roomData.smokeFree.toString()}
+          selectedValue={roomDataDetail.smokeFree}
           className="w-full"
-          onChange={(value) => handleState({ smokeFree: parseInt(value) })}
+          onChange={(value) => handleState({ smokeFree:value })}
         />
         <div className="m-auto w-[74%]">
           <PrSelect
             label="Meal Option"
             className="w-full font-bold"
             options={mealTypes}
-            value={roomData.mealOption}
+            value={roomDataDetail.mealOption}
             onChange={(value) => handleState({ mealOption: value })}
           />
         </div>
