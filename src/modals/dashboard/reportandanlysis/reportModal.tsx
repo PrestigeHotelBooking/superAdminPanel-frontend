@@ -11,8 +11,7 @@ import products from "../../common/booking_data.json";
 import { ComissionCellComponent } from "../payment/paymentModal";
 import { BookingCellComponent, IndexCellComponent, PaymentStatusCellComponent, PropertyCellComponent } from "./common/reportTableComponents";
 import { useFilteredPagination } from "@/components/common/PrPagination/PrPaginationCalculator";
-
-
+import generateExcelAndDownload from '../../../components/services/ExcelDownloader';
 
 
 function ReportModal() {
@@ -34,7 +33,7 @@ function ReportModal() {
               throw new Error("Function not implemented.");
             }}
           />
-          <PrButton label={"Excel"} iconName={"Download"} />
+          <PrButton label={"Excel"} iconName={"Download"}  onClick={()=>generateExcelAndDownload(visibleData, 'booking')} />
           <PrSearch
             onSearch={function (e: ChangeEvent<HTMLInputElement>): void {
               throw new Error("Function not implemented.");

@@ -35,10 +35,11 @@ const handleDelete=(id:string)=>{
 }
 
 export const ActionCell:React.FC<TableCellPropsT>=(props)=>{
+    console.log(props)
     return(
         <div className='flex space-x-2'>
             <PrIconV2 name={'RemoveRedEyeSharp'} color='blue' onClick={()=>handleView(props?.rowData?.propertyID)} ></PrIconV2>
-            <PrIconV2 name={'Edit'} color='blue' onClick={()=>handleEdit(props?.rowData?.propertyID)}></PrIconV2>
+            <PrIconV2 name={'Edit'} color='blue' onClick={()=>handleEdit(props?.rowData?.id)}></PrIconV2>
             <PrIconV2 name={'Delete'} color='blue' onClick={()=>handleDelete(props?.rowData?.propertyID)}></PrIconV2>
         </div>
     );

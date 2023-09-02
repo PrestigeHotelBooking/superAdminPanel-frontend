@@ -44,7 +44,7 @@ function BookingModal(){
 
     return(
         <div><div className="h-[4rem] flex">
-        <H1>{LANG.COMMON.PROPERTYMANGEMENT}</H1>
+        <H1>{LANG.COMMON.BOOKINGMANAGEMENT}</H1>
         <div className="ml-auto flex items-center space-x-4">
             <PrSearch onSearch={function (e: React.ChangeEvent<HTMLInputElement>): void {
                 throw new Error('Function not implemented.');
