@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import PrIcon from "@/components/common/PrIcon/PrIcon";
+import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
+import { BackendPost } from '@/components/services/BackendServices';
+import { API_ENDPOINT } from '@/Global/api/api';
+import { ENDPOINTS } from '@/components/lang/EndPoints';
+import { BackendPostV2 } from '@/components/services/BackendServicesV2';
 
 function PhotosModal(){
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
@@ -16,6 +21,22 @@ function PhotosModal(){
       reader.readAsDataURL(file);
     }
   };
+
+  const saveMe = async () => {
+    const formData = new FormData();
+    selectedImages.forEach((image, index) => {
+      formData.append(`image_${index}`, image);
+    });
+    formData.append('type','rooms');
+    try {
+      const data = await BackendPostV2(`${ENDPOINTS.PROPERTY.ADD_IMAGES}`, formData);
+      console.log(data);
+      console.log(selectedImages);
+    } catch (error) {
+      console.error('Error uploading images:', error);
+    }
+  };
+  
 
   const imagesInRow = 5; // Number of images in a row
 
@@ -58,6 +79,11 @@ function PhotosModal(){
             <input id="dropzone-file" type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
           </label>
         </div>
+        
+      </div>
+      <div className="flex mt-12 space-x-16 justify-center">
+        <PrButtonV2 label={"Save"} className="rounded-md" onClick={saveMe} />
+        <PrButtonV2 label={"Cancel"} className="rounded-md" dangerLink buttonStyle='danger' />
       </div>
     </div>
   );

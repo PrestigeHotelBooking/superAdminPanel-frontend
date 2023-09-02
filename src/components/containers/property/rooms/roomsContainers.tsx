@@ -8,7 +8,7 @@ import {
   roomTypes,
   yesOrNoOption,
 } from "@/modals/dashboard/property/common/property.types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface roomDetailsT {
   roomName: string;
@@ -42,7 +42,8 @@ export const initialRoomDetails: roomDetailsT = {
   mealOption: '',
 };
 
-export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
+
+export const RoomsContainers = ({ onDelete, onSave }: { onDelete: () => void; onSave: (data: roomDetailsT) => void }) => {
 
   const [roomDataDetail, setRoomData] = useState<roomDetailsT>(initialRoomDetails);
 
@@ -52,6 +53,11 @@ export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
       ...data,
     }));
   };
+
+  const handleSave = () => {
+    onSave(roomDataDetail);
+  };
+
 
 
 
@@ -180,7 +186,8 @@ export const RoomsContainers = ({ onDelete }: { onDelete: () => void }) => {
             onChange={(value) => handleState({ mealOption: value })}
           />
         </div>
-        <div className="flex justify-center items-center w-[48%]">
+        <div className="flex justify-center items-center w-[48%] space-x-4 mt-5">
+          <PrButtonV2 label="Save" buttonStyle='success' onClick={handleSave} className="rounded-md" />
           <PrButtonV2 label="Delete" buttonStyle="danger" onClick={onDelete} className="rounded-md" />
         </div>
       </div>

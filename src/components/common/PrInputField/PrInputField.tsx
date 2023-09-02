@@ -3,6 +3,7 @@ import React, { InputHTMLAttributes, useRef, useState, useEffect } from 'react';
 interface PrInputFieldV2Props extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   className?: string;
+  ref?: React.RefObject<HTMLInputElement | null>;
 }
 
 const PrInputField: React.FC<PrInputFieldV2Props> = ({ label, className, type, value, ...inputProps }) => {
