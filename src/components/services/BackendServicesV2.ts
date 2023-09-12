@@ -4,7 +4,7 @@ type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
 interface RequestOptions {
   method: HttpMethod;
-  headers: {
+  headers?: {
     'Content-Type'?: string;
     // Add your custom headers here
     'Authorization'?: string;
@@ -39,15 +39,6 @@ const callApiV2 = async <T>(
     body: data, // Assign the data directly to the body
   };
 
-  if (method === 'POST' || method === 'PATCH') {
-    if (data instanceof FormData) {
-      // Set appropriate headers for FormData
-      requestOptions.headers['Content-Type'] = 'multipart/form-data';
-    } else {
-      // Set appropriate headers for JSON data
-      requestOptions.headers['Content-Type'] = 'application/json';
-    }
-  }
 
   try {
     const response = await fetch(url, requestOptions);
@@ -66,16 +57,40 @@ const callApiV2 = async <T>(
 
 const BackendPostV2 = async <T>(
   endpoint: string,
-  data: FormData | string = '', // Updated the default value to an empty string
-  customHeaders: { [key: string]: string } = {} // You can pass custom headers for this specific request
+  data: FormData,
+  customHeaders: { [key: string]: string } = {}
 ): Promise<ApiResponse<T>> => {
   try {
-    return await callApiV2<T>('POST', endpoint, data, customHeaders);
+    // Generate a unique boundary string
+    const boundary = '----your-unique-boundary-string-here';
+
+    const requestOptions: RequestOptions = {
+      method: 'POST',
+      // headers: {
+      //   ...customHeaders,
+      //   // Set the 'Content-Type' header with the boundary
+      //   'Content-Type': `multipart/form-data; boundary=gfddtfggggggggg`,
+      // },
+      body: data,
+    };
+
+    const response = await fetch(API_ENDPOINT + endpoint, requestOptions);
+
+    if (response.ok) {
+      const responseData: T = await response.json();
+      console.log(responseData);
+      return { success: true, responseData };
+    } else {
+      const errorData: ApiError = await response.json();
+      throw new Error(`API request failed: ${errorData.message}`);
+    }
   } catch (error) {
     console.error(`Error in POST request to ${endpoint}:`, error);
     throw error;
   }
 };
+
+
 
 const BackendPatchV2 = async <T>(
   endpoint: string,

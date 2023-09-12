@@ -1,18 +1,26 @@
 export type PropertyDataT = {
-    propertyID: string;
-    propertyName: string;
+  property_id: string;
+  property_name: string;
+  property_city: string;
+  property_addressLine1: string;
+  property_addressLine2: string;
+  property_country: string;
+  property_pincode: number;
+  property_offer_percentage: number;
+  property_latitude: number;
+  property_longitude: number;
+  available: number;
+  property_policy: string;
+  ratings_number: number;
+  price_per_night: number;
+  special_offer_id: string;
+  admin_id: string;
+  amenity: string[]; // Assuming this should be an array of strings
+  property_images: string[]; // Assuming this should be an array of image URLs
+  address: {
     addressLine1: string;
     addressLine2: string;
-    city: string;
-    state: string;
-    pincode: string;
-    country: string;
-    latitude: number;
-    longitude: number;
-    totalNoOfRooms: number;
-    username: string;
-    password: string;
-    Available: number;
+  };
   };
   
 

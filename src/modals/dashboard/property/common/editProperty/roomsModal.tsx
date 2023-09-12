@@ -4,7 +4,7 @@ import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
 import { RoomsContainers, roomDetailsT, initialRoomDetails } from '@/components/containers/property/rooms/roomsContainers';
 
 // RoomsModal.tsx
-function RoomsModal() {
+function RoomsModal({ id }: { id: string }) {
   const [roomComponents, setRoomComponents] = useState<React.ReactNode[]>([]);
   const [roomDataList, setRoomDataList] = useState<roomDetailsT[]>([]);
 

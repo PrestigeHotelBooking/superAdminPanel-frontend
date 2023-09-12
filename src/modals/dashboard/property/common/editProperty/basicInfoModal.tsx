@@ -10,7 +10,7 @@ import PrButton from '@/components/common/PrButton/PrButton';
 import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
 import { usePropertyData } from '@/redux';
 
-function BasicInfoModal(){
+function BasicInfoModal({ id }: { id: string }){
     const [phoneNumber1, setPhoneNumber1] = useState("");
     const [phoneNumber2, setPhoneNumber2] = useState("");
     const data=usePropertyData();

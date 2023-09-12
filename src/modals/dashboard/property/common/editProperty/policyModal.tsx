@@ -1,7 +1,7 @@
 import PrButtonV2 from "@/components/common/PrButton/PrButtonV2";
 import PrTextArea from "@/components/common/PrTextArea/PrTextArea";
 
-function PolicyModal(){
+function PolicyModal({ id }: { id: string }){
     return(
         <div className="mb-64">
             <PrTextArea label={"General Policy"}></PrTextArea>

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import PrButtonV2 from "@/components/common/PrButton/PrButtonV2";
 import PrCheckbox from "@/components/common/PrCheckBox/PrCheckbox";
 import { Amenities } from "@/components/containers/property/amenities/commonAmenities";
+import { BackendPost } from '@/components/services/BackendServices';
+import { ENDPOINTS } from '@/components/lang/EndPoints';
 
-function AmenitiesModal() {
+function AmenitiesModal({ id }: { id: string }) {
   const columnCount = 3;
   const chunkSize = Math.ceil(Amenities.length / columnCount);
   const amenitiesChunks = [];
@@ -29,8 +31,9 @@ function AmenitiesModal() {
 
   // Function to handle "Save" button click
   const handleSaveClick = () => {
-    console.log('Checked values:', checkedValues);
-    // You can perform further actions with the checked values here
+    const data=BackendPost(ENDPOINTS.PROPERTY.ADD_AMENITIES,{
+      propertyID:id,
+      amenities:Object.keys(checkedValues)});
   };
 
   return (

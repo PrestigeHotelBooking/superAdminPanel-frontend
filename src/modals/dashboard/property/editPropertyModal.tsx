@@ -25,28 +25,34 @@ type Property = {
 
 
 
+
+
 function EditPropertyModal() {
   const router = useRouter();
   const property=usePropertyData();
   const { id } = router.query;
-  const data=product.filter((d)=>{
-    if(d.id===Number(id)){
+
+  console.log(property)
+
+  const data=property.filter((d)=>{
+    if(d.property_id===id){
       return d;
     }
   });
+
   const handleClick =()=>{
     router.push('/dashboard/property');
-  }
+  } 
 
 
   return (
     <div className=" w-full h-full p-4">
       <div className="flex flex-1 space-x-2 p-4">
         <PrIconV2 name='ArrowBack' size='large' onClick={handleClick}></PrIconV2>
-        <div className="font-semibold text-[1.5rem]">{data[0]?.propertyName}</div>
+        <div className="font-semibold text-[1.5rem]">{data[0]?.property_name}</div>
       </div>
       <div className="bg-white p-4 mb-4">
-        <EditPropertyTabs></EditPropertyTabs>
+        <EditPropertyTabs id={id as string}></EditPropertyTabs>
       </div>
     </div>
   );

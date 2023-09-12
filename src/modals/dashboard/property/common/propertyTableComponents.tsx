@@ -6,7 +6,7 @@ import router from "next/router";
 
 export const AddressCell:React.FC<TableCellPropsT> = (props) =>{
     return(
-        <div className='text-black'>{props.data.addressLine1+props.data.addressLine2}</div>
+        <div className='text-black'>{props.data.addressLine1+" \n"+props.data.addressLine2}</div>
     );
 }
 
@@ -38,9 +38,9 @@ export const ActionCell:React.FC<TableCellPropsT>=(props)=>{
     console.log(props)
     return(
         <div className='flex space-x-2'>
-            <PrIconV2 name={'RemoveRedEyeSharp'} color='blue' onClick={()=>handleView(props?.rowData?.propertyID)} ></PrIconV2>
-            <PrIconV2 name={'Edit'} color='blue' onClick={()=>handleEdit(props?.rowData?.id)}></PrIconV2>
-            <PrIconV2 name={'Delete'} color='blue' onClick={()=>handleDelete(props?.rowData?.propertyID)}></PrIconV2>
+            <PrIconV2 name={'RemoveRedEyeSharp'} color='blue' onClick={()=>handleView(props?.rowData?.property_id)} ></PrIconV2>
+            <PrIconV2 name={'Edit'} color='blue' onClick={()=>handleEdit(props?.rowData?.property_id)}></PrIconV2>
+            <PrIconV2 name={'Delete'} color='blue' onClick={()=>handleDelete(props?.rowData?.property_id)}></PrIconV2>
         </div>
     );
 }
