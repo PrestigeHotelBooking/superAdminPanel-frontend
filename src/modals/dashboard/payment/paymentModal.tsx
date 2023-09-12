@@ -19,6 +19,7 @@ import {
 import { PaymentStatusT, RefundStatusT, getPaymentStatusBackgroundColor, getRefundStatusColor } from "./common/paymentCommon";
 import PrPagination from "@/components/common/PrPagination/PrPagination";
 import { useFilteredPagination } from "@/components/common/PrPagination/PrPaginationCalculator";
+import  generateExcelFromJSON  from '@/components/services/ExcelDownloader';
 
 export interface ComissionCellComponentProps {
   data: any;
@@ -81,13 +82,13 @@ const PaymentStatusCellComponent: React.FC<TableCellPropsT> = (data) => {
 
 export const CheckInCellComponent:React.FC<TableCellPropsT>=(data)=>{
     return(
-        <DateFormat date={data.data} formatType="dd MMM yyyy" />
+        <DateFormat date={data.data} className="text-black" formatType="dd MMM yyyy" />
     );
 }
 
 const checkOutTimeCellComponent:React.FC<TableCellPropsT>=(data)=>{
     return(
-        <DateFormat date={data.data} formatType="dd MMM yyyy" />
+        <DateFormat date={data.data} className="text-black" formatType="dd MMM yyyy" />
     );
 }
 
@@ -122,6 +123,8 @@ const PaymentModal = () => {
       const {visibleData, totalPages, currentPage,handlePageChange} = useFilteredPagination(products,searchText,10);
    
   
+
+
     return (
       <div className="p-3 ">
 
@@ -129,7 +132,7 @@ const PaymentModal = () => {
         <H1>{LANG.COMMON.PAYMENTMANAGEMENT}</H1>
         <div className="ml-auto flex items-center space-x-4">
           <DateFilter onDateRangeChange={handleDateRangeChange} />
-          <PrButton label={"Excel"} iconName={"Download"} />
+          <PrButton label={"Excel"} iconName={"Download"}  onClick={()=>generateExcelFromJSON(visibleData, 'paymentData')}/>
           <PrSearch
             value={userData.searchText}
             onSearch={(e) => handleState({ searchText: e.target.value })}

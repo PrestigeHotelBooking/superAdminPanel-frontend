@@ -11,6 +11,8 @@ import AddPropertySuccessFully from '@/components/common/Card/PropertyCard/AddPr
 import { API_ENDPOINT } from '@/Global/api/api';
 import { ENDPOINTS } from '@/components/lang/EndPoints';
 import { BackendPost } from '@/components/services/BackendServices';
+import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
+import { findFirstEmptyField } from '@/components/helper/validator';
 
 
 
@@ -33,6 +35,8 @@ interface AddPropertyProps {
     username: string;
     password: string;
   }
+
+  
   
   // Define an initial object with default values
   const initialAddProperty: AddPropertyT = {
@@ -55,7 +59,10 @@ const AddProperty = (props:AddPropertyProps) => {
 
   const [phoneValue, setPhoneValue] = useState('');
   const [selectedCountry, setSelectedCountry] = useState<CountryIso2 | ''>('');
-  const [modal,setModal]=useState(false);
+  const [modal,setModal]=useState(true);
+  const [successModal,setSuccessModal]=useState(false);
+  const [errorMsg,setErrorMsg]=useState('');
+  const [buttonLoading,setButtonLoading]=useState(false);
   const [addPropertyData,SetAddPropertyData]=useState<AddPropertyT>(initialAddProperty);
   
   const handlePhoneChange = (phone: string, country: CountryIso2): void => {
@@ -66,6 +73,12 @@ const AddProperty = (props:AddPropertyProps) => {
     setModal(!modal);
   }
 
+  const ModalChangeSucess =()=>{
+    setSuccessModal(!successModal);
+  }
+
+
+
   const handleState = (field: keyof AddPropertyT, value: any) => {
     SetAddPropertyData((prevData) => ({
       ...prevData,
@@ -74,18 +87,29 @@ const AddProperty = (props:AddPropertyProps) => {
   };
 
   const handleAddproperty = async () => {
-    try {
-      const responseData = await BackendPost(ENDPOINTS.PROPERTY.ADD, addPropertyData);
-      console.log('Property added successfully:', responseData);
-    } catch (error) {
-      console.error('Error adding property:', error);
+    setButtonLoading(true);
+    setErrorMsg('');
+    const isEmpty=findFirstEmptyField(addPropertyData);
+    if(!isEmpty){
+      try {
+        const responseData = await BackendPost(ENDPOINTS.PROPERTY.ADD, addPropertyData);
+        setButtonLoading(!buttonLoading);
+        console.log('Property added successfully:', responseData);
+      } catch (error) {
+        console.error('Error adding property:', error);
+        setButtonLoading(!buttonLoading);
+      }
+    }
+    else{
+      setButtonLoading(false);
+      setErrorMsg(`* ${isEmpty} field is required.`)
     }
   };
   
   
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 ">
-    {modal ?   <div className="bg-white p-8 rounded-lg shadow-lg">
+    {modal &&   <div className="bg-white p-8 rounded-lg shadow-lg">
       <div className='flex items-center justify-between border-b border-black mb-4'>
   <h2 className="text-xl font-semibold mb-4">Add Property</h2>
   <PrIcon onClick={props.closeModal} className='hover:cursor-pointer' name={'X'}></PrIcon>
@@ -115,12 +139,13 @@ const AddProperty = (props:AddPropertyProps) => {
        
         </form>
         <div className="flex justify-center mt-6"> 
-          <PrButton label={'Create'} iconName='ArrowUpCircle' buttonStyle='danger' className='rounded-md' onClick={handleAddproperty}></PrButton>
+          <PrButtonV2 label={'Create'} loading={buttonLoading}  buttonStyle='danger' className='rounded-md' onClick={handleAddproperty}></PrButtonV2>
         </div>
-
-      </div> :
-      <AddPropertySuccessFully closeModal={ModalChange}></AddPropertySuccessFully>
+        <div className='text-red-500 font-bold text-center mt-8'>{errorMsg ? errorMsg : null }</div>
+      </div> 
+ 
       }
+      {  successModal &&   <AddPropertySuccessFully closeModal={ModalChangeSucess}></AddPropertySuccessFully>}
       
     </div>
   );

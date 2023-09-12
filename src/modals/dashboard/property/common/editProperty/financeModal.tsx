@@ -3,7 +3,7 @@ import PrButtonV2 from "@/components/common/PrButton/PrButtonV2";
 import PrInputField from "@/components/common/PrInputField/PrInputField";
 
 
-function FinanceModal(){
+function FinanceModal({ id }: { id: string }){
     return(
         <div className='overflow-auto flex flex-col space-x-4 mb-64'>
         <div className='mb-4 p-4'>

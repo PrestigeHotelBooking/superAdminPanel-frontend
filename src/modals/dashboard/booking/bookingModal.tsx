@@ -10,6 +10,7 @@ import { CheckInCellComponent } from "../payment/paymentModal";
 import PrPagination from "@/components/common/PrPagination/PrPagination";
 import { useFilteredPagination } from "@/components/common/PrPagination/PrPaginationCalculator";
 import { TableCellPropsT } from "@/components/common/PrTable/PrTableCommon";
+import generateExcelAndDownload from '../../../components/services/ExcelDownloader';
 import PrIcon from "@/components/common/PrIcon/PrIcon";
 import { useState } from "react";
 import BookingDetailModal from "./common/bookingDetailModal";
@@ -25,27 +26,30 @@ function BookingModal(){
         setOpenModal(!openModal)
     }
 
-    
-const BookingActionComponent:React.FC<TableCellPropsT>=(props)=>{
+    const BookingActionComponent:React.FC<TableCellPropsT>=(props)=>{
 
-    return(
-        <div>
-            <PrIcon name={'Eye'} className="cursor-pointer" color='blue' onClick={()=>handleModal(props.rowData.bookingId)} ></PrIcon>
-        </div>
-    );
-}
+      return(
+          <div>
+              <PrIcon name={'Eye'} className="cursor-pointer" color='blue' onClick={()=>handleModal(props.rowData.bookingId)} ></PrIcon>
+          </div>
+      );
+  }
+
+    
+
+
 
 
 
 
     return(
         <div><div className="h-[4rem] flex">
-        <H1>{LANG.COMMON.PROPERTYMANGEMENT}</H1>
+        <H1>{LANG.COMMON.BOOKINGMANAGEMENT}</H1>
         <div className="ml-auto flex items-center space-x-4">
             <PrSearch onSearch={function (e: React.ChangeEvent<HTMLInputElement>): void {
                 throw new Error('Function not implemented.');
             }} value={''}></PrSearch>
-            <PrButton label={'Add'} iconName={'Plus'} buttonStyle='primary'></PrButton>
+            <PrButton label={'Download'} iconName={'Download'} buttonStyle='primary' onClick={()=>generateExcelAndDownload(visibleData, 'booking')}></PrButton>
             <DateFilter onDateRangeChange={function (startDate: Date | null, endDate: Date | null): void {
                 throw new Error('Function not implemented.');
             }}></DateFilter>

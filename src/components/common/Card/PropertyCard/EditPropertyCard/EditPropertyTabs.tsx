@@ -26,7 +26,9 @@ const TabButton: React.FC<TabProps> = ({ tabName, activeTab, onClick, children }
   );
 };
 
-const EditPropertyTabs: React.FC = () => {
+const EditPropertyTabs: React.FC<{ id: string }> = ({ id }) => {
+
+
   const [activeTab, setActiveTab] = useState<string>('basicinfo'); // Set the default active tab
 
   const handleTabClick = (tabName: string): void => {
@@ -58,12 +60,12 @@ const EditPropertyTabs: React.FC = () => {
         </div>
       </div>
       <div className="flex-1  w-full max-h-[100vh] overflow-auto p-4 mb-4  ">
-        {activeTab === 'basicinfo' && <BasicInfoModal></BasicInfoModal>}
-        {activeTab === 'rooms' && <RoomsModal></RoomsModal>}
-        {activeTab === 'amenities' &&<AmenitiesModal></AmenitiesModal>}
-        {activeTab === 'photos' && <PhotosModal></PhotosModal>}
-        {activeTab === 'finance' && <FinanceModal></FinanceModal>}
-        {activeTab === 'policy' &&<PolicyModal></PolicyModal>}
+        {activeTab === 'basicinfo' && <BasicInfoModal id={id}></BasicInfoModal>}
+        {activeTab === 'rooms' && <RoomsModal id={id}></RoomsModal>}
+        {activeTab === 'amenities' &&<AmenitiesModal id={id}></AmenitiesModal>}
+        {activeTab === 'photos' && <PhotosModal id={id}></PhotosModal>}
+        {activeTab === 'finance' && <FinanceModal id={id}></FinanceModal>}
+        {activeTab === 'policy' &&<PolicyModal id={id}></PolicyModal>}
       </div>
     </div>
   );
