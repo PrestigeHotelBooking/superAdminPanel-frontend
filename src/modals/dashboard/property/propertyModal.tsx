@@ -10,25 +10,24 @@ import { AddressCell, GpsLocationCell, AvilableCell, ActionCell } from './common
 import { BackendGet } from '@/components/services/BackendServices';
 import { ENDPOINTS } from '@/components/lang/EndPoints';
 import usePropertyList from '@/hooks/useProperty/usePropertyList';
-
-
-
+import { PropertyDataT } from './common/property.types';
+// import propertyData from '../../common/property_data.json';
 
 const PropertyModal = () => {
 
     const [openAddProperty,setOpenAddProperty]=useState(false);
-    const [propertyData,setPropertyData]=useState<any>([]);
+    const [propertyData,setPropertyData]=useState<PropertyDataT[]>([]);
     const handleAddProperty = ()=>{
         setOpenAddProperty(!openAddProperty);
     }
     const {data,loading}=usePropertyList();
-
+    console.log(data)
     useEffect(()=>{
         if(!loading){
             setPropertyData(data)
         }
     },[data])
-  
+
     
     return (
         <div className="p-3">
@@ -47,12 +46,12 @@ const PropertyModal = () => {
             <PrTable
                 headers={[
                     {
-                        id: 'propertyID',
+                        id: 'property_id',
                         name: '#'
                     },
                     {
                         name: 'Property Name',
-                        id: 'propertyName'
+                        id: 'property_name'
                     },
                     {
                         name: 'Address',

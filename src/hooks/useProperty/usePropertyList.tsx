@@ -38,8 +38,8 @@ const usePropertyList = (): PropertyListHookResult => {
         const dataMessageWithAddress = data.responseData['message'].map((d:any) => ({
           ...d,
           address: {
-            addressLine1: d.addressLine1 || '',
-            addressLine2: d.addressLine2 || ''
+            addressLine1: d.property_addressLine1 || '',
+            addressLine2: d.property_addressLine1 || ''
           }
         }));
 

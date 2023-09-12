@@ -23,17 +23,17 @@ const paymentStatusColor = (status:paymentStatusT) => {
 
 const BookingCellComponent:React.FC<TableCellPropsT>=(props)=>{
     return(
-        <div className="font-bold text-[2rem]">{props.data}</div>
+        <div className="font-bold text-black text-[2rem]">{props.data}</div>
     );
 }
 const PropertyCellComponent:React.FC<TableCellPropsT>=(props)=>{
     return(
-        <div className="font-bold text-[1rem]">{props.data}</div>
+        <div className="font-bold text-black  text-[1rem]">{props.data}</div>
     );
 }
 const IndexCellComponent:React.FC<TableCellPropsT>=(props)=>{
     return(
-        <div className="font-bold text-[1rem]">{props.data}</div>
+        <div className="font-bold text-black  text-[1rem]">{props.data}</div>
     );
 }
 
