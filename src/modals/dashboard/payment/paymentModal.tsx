@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import products from "../../common/booking_data.json";
 import { useDebounce } from "@uidotdev/usehooks";
@@ -95,6 +95,7 @@ const checkOutTimeCellComponent:React.FC<TableCellPropsT>=(data)=>{
 
 
 
+
 const PaymentModal = () => {
     const router = useRouter();
     const [userData, setUserData] = useState<userModalInputT>(
@@ -117,8 +118,13 @@ const PaymentModal = () => {
         startDate: Date | null,
         endDate: Date | null
       ) => {
-        handleState({ filterDate: `${startDate} - ${endDate}` });
+        handleState({ calendarStartDate:startDate,
+                calendarEndDate: endDate });
       };
+
+    useEffect(()=>{
+      
+    },[])
 
       const {visibleData, totalPages, currentPage,handlePageChange} = useFilteredPagination(products,searchText,10);
    

@@ -1,6 +1,5 @@
 
 import { useRouter } from "next/router";
-import customerData from "./sampleProduct";
 import UserAddressCard from "@/components/common/Card/UserCard/UserAddressCard";
 import UserDetailCard from "@/components/common/Card/UserCard/UserDetailCard";
 import DateFilter from "@/components/common/DateFilter/dateFilter";
@@ -8,19 +7,111 @@ import PrButton from "@/components/common/PrButton/PrButton";
 import PrIcon from "@/components/common/PrIcon/PrIcon";
 import PrTable from "@/components/common/PrTable/PrTable";
 import { LANG } from "@/components/lang/Lang";
+import { useCustomerHook } from "@/redux/selectors/customer";
+import useCustomerData from "@/hooks/useCustomerData/useCustomerData";
+import { CustomerDataT } from "./common/userCommon";
+import useSingleCustomerBookingData from "@/hooks/useCustomerData/useSingleCustomerBookingData";
+import { useEffect, useMemo, useState } from "react";
+import { BackendGet } from "@/components/services/BackendServices";
+import { ENDPOINTS } from "@/components/lang/EndPoints";
+import { useDebounce } from "@uidotdev/usehooks";
+import { FilterCriteria } from "@/components/helper/criteriaFilter";
+
+
+
+export type userDetailInputT={
+    searchText:string;
+    pageRows:number;
+    calendarStartDate: Date | null; 
+    calendarEndDate: Date | null;
+    userDetailData:any;
+}
+
+
+export const initialuserModalInput:userDetailInputT={
+    searchText:'',
+    pageRows:0,
+    calendarStartDate: null,
+    calendarEndDate: null,
+    userDetailData:{}
+}
 
 
 const UserDetail = () =>{
     const router = useRouter();
     const { id } = router.query;
+
     const handleNavigate = () => {
         router.push('/dashboard/user');
     };
-    const userData=customerData?.find((d)=>d.customer_id===id) ;
 
-    function handleDateRangeChange(startDate: Date | null, endDate: Date | null): void {
-        throw new Error("Function not implemented.");
+    const [userDetailInput,setUserDetailInput]=useState<userDetailInputT>(initialuserModalInput);
+
+    const {data} = useSingleCustomerBookingData(id as string);
+    const customerData=useCustomerData();
+
+ 
+
+    const singleCustomerData=customerData.data.find((d)=>d.customer_id===Number(id));
+
+    const handleState = (data: Partial<userDetailInputT>) => {
+        setUserDetailInput((prevState) => ({
+          ...prevState,
+          ...data,
+        }));
+      };
+
+
+      useEffect(()=>{
+          handleState({ userDetailData:data })      
+      },[data])
+  
+    
+      async function fetchData() {
+        let filter;
+        if (userDetailInput.calendarStartDate && userDetailInput.calendarEndDate) {
+            filter = [
+                {
+                    field: 'created_at',
+                    operator: 'BETWEEN',
+                    value: {
+                        startDate: userDetailInput.calendarStartDate,
+                        endDate: userDetailInput.calendarEndDate,
+                    },
+                },
+            ];
+        } else {
+            filter = [
+                {
+                    field: 'first_name',
+                    operator: 'LIKE',
+                    value: userDetailInput.searchText,
+                },
+            ];
+        }
+
+        const data = await BackendGet(`${ENDPOINTS.USER.SINGLE_CUSTOMER_BOOKING}/${id}`, { filter: filter });
+
+        if (data.success) {
+            const dataList = data['responseData']['message'];
+            handleState({ userDetailData: dataList });
+        }
     }
+
+
+      useEffect(() => {
+        fetchData();
+    }, [userDetailInput.calendarStartDate, userDetailInput.calendarEndDate]);
+    
+
+    const handleDateRangeChange=(startDate: Date | null, endDate: Date | null): void =>{
+        handleState({
+            calendarStartDate:startDate,
+            calendarEndDate:endDate
+        })
+    }
+
+    console.log(userDetailInput)
 
     return(
         <div className="bg-[#f6f7fa]">
@@ -28,15 +119,15 @@ const UserDetail = () =>{
                 <div className="p-2.5 font-semibold cursor-pointer" onClick={handleNavigate}>
                  <PrIcon name={'ArrowLeft'} size={28} ></PrIcon>
                 </div>
-                <div className="p-2 text-[1.5rem] font-semibold">{userData?.first_name || ' '}</div>
+                <div className="p-2 text-[1.5rem] font-semibold">{singleCustomerData?.first_name || ' '}</div>
                 
             </div>
             <div className="flex space-x-4">
             <UserDetailCard
     items={[
-        { icon:"User", iconType:'feather', title: "Name", subtitle:userData?.first_name || ' '},
-        { icon:'Mail',iconType:'feather', title: "Email", subtitle:userData?.email_address || ' ' },
-        { icon: 'Smartphone',iconType:'feather', title: "Mobile", subtitle:userData?.mobile_number|| ' ' }
+        { icon:"User", iconType:'feather', title: "Name", subtitle:singleCustomerData?.first_name || ' '},
+        { icon:'Mail',iconType:'feather', title: "Email", subtitle:singleCustomerData?.email_id || ' ' },
+        { icon: 'Smartphone',iconType:'feather', title: "Mobile", subtitle:singleCustomerData?.phone_number|| ' ' }
 
     ]}
 />
@@ -44,18 +135,18 @@ const UserDetail = () =>{
 title={"Address"}
  subtitle={"Robertson, 1234 NW Bobcat Lane, St. Robert, MO 65584-5678"} 
  items={[
-    { title: 'City', subtitle: 'Vellore' },
-    { title: 'State', subtitle: 'Tamil Nadu' },
-    { title: 'Pincode', subtitle: '6333344' },
-    { title: 'Country', subtitle: 'India' }
+    { title: 'City', subtitle: singleCustomerData?.city ||'' },
+    { title: 'State', subtitle:singleCustomerData?.city || '' },
+    { title: 'Pincode', subtitle: singleCustomerData?.pincode || '' },
+    { title: 'Country', subtitle: singleCustomerData?.country || '' }
 ]}
  ></UserAddressCard>
 
 <UserDetailCard
     items={[
-        { icon: 'TransgenderSharp',iconType:'material', title: "Gender", subtitle: "Male" },
-        { icon: "Gift",iconType:'feather', title: "Date Of Birth", subtitle: "10 March 1998" },
-        { icon: 'LocalAtmSharp',iconType:'material', title: "Curreny", subtitle: "₹ INR" }
+        { icon: 'TransgenderSharp',iconType:'material', title: "Gender", subtitle: singleCustomerData?.gender || '' },
+        { icon: "Gift",iconType:'feather', title: "Date Of Birth", subtitle: singleCustomerData?.date_of_birth || '' },
+        { icon: 'LocalAtmSharp',iconType:'material', title: "Curreny", subtitle: singleCustomerData?.currency ||' ' }
     ]}
 />
 <div className="bg-transparent w-[1rem]"></div>
@@ -87,31 +178,31 @@ title={"Address"}
         },
         {
             name:'Booking On',
-            id:'booking_on'
+            id:'booking_date'
         },
         {
             name:'Rooms Selected',
-            id:'rooms_selected'
+            id:'room_id'
         },{
             name:'Guests',
-            id:'guests'
+            id:'no_of_adults'
         },{
             name:'Check In',
-            id:'check_in'
+            id:'check_in_date'
         },
         {
             name:'Check Out',
-            id:'check_out'
+            id:'check_in_date'
         },
         {
             name:'Booking Status',
-            id:'booking_status'
+            id:'payment_status'
         },
         {
             name:'Check In Status',
             id:'check_in_status'
         }
-    ]} data={userData?.bookings || []}></PrTable>
+    ]} data={data || []}></PrTable>
 </div>
 
         </div>

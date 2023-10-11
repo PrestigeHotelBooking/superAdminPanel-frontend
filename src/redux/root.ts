@@ -1,8 +1,11 @@
 import { combineReducers } from 'redux';
 import { propertyReducer, PropertyReducerState } from './reducers/property';
 import {ROOT_ACTION} from './action-types';
+import { CustomerReducerState } from '.';
+
 export interface rootReducersI {
   property: PropertyReducerState;
+  customer:CustomerReducerState;
 }
 
 export const reducers = {

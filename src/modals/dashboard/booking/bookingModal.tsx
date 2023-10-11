@@ -12,14 +12,46 @@ import { useFilteredPagination } from "@/components/common/PrPagination/PrPagina
 import { TableCellPropsT } from "@/components/common/PrTable/PrTableCommon";
 import generateExcelAndDownload from '../../../components/services/ExcelDownloader';
 import PrIcon from "@/components/common/PrIcon/PrIcon";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import BookingDetailModal from "./common/bookingDetailModal";
+import { useDebounce } from "@uidotdev/usehooks";
+import { CriteriaFilterPayload, FilterCriteria } from "@/components/helper/criteriaFilter";
 
+interface BookingModalT {
+   calendarStartDate: Date | null; 
+   calendarEndDate: Date | null;
+ }
+ 
+
+ const initialBookingModalData: BookingModalT = {
+   calendarStartDate: null,
+   calendarEndDate: null,
+ };
+ 
 
 function BookingModal(){
     const {currentPage,visibleData,handlePageChange,totalPages} =useFilteredPagination(products,'',10);
+    const [bookingModalData,setBookingModalData]=useState<BookingModalT>(initialBookingModalData);
     const [openModal,setOpenModal]=useState(false);
+
     const  [bookingId,setBookingId]=useState('');
+
+    const DateFilterMemo=useMemo(()=>{
+      const filter:FilterCriteria[]=[{
+         field:'booking_date',
+         operator:'BETWEEN',
+         value:{startDate:bookingModalData.calendarStartDate,
+                endDate:bookingModalData.calendarEndDate},
+      }];
+      return CriteriaFilterPayload(filter);
+    },[bookingModalData.calendarEndDate,bookingModalData.calendarStartDate])
+
+    const DateFilterPayload=useDebounce(DateFilterMemo,500);
+
+    useEffect(()=>{
+      
+    },[DateFilter])
+
 
     const handleModal = (data:string)=>{
         setBookingId(data)
@@ -35,13 +67,19 @@ function BookingModal(){
       );
   }
 
-    
-
-
-
-
-
-
+  const handleState = (payload: Partial<BookingModalT>) => {
+   setBookingModalData((prevState) => ({
+     ...prevState,
+     ...payload
+   }));
+ };
+ 
+  const  handleDateRangeChange=(startDate: Date |null, endDate: Date|null): void =>{
+   handleState({
+      calendarEndDate:endDate,
+      calendarStartDate:startDate
+   });
+  }
     return(
         <div><div className="h-[4rem] flex">
         <H1>{LANG.COMMON.BOOKINGMANAGEMENT}</H1>
@@ -50,9 +88,7 @@ function BookingModal(){
                 throw new Error('Function not implemented.');
             }} value={''}></PrSearch>
             <PrButton label={'Download'} iconName={'Download'} buttonStyle='primary' onClick={()=>generateExcelAndDownload(visibleData, 'booking')}></PrButton>
-            <DateFilter onDateRangeChange={function (startDate: Date | null, endDate: Date | null): void {
-                throw new Error('Function not implemented.');
-            }}></DateFilter>
+            <DateFilter onDateRangeChange={handleDateRangeChange}></DateFilter>
             <PrPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange }></PrPagination>
         </div>
     </div>

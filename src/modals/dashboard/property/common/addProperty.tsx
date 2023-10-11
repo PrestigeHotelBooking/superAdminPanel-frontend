@@ -64,6 +64,15 @@ const AddProperty = (props:AddPropertyProps) => {
   const [errorMsg,setErrorMsg]=useState('');
   const [buttonLoading,setButtonLoading]=useState(false);
   const [addPropertyData,SetAddPropertyData]=useState<AddPropertyT>(initialAddProperty);
+
+  const [mapLatitude, setMapLatitude] = useState(0);
+  const [mapLongitude, setMapLongitude] = useState(0);
+
+  // Callback function to capture dragged map's coordinates
+  const handleMapDrag = (latitude :any, longitude:any) => {
+    setMapLatitude(latitude);
+    setMapLongitude(longitude);
+  };
   
   const handlePhoneChange = (phone: string, country: CountryIso2): void => {
     setPhoneValue(phone); // Update the phoneValue state
@@ -109,7 +118,7 @@ const AddProperty = (props:AddPropertyProps) => {
   
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 ">
-    {modal &&   <div className="bg-white p-8 rounded-lg shadow-lg">
+    {modal &&   <div className="bg-white p-6 rounded-lg shadow-lg ">
       <div className='flex items-center justify-between border-b border-black mb-4'>
   <h2 className="text-xl font-semibold mb-4">Add Property</h2>
   <PrIcon onClick={props.closeModal} className='hover:cursor-pointer' name={'X'}></PrIcon>
@@ -128,7 +137,14 @@ const AddProperty = (props:AddPropertyProps) => {
             <PrInputFieldV2 label={'Pin/Zip/Postal Code'} value={addPropertyData.pincode} onChange={(e:any)=>handleState('pincode',e.target.value)}></PrInputFieldV2>
             <PrCountryInputField value={addPropertyData.country}  onChange={(e)=>handleState('country',e)} />
             <label className='block font-semibold mt-4'>GPS Location</label>
-            <PrMapComponent latitude={0} longitude={0} className={'mt-2 w-[20.5rem] h-[10rem]'}></PrMapComponent>
+            <div className='w-[10] h-[10]'>
+      <PrMapComponent
+        initialLatitude={0}
+        initialLongitude={0}
+        className={'mt-2 w-[full] h-[full]'}
+        onMapDrag={handleMapDrag} // Pass the callback function
+      />
+    </div>
             <PRInputField label="Total No Of Rooms" onChange={(e:any)=>handleState('totalNoOfRooms',e.target.value)}  placeholder="Enter number of rooms" />
             </div>
             <div  className='ml-12'>
@@ -138,7 +154,7 @@ const AddProperty = (props:AddPropertyProps) => {
             </div>
        
         </form>
-        <div className="flex justify-center mt-6"> 
+        <div className="flex justify-center mt-25"> 
           <PrButtonV2 label={'Create'} loading={buttonLoading}  buttonStyle='danger' className='rounded-md' onClick={handleAddproperty}></PrButtonV2>
         </div>
         <div className='text-red-500 font-bold text-center mt-8'>{errorMsg ? errorMsg : null }</div>

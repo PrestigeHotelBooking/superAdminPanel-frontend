@@ -9,10 +9,13 @@ import adminDetail from '../common/adminDetails.json';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import PrCircularProgressIndicator from '@/components/common/Loader/PrCircularProgressIndicator';
+import { BackendGet, BackendPost } from '@/components/services/BackendServices';
+import { ENDPOINTS } from '@/components/lang/EndPoints';
 
 interface UserLoginT {
     email: string;
     password: string;
+    errorMessage:string;
     loading: boolean;
 }
 
@@ -20,6 +23,7 @@ const initialUserLogin: UserLoginT = {
     email: '',
     password: '',
     loading: false,
+    errorMessage:''
 };
 
 // ...
@@ -38,22 +42,24 @@ function SignInModal() {
     };
 
     const handleLogin = async () => {
-        handleFieldChange('loading', true);
-        const validUser = adminDetail.find((d) => d.email === loginData.email && d.password === loginData.password);
 
-        if (validUser) {
-            const auth = 'your-auth-token-here'; // Replace with your actual authentication token
-            Cookies.set('x-access-token', auth);
-                router.push('/dashboard');
+
+        const loggedIn=await BackendPost(ENDPOINTS.LOGIN.SIGNIN,{email:loginData.email,password:loginData.password});
+        if(loggedIn.success){
+            console.log(`hello`)
+            router.push('/dashboard')
         }
+        else if(!loggedIn.success){
+            const message=loggedIn?.errorData;
+            handleFieldChange('errorMessage', message as any);
 
-        // Simulate loading for a moment before resetting loading state
-        setTimeout(() => {
-            handleFieldChange('loading', false);
-        }, 2000);
+        }
+      
     };
 
     useEnterNavigation([emailInputRef, passwordInputRef], handleLogin);
+
+  
 
     return (
         <div>
@@ -79,6 +85,9 @@ function SignInModal() {
                             ref={passwordInputRef}
                         />
                     </div>
+             {loginData.errorMessage &&        <div className=' p-4 text-red-800 font-bold'>
+                   {`🚷   ${loginData.errorMessage}`}
+                   </div>}
                     <PrButtonV2 label={"LOGIN"} className="w-full h-[4rem] mt-6 rounded-md" onClick={handleLogin} />
                 </div>
             </div>
