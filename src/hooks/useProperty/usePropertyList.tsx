@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { BackendGet } from '@/components/services/BackendServices';
 import { ENDPOINTS } from '@/components/lang/EndPoints'; // Define EndpointType based on your actual endpoint structure
-import { PropertyDataT } from '@/modals/dashboard/property/common/property.types';
+import { PropertyDataT } from '@/modals/dashboard/property/common/components/property.types';
 import { useDispatch } from 'react-redux';
 import { PROPERTY_ACTIONS } from '@/redux';
 
@@ -20,6 +20,7 @@ interface PropertyListHookResult {
   loading: boolean;
   data: PropertyDataT[];
   error: Error | null;
+  fetchPropertyList: () => Promise<void>;
 }
 
 const usePropertyList = (): PropertyListHookResult => {
@@ -30,7 +31,7 @@ const usePropertyList = (): PropertyListHookResult => {
   const dispatch=useDispatch();
   const fetchPropertyList = async () => {
     try {
-      const data = await BackendGet<PropertyApiResponse>(ENDPOINTS.PROPERTY.GET,{});
+      const data = await BackendGet<PropertyApiResponse>(ENDPOINTS.PROPERTY.GET);
       if (typeof data === 'object' && data !== null) {
         const dataMessageWithAddress = data.responseData['message'].map((d:any) => ({
           ...d,
@@ -55,7 +56,7 @@ const usePropertyList = (): PropertyListHookResult => {
     fetchPropertyList();
   }, []);
   
-  return { loading, data, error };
+  return { loading, data, error,fetchPropertyList };
 };
 
 export default usePropertyList;

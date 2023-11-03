@@ -12,14 +12,16 @@ import { ComissionCellComponent } from "../payment/paymentModal";
 import { BookingCellComponent, IndexCellComponent, PaymentStatusCellComponent, PropertyCellComponent } from "./common/reportTableComponents";
 import { useFilteredPagination } from "@/components/common/PrPagination/PrPaginationCalculator";
 import generateExcelAndDownload from '../../../components/services/ExcelDownloader';
+import PrRowPagination from "@/components/common/PrPagination/PrRowPagination";
 
 
 function ReportModal() {
   const [selectedTab, setSelectedTab] = useState<reportTabT>("BOOKING");
+  const [itemsPerPage,setItemsPerPage]=useState<number>(10);
   const handleTabChange = (tab: reportTabT) => {
     setSelectedTab(tab);
   };
-  const {visibleData,currentPage,totalPages,handlePageChange} = useFilteredPagination(products,'',10)
+  const {visibleData,currentPage,totalPages,handlePageChange} = useFilteredPagination(products,'',itemsPerPage)
   return (
     <div>
       <div className="h-[4rem] flex">
@@ -31,8 +33,9 @@ function ReportModal() {
               endDate: Date | null
             ): void {
               throw new Error("Function not implemented.");
-            }}
-          />
+            } } options={[]} value={""} onChange={function (value: any): void {
+              throw new Error("Function not implemented.");
+            } }          />
           <PrButton label={"Excel"} iconName={"Download"}  onClick={()=>generateExcelAndDownload(visibleData, 'booking')} />
           <PrSearch
             onSearch={function (e: ChangeEvent<HTMLInputElement>): void {
@@ -40,6 +43,15 @@ function ReportModal() {
             }}
             value={""}
           ></PrSearch>
+           <PrRowPagination
+                        totalRows={totalPages}
+                        currentPageData={visibleData}
+                        onPageChange={handlePageChange}
+                        currentPage={currentPage}
+                        itemsPerPage={itemsPerPage} 
+                        onItemsPerPageChange={(itemsPerPage) => {
+                            setItemsPerPage(itemsPerPage)
+                        }}/>
           <PrPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange}></PrPagination>
         </div>
       </div>

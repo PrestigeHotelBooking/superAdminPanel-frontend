@@ -4,6 +4,9 @@ import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
 import { BackendPostV2 } from '@/components/services/BackendServicesV2';
 import { ENDPOINTS } from '@/components/lang/EndPoints';
 import { ConvertBase64ToFullFileObject } from '@/components/services/MulterConverter';
+import useRoomData from '@/hooks/useRoomData/useRoomData';
+import PhotoCollopser from '../components/photoCollpaser';
+import Image from 'next/image';
 
 
 interface imageObjectT {
@@ -13,10 +16,11 @@ interface imageObjectT {
 }
 
 function PhotosModal({ id }: { id: string }) {
- 
+
+  const {data,loading}=useRoomData(id);
 
   const [selectedImages_property, setSelectedImagesProperty] = useState<imageObjectT[]>([]);
-  
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
@@ -41,13 +45,14 @@ function PhotosModal({ id }: { id: string }) {
       }
     }
   };
-  
-
-  const [selectedImages_room, setSelectedImagesRoom] = useState<string[]>([]);
 
 
-  
-  const handleFileChangeRoom = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const [selectedImagesRoom, setSelectedImagesRoom] = useState<{ [roomId: number]: string[] }>({});
+
+
+
+
+  const handleFileChangeRoom = (event: React.ChangeEvent<HTMLInputElement>, id: number) => {
     const files = event.target.files;
     if (files) {
       const newImages: string[] = [];
@@ -59,7 +64,11 @@ function PhotosModal({ id }: { id: string }) {
             if (event.target?.result) {
               newImages.push(event.target.result as string);
               if (i === files.length - 1) {
-                setSelectedImagesRoom((prevImages) => [...prevImages, ...newImages]);
+                // Update the state based on the room id
+                setSelectedImagesRoom((prevImages) => ({
+                  ...prevImages,
+                  [id]: [...(prevImages[id] || []), ...newImages],
+                }));
               }
             }
           };
@@ -68,16 +77,58 @@ function PhotosModal({ id }: { id: string }) {
       }
     }
   };
-
   const saveMe = async () => {
-const formData = new FormData();
-formData.append('propertyID', id);
-formData.append('type', 'property');
-formData.append('caption', 'Room Images');
-formData.append('images',JSON.stringify(selectedImages_property))
-const data = await BackendPostV2(ENDPOINTS.PROPERTY.ADD_IMAGES,formData);
-console.log(data);
-};
+    console.log(selectedImagesRoom)
+    const formData = new FormData();
+    formData.append('propertyID', id);
+    formData.append('type', 'room');
+    formData.append('caption', 'Room Images');
+    formData.append('images', JSON.stringify(selectedImagesRoom))
+    const data = await BackendPostV2(ENDPOINTS.PROPERTY.ADD_IMAGES, formData);
+    console.log(data);
+  };
+
+  const sections = loading
+  ? []
+  : data?.map((room, id) => {
+      return {
+        index: id,
+        title: room.room_Name,
+        content: (
+          <div className="flex flex-wrap mt-5">
+            {selectedImagesRoom[room.room_id]?.map((image, index) => (
+              <div
+                key={index}
+                className={`w-[10rem] h-[10rem] border-dotted border-2 border-gray-300 rounded-lg mr-4 mb-4 ${index % 5 === 4 ? 'mr-3' : ''}`}
+              >
+                <Image src={image} alt={'image=data'} width={100} height={100}></Image>
+              </div>
+            ))}
+            <div
+              className={`w-[10rem] h-[10rem] border-dotted border-2 border-gray-300 rounded-lg mr-4 mb-4 ${selectedImagesRoom[room.room_id]?.length % 5 === 4 ? 'mr-0' : ''}`}
+            >
+              <label
+                htmlFor={`dropzone-file-room-${room.room_id}`}
+                className="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover-bg-gray-100 dark-border-gray-600 dark-hover-border-gray-500 dark-hover-bg-gray-600"
+              >
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <PrIcon name={'Upload'} size={28} />
+                </div>
+                <input
+                  id={`dropzone-file-room-${room.room_id}`}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => handleFileChangeRoom(e, room.room_id)}
+                  multiple // Enable multi-image selection
+                />
+              </label>
+            </div>
+          </div>
+        ),
+      };
+    });
+
 
   return (
     <div className="mb-64">
@@ -87,9 +138,8 @@ console.log(data);
         {selectedImages_property.map((image, index) => (
           <div
             key={index}
-            className={`w-[10rem] h-[10rem] border-dotted border-2 border-gray-300 rounded-lg mr-4 mb-4 ${
-              index % 5 === 4 ? 'mr-3' : ''
-            }`}
+            className={`w-[10rem] h-[10rem] border-dotted border-2 border-gray-300 rounded-lg mr-4 mb-4 ${index % 5 === 4 ? 'mr-3' : ''
+              }`}
           >
             <div className="flex flex-col items-center justify-center w-full h-full">
               <img src={image.dataURL} alt={`Uploaded ${index + 1}`} className="max-h-full max-w-full" />
@@ -97,9 +147,8 @@ console.log(data);
           </div>
         ))}
         <div
-          className={`w-[10rem] h-[10rem] border-dotted border-2 border-gray-300 rounded-lg mr-4 mb-4 ${
-            selectedImages_property.length % 5 === 4 ? 'mr-0' : ''
-          }`}
+          className={`w-[10rem] h-[10rem] border-dotted border-2 border-gray-300 rounded-lg mr-4 mb-4 ${selectedImages_property.length % 5 === 4 ? 'mr-0' : ''
+            }`}
         >
           <label
             htmlFor="dropzone-file-property"
@@ -122,42 +171,8 @@ console.log(data);
 
       {/* Room Photos */}
       <div className="font-semibold text-gray-500 text-[18px] p-2">Room Photos</div>
-      <div className="flex flex-wrap mt-5">
-        {selectedImages_room.map((image, index) => (
-          <div
-            key={index}
-            className={`w-[10rem] h-[10rem] border-dotted border-2 border-gray-300 rounded-lg mr-4 mb-4 ${
-              index % 5 === 4 ? 'mr-3' : ''
-            }`}
-          >
-            <div className="flex flex-col items-center justify-center w-full h-full">
-              <img src={image} alt={`Uploaded ${index + 1}`} className="max-h-full max-w-full" />
-            </div>
-          </div>
-        ))}
-        <div
-          className={`w-[10rem] h-[10rem] border-dotted border-2 border-gray-300 rounded-lg mr-4 mb-4 ${
-            selectedImages_room.length % 5 === 4 ? 'mr-0' : ''
-          }`}
-        >
-          <label
-            htmlFor="dropzone-file-room"
-            className="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-          >
-            <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <PrIcon name={'Upload'} size={28} />
-            </div>
-            <input
-              id="dropzone-file-room"
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleFileChangeRoom}
-              multiple // Enable multi-image selection
-            />
-          </label>
-        </div>
-      </div>
+
+      <PhotoCollopser sections={sections}></PhotoCollopser>
 
       <div className="flex mt-12 space-x-16 justify-center">
         <PrButtonV2 label={'Save'} className="rounded-md" onClick={saveMe} />

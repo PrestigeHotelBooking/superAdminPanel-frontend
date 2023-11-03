@@ -20,6 +20,7 @@ import { PaymentStatusT, RefundStatusT, getPaymentStatusBackgroundColor, getRefu
 import PrPagination from "@/components/common/PrPagination/PrPagination";
 import { useFilteredPagination } from "@/components/common/PrPagination/PrPaginationCalculator";
 import  generateExcelFromJSON  from '@/components/services/ExcelDownloader';
+import PrRowPagination from "@/components/common/PrPagination/PrRowPagination";
 
 export interface ComissionCellComponentProps {
   data: any;
@@ -98,6 +99,7 @@ const checkOutTimeCellComponent:React.FC<TableCellPropsT>=(data)=>{
 
 const PaymentModal = () => {
     const router = useRouter();
+    const [itemsPerPage,setItemsPerPage]=useState<number>(10);
     const [userData, setUserData] = useState<userModalInputT>(
       initialuserModalInput
     );
@@ -126,9 +128,9 @@ const PaymentModal = () => {
       
     },[])
 
-      const {visibleData, totalPages, currentPage,handlePageChange} = useFilteredPagination(products,searchText,10);
+      const {visibleData, totalPages, currentPage,handlePageChange} = useFilteredPagination(products,searchText,itemsPerPage);
    
-  
+ 
 
 
     return (
@@ -137,18 +139,30 @@ const PaymentModal = () => {
         <div className="h-[4rem] flex">
         <H1>{LANG.COMMON.PAYMENTMANAGEMENT}</H1>
         <div className="ml-auto flex items-center space-x-4">
-          <DateFilter onDateRangeChange={handleDateRangeChange} />
+          <DateFilter onDateRangeChange={handleDateRangeChange} options={[]} value={""} onChange={function (value: any): void {
+              throw new Error("Function not implemented.");
+            } } />
           <PrButton label={"Excel"} iconName={"Download"}  onClick={()=>generateExcelFromJSON(visibleData, 'paymentData')}/>
           <PrSearch
             value={userData.searchText}
             onSearch={(e) => handleState({ searchText: e.target.value })}
           ></PrSearch>
-         
+           <PrRowPagination
+                        totalRows={totalPages}
+                        currentPageData={visibleData}
+                        onPageChange={handlePageChange}
+                        currentPage={currentPage}
+                        itemsPerPage={itemsPerPage} 
+                        onItemsPerPageChange={(itemsPerPage) => {
+                            setItemsPerPage(itemsPerPage);
+                            handlePageChange(1);
+                        }}
+                        />
          <PrPagination
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
+          onPageChange={handlePageChange}/>
+
         </div>
       </div>
       <div className="h-full mb-2">

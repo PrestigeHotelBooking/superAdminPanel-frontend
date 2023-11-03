@@ -2,15 +2,12 @@ import PrButtonV2 from "@/components/common/PrButton/PrButtonV2";
 import PrInputField from "@/components/common/PrInputField/PrInputField";
 import PrRadioButton from "@/components/common/PrRadioButton/PrRadioButton";
 import PrSelect from "@/components/common/PrSelect/PrSelect";
-import {
-  bedTypes,
-  mealTypes,
-  roomTypes,
-  yesOrNoOption,
-} from "@/modals/dashboard/property/common/property.types";
+import useConfigurationData from "@/hooks/useConfigurationData/useConfigurationData";
+import {yesOrNoOption} from "@/modals/dashboard/property/common/components/property.types";
 import { useEffect, useState } from "react";
 
 export interface roomDetailsT {
+  id:string;
   roomName: string;
   roomType: string;
   noOfRooms: number;
@@ -27,6 +24,7 @@ export interface roomDetailsT {
 }
 
 export const initialRoomDetails: roomDetailsT = {
+  id:'',
   roomName: '',
   roomType: '',
   noOfRooms: 0,
@@ -43,7 +41,23 @@ export const initialRoomDetails: roomDetailsT = {
 };
 
 
-export const RoomsContainers = ({ onDelete, onSave }: { onDelete: () => void; onSave: (data: roomDetailsT) => void }) => {
+export const RoomsContainers = ({
+  id,
+  onDelete,
+  onSave
+}: {
+  id: string;
+  onDelete: () => void;
+  onSave: (id: string, data: roomDetailsT) => void;
+}) => {
+
+
+  useEffect(()=>{
+    handleState({ id:id })
+  },[id]);
+
+  const {loading,bedType,roomType,mealTypes}=useConfigurationData();
+ 
 
   const [roomDataDetail, setRoomData] = useState<roomDetailsT>(initialRoomDetails);
 
@@ -55,7 +69,7 @@ export const RoomsContainers = ({ onDelete, onSave }: { onDelete: () => void; on
   };
 
   const handleSave = () => {
-    onSave(roomDataDetail);
+    onSave(id,roomDataDetail);
   };
 
 
@@ -76,7 +90,7 @@ export const RoomsContainers = ({ onDelete, onSave }: { onDelete: () => void; on
         <div className="col-span-3">
           <PrSelect
             label="Room Type"
-            options={roomTypes}
+            options={roomType}
             className="w-full font-bold"
             value={roomDataDetail.roomType}
             onChange={(value) => handleState({ roomType: value })}
@@ -106,7 +120,7 @@ export const RoomsContainers = ({ onDelete, onSave }: { onDelete: () => void; on
         <div className="col-span-4">
           <PrSelect
             label="Bed Type"
-            options={bedTypes}
+            options={bedType}
             className="w-full font-bold"
             value={roomDataDetail.bedType}
             onChange={(value) => handleState({ bedType: value })}

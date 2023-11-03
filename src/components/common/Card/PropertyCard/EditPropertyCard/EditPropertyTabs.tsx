@@ -29,7 +29,7 @@ const TabButton: React.FC<TabProps> = ({ tabName, activeTab, onClick, children }
 const EditPropertyTabs: React.FC<{ id: string }> = ({ id }) => {
 
 
-  const [activeTab, setActiveTab] = useState<string>('basicinfo'); // Set the default active tab
+  const [activeTab, setActiveTab] = useState<string>('basicinfo');
 
   const handleTabClick = (tabName: string): void => {
     setActiveTab(tabName);

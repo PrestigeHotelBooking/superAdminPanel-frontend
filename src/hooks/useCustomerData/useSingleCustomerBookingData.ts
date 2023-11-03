@@ -32,7 +32,7 @@ const useSingleCustomerBookingData = (id:string): CustomerListHookResult => {
   const dispatch=useDispatch();
   const fetchCustomerList = async () => {
     try {
-      const data = await BackendGet(`${ENDPOINTS.USER.SINGLE_CUSTOMER_BOOKING}/${id}`,{});
+      const data = await BackendGet(`${ENDPOINTS.USER.SINGLE_CUSTOMER_BOOKING}/${id}`);
         if(data.success){
             const dataList=data['responseData']['message'];
             setData(dataList);

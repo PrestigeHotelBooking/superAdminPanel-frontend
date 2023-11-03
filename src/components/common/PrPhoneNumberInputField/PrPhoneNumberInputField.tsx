@@ -27,7 +27,7 @@ export const PrPhoneNumberInputField = ({ value,label, onChange, ...restProps }:
   const { phone, handlePhoneValueChange, inputRef, country, setCountry } =
     usePhoneInput({
       defaultCountry: 'us',
-      value,
+      value:value ||'',
       countries: defaultCountries,
       onChange: (data) => {
         onChange(data.phone,data.country);

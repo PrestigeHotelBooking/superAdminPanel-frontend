@@ -1,7 +1,7 @@
     import React, { useEffect, useMemo, useState } from 'react';
     import { useRouter } from 'next/router';
     import products from './sampleProduct';
-    import { initialuserModalInput, userModalInputT } from './common/userCommon';
+    import { dateFilterUserOption, initialuserModalInput, userModalInputT } from './common/userCommon';
     import { useDebounce } from '@uidotdev/usehooks';
     import _ from 'lodash';
     import DateFilter from '@/components/common/DateFilter/dateFilter';
@@ -15,10 +15,16 @@
     import { LANG } from '@/components/lang/Lang';
     import  generateExcelFromJSON  from '@/components/services/ExcelDownloader';
     import PrCircularProgressIndicator from '@/components/common/Loader/PrCircularProgressIndicator';
-    import { BackendGet } from '@/components/services/BackendServices';
+    import { BackendGet, BackendPost } from '@/components/services/BackendServices';
     import { ENDPOINTS } from '@/components/lang/EndPoints';
-import { useDispatch } from 'react-redux';
-import useCustomerData from '@/hooks/useCustomerData/useCustomerData';
+    import { useDispatch } from 'react-redux';
+    import useCustomerData from '@/hooks/useCustomerData/useCustomerData';
+    import PrPagination from '@/components/common/PrPagination/PrPagination';
+    import { useFilteredPagination } from '@/components/common/PrPagination/PrPaginationCalculator';
+    import PrRowPagination from '@/components/common/PrPagination/PrRowPagination';
+    import PrSelect from '@/components/common/PrSelect/PrSelect';
+    import { isStringNotEmpty } from '@/components/helper/validator';
+import { FilterCriteria } from '@/components/helper/criteriaFilter';
 
     const TotalBookingText: React.FC<TableCellPropsT> = ({ data }) => {
         return (
@@ -39,33 +45,13 @@ import useCustomerData from '@/hooks/useCustomerData/useCustomerData';
     const UserModal = () => {
         const router = useRouter();
         const [userData, setUserData] = useState<userModalInputT>(initialuserModalInput);
+        const [itemsPerPage,setItemsPerPage]=useState<number>(10);
         const searchText = useDebounce(userData.searchText, 100);
         const {data,loading,getCustomerData}=useCustomerData();
-        const [isFiltering, setIsFiltering] = useState(false);
-        
 
-        const filteredData = useMemo(() => {
-            setIsFiltering(true); // Set isFiltering to true while filtering
-            if (!searchText) {
-                setIsFiltering(false); 
-                return data;
-            }
-
-            const normalizedSearchText = searchText.toLowerCase();
-
-            const filteredProducts = _.filter(data, product => {
-                return _.some(Object.values(product), value => {
-                    if (typeof value === 'string') {
-                        return value.toLowerCase().includes(normalizedSearchText);
-                    }
-                    return false;
-                });
-            });
-
-            setIsFiltering(false); 
-            return filteredProducts;
-        }, [searchText]);
-
+        useEffect(()=>{
+            handleState({userData:data })
+        },[data])
 
 
         const handleEditClick = (id: string) => {
@@ -81,8 +67,51 @@ import useCustomerData from '@/hooks/useCustomerData/useCustomerData';
         };
 
         const handleDateRangeChange = (startDate: Date | null, endDate: Date | null) => {
-            handleState({ filterDate: `${startDate} - ${endDate}` });
+            handleState({ calendarStartDate : startDate,calendarEndDate:endDate });
         };
+
+        useEffect( ()=>{
+            if(isStringNotEmpty(searchText)){
+                getFilteredData();
+            }
+        },[searchText]);
+
+
+        const getFilteredData = async ()=>{
+            const filter:FilterCriteria[]=[{
+                field:'customer_id',
+                operator:'LIKE',
+                value:searchText,
+                logicalOperator:'OR'
+            },
+            {
+                field:'first_name',
+                operator:'LIKE',
+                value:searchText,
+                logicalOperator:'OR'
+            },
+            {
+                field:'last_name',
+                operator:'LIKE',
+                value:searchText,
+                logicalOperator:'OR'
+            },
+            {
+                field:'phone_number',
+                operator:'LIKE',
+                value:searchText,
+                logicalOperator:'OR'
+            }, 
+            {
+                field:'email_id',
+                operator:'LIKE',
+                value:searchText,
+                logicalOperator:'OR'
+            }  
+        ]
+            const user = await BackendPost(`${ENDPOINTS.USER.GET_USER}`,{filter:filter});
+            handleState({ userData:user['responseData']['message'] })
+        }
 
         const handleState = (data: Partial<userModalInputT>) => {
             setUserData((prevState) => ({
@@ -91,21 +120,32 @@ import useCustomerData from '@/hooks/useCustomerData/useCustomerData';
             }));
         }
 
-        console.log(data)
+        const {currentPage,visibleData,handlePageChange,totalPages} =useFilteredPagination(userData.userData,'',itemsPerPage);
 
         return (
             <div className="p-3">
-                <div className="h-[4rem] flex">
+                <div className="h-[5rem] flex">
                     <H1>{LANG.COMMON.USERMANAGEMENT}</H1>
                     <div className="ml-auto flex items-center space-x-4">
-                        <DateFilter onDateRangeChange={handleDateRangeChange} />
-                        <PrButton label={'Excel'} iconName={'Download'} onClick={()=>generateExcelFromJSON(filteredData, 'userdetail')} />
+                        <DateFilter onDateRangeChange={handleDateRangeChange} options={dateFilterUserOption} value={userData.dateFilterColumn} onChange={(value)=>{ handleState({ dateFilterColumn:value }) }} />
+                        <PrButton label={'Excel'} iconName={'Download'} onClick={()=>generateExcelFromJSON(visibleData, 'userdetail')} />
+                        <PrRowPagination
+                        totalRows={totalPages}
+                        currentPageData={visibleData}
+                        onPageChange={handlePageChange}
+                        currentPage={currentPage}
+                        itemsPerPage={itemsPerPage} 
+                        onItemsPerPageChange={(itemsPerPage) => {
+                            setItemsPerPage(itemsPerPage);
+                            handlePageChange(1);
+                        }}/>
                         <PrSearch
                             value={userData.searchText}
                             onSearch={(e) => handleState({ searchText: e.target.value })} ></PrSearch>
+                                  <PrPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange }></PrPagination>
                     </div>
                 </div>
-                {isFiltering   && <PrCircularProgressIndicator />}
+ 
                 {loading  ? <PrCircularProgressIndicator /> :         <PrTable
                         headers={[
                             {
@@ -147,7 +187,7 @@ import useCustomerData from '@/hooks/useCustomerData/useCustomerData';
                                 renderProps: { dataField: 'Edit' }
                             }
                         ]}
-                        data={data}
+                        data={visibleData}
                         refreshButton={getCustomerData}
                     />
                     

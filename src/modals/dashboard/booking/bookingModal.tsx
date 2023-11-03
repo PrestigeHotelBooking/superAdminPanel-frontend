@@ -16,6 +16,7 @@ import { useEffect, useMemo, useState } from "react";
 import BookingDetailModal from "./common/bookingDetailModal";
 import { useDebounce } from "@uidotdev/usehooks";
 import { CriteriaFilterPayload, FilterCriteria } from "@/components/helper/criteriaFilter";
+import PrRowPagination from "@/components/common/PrPagination/PrRowPagination";
 
 interface BookingModalT {
    calendarStartDate: Date | null; 
@@ -30,12 +31,12 @@ interface BookingModalT {
  
 
 function BookingModal(){
-    const {currentPage,visibleData,handlePageChange,totalPages} =useFilteredPagination(products,'',10);
+
     const [bookingModalData,setBookingModalData]=useState<BookingModalT>(initialBookingModalData);
     const [openModal,setOpenModal]=useState(false);
-
+    const [itemsPerPage,setItemsPerPage]=useState<number>(10);
     const  [bookingId,setBookingId]=useState('');
-
+    const {currentPage,visibleData,handlePageChange,totalPages} =useFilteredPagination(products,'',itemsPerPage);
     const DateFilterMemo=useMemo(()=>{
       const filter:FilterCriteria[]=[{
          field:'booking_date',
@@ -88,7 +89,18 @@ function BookingModal(){
                 throw new Error('Function not implemented.');
             }} value={''}></PrSearch>
             <PrButton label={'Download'} iconName={'Download'} buttonStyle='primary' onClick={()=>generateExcelAndDownload(visibleData, 'booking')}></PrButton>
-            <DateFilter onDateRangeChange={handleDateRangeChange}></DateFilter>
+            <DateFilter onDateRangeChange={handleDateRangeChange} options={[]} value={""} onChange={function (value: any): void {
+                throw new Error("Function not implemented.");
+             } }></DateFilter>
+            <PrRowPagination
+                        totalRows={totalPages}
+                        currentPageData={visibleData}
+                        onPageChange={handlePageChange}
+                        currentPage={currentPage}
+                        itemsPerPage={itemsPerPage} 
+                        onItemsPerPageChange={(itemsPerPage) => {
+                            setItemsPerPage(itemsPerPage)
+                        }}/>
             <PrPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange }></PrPagination>
         </div>
     </div>

@@ -1,5 +1,6 @@
 import { API_ENDPOINT } from "@/Global/api/api";
-
+import Cookies from "js-cookie";
+import { CONSTANTS } from "@/modals/common/constants";
 type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
 interface RequestOptions {
@@ -7,7 +8,7 @@ interface RequestOptions {
   headers?: {
     'Content-Type'?: string;
     // Add your custom headers here
-    'Authorization'?: string;
+    'X-Access-Token'?: string;
     // More custom headers...
   };
   body?: FormData | string; // Updated the body type to accept FormData or string
@@ -63,16 +64,15 @@ const BackendPostV2 = async <T>(
   try {
     // Generate a unique boundary string
     const boundary = '----your-unique-boundary-string-here';
-
+    const accessToken = Cookies.get(CONSTANTS.STORAGE_KEYS.TOKEN);
     const requestOptions: RequestOptions = {
       method: 'POST',
-      // headers: {
-      //   ...customHeaders,
-      //   // Set the 'Content-Type' header with the boundary
-      //   'Content-Type': `multipart/form-data; boundary=gfddtfggggggggg`,
-      // },
+      headers: {
+        'X-Access-Token':`${accessToken}`
+      },
       body: data,
     };
+    
 
     const response = await fetch(API_ENDPOINT + endpoint, requestOptions);
 

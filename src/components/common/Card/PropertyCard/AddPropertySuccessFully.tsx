@@ -29,7 +29,7 @@ const AddPropertySuccessFully: React.FC<AddPropertySuccessFullyProps> = ({ close
           className="mb-6"
         />
         <div className="flex justify-center items-center">
-          <PrButton label="Ok" iconName='ThumbsUp' className="rounded-md w-1/4" buttonStyle='danger'></PrButton>
+          <PrButton label="Ok" iconName='ThumbsUp' className="rounded-md w-1/4" buttonStyle='danger' onClick={closeModal}></PrButton>
         </div>
       </div>
     </div>

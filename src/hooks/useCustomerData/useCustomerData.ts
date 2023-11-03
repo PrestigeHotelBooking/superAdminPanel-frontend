@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { BackendGet } from '@/components/services/BackendServices';
 import { ENDPOINTS } from '@/components/lang/EndPoints'; // Define EndpointType based on your actual endpoint structure
-import { PropertyDataT } from '@/modals/dashboard/property/common/property.types';
+import { PropertyDataT } from '@/modals/dashboard/property/common/components/property.types';
 import { useDispatch } from 'react-redux';
 import { CUSTOMER_ACTIONS, PROPERTY_ACTIONS } from '@/redux';
 import { CustomerDataT } from '@/modals/dashboard/user/common/userCommon';
@@ -66,3 +66,5 @@ const useCustomerData = (): CustomerListHookResult => {
 };
 
 export default useCustomerData;
+
+

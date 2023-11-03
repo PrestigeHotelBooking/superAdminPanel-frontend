@@ -1,56 +1,75 @@
-import React, { useState } from 'react';
+import React, { useState, ReactNode } from 'react';
 import PrButton from '@/components/common/PrButton/PrButton';
 import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
-import { RoomsContainers, roomDetailsT, initialRoomDetails } from '@/components/containers/property/rooms/roomsContainers';
+import { roomDetailsT, initialRoomDetails, RoomsContainers } from '@/components/containers/property/rooms/roomsContainers';
 
-// RoomsModal.tsx
-function RoomsModal({ id }: { id: string }) {
-  const [roomComponents, setRoomComponents] = useState<React.ReactNode[]>([]);
-  const [roomDataList, setRoomDataList] = useState<roomDetailsT[]>([]);
+interface RoomDataMap {
+  [id: string]: roomDetailsT;
+}
 
+interface RoomModalProps {
+  id: string;
+}
+
+function RoomsModal({ id }: RoomModalProps): React.ReactElement {
+  const [roomComponents, setRoomComponents] = useState<ReactNode[]>([]);
+  const [roomDataMap, setRoomDataMap] = useState<RoomDataMap>({});
+
+  const generateUniqueId = (): string => {
+    return `room_${Math.random().toString(36).substr(2, 9)}`;
+  };
+  
   const addRoomComponent = () => {
-    const newRoomData: roomDetailsT = { ...initialRoomDetails };
-    setRoomDataList((prevRoomDataList) => [...prevRoomDataList, newRoomData]);
-
+    const newId = generateUniqueId();
+    const newRoomData: roomDetailsT = { ...initialRoomDetails, id: newId };
+    setRoomDataMap((prevRoomDataMap) => ({
+      ...prevRoomDataMap,
+      [newId]: newRoomData,
+    }));
+  
     const newComponent = (
       <RoomsContainers
-        key={roomDataList.length}
-        onDelete={deleteRoomComponent(roomDataList.length)}
-        onSave={saveRoomData} // Pass the saveRoomData function
+        key={newId}  
+        id={newId}
+        onDelete={deleteRoomComponent(newId)}
+        onSave={saveRoomData}
       />
     );
-
+  
     setRoomComponents((prevComponents) => [...prevComponents, newComponent]);
   };
 
-  const deleteRoomComponent = (indexToDelete: number) => () => {
-    setRoomDataList((prevRoomDataList) =>
-      prevRoomDataList.filter((_, index) => index !== indexToDelete)
-    );
 
+  const deleteRoomComponent = (idToDelete: string) => () => {
     setRoomComponents((prevComponents) =>
-      prevComponents.filter((_, index) => index !== indexToDelete)
+      prevComponents.filter((component) => (component as React.ReactElement).key !== idToDelete)
     );
+  
+    setRoomDataMap((prevRoomDataMap) => {
+      const updatedDataMap: RoomDataMap = { ...prevRoomDataMap };
+      delete updatedDataMap[idToDelete];
+      return updatedDataMap;
+    });
   };
 
-  // Callback function to save room data
-  const saveRoomData = (data: roomDetailsT) => {
-    // Check if the room data is filled
-    if (data.roomName !== '' || data.roomType !== '' || data.noOfRooms !== 0 /* Add more conditions as needed */) {
-      setRoomDataList((prevRoomDataList) => [...prevRoomDataList, data]);
+  
+  const saveRoomData = (id: string, data: roomDetailsT) => {
+    if (data.roomName !== '' || data.roomType !== '' || data.noOfRooms !== 0) {
+      setRoomDataMap((prevRoomDataMap) => ({
+        ...prevRoomDataMap,
+        [id]: data,
+      }));
     }
   };
   
-
   const logRoomData = () => {
-    console.log(roomDataList);
+ console.log(roomDataMap)
   };
-
 
   return (
     <div className="mb-64">
-      {roomComponents.map((Component, index) => (
-        <div key={index}>{Component}</div>
+      {roomComponents.map((Component) => (
+        <div key={(Component as React.ReactElement).key}>{Component}</div>
       ))}
       <div className="flex justify-center items-center mt-6 flex-col">
         <PrButton
@@ -73,6 +92,5 @@ function RoomsModal({ id }: { id: string }) {
     </div>
   );
 }
-
 
 export default RoomsModal;

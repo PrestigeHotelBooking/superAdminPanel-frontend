@@ -3,7 +3,8 @@ export type userModalInputT={
     pageRows:number;
     calendarStartDate: Date | null; 
     calendarEndDate: Date | null;
-  
+    dateFilterColumn:string;
+    userData:CustomerDataT[];
 }
 
 
@@ -15,6 +16,8 @@ export const initialuserModalInput:userModalInputT={
     pageRows:0,
     calendarStartDate: null,
     calendarEndDate: null,
+    dateFilterColumn:'',
+    userData:[]
 
 }
 
@@ -85,4 +88,8 @@ export interface CustomerDataT {
         property_images: string[];
       }
       
-  
+export const dateFilterUserOption=[
+    {
+        label: 'Joined Date',
+        value: 'created_at',
+    }]

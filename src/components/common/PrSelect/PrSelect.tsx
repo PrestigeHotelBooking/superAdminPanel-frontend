@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 
-interface Option {
+ export interface OptionT {
     label: string;
     value: string;
 }
@@ -8,7 +8,7 @@ interface Option {
 interface PrSelectProps {
     label: string; // New label prop
     className?: string; // Optional className prop
-    options: Option[];
+    options: OptionT[];
     value: string;
     onChange: (value: string) => void;
 }

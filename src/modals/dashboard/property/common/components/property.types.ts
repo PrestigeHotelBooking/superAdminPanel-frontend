@@ -9,6 +9,7 @@ export type PropertyDataT = {
   property_offer_percentage: number;
   property_latitude: number;
   property_longitude: number;
+  property_totalNoOfRooms:number;
   available: number;
   property_policy: string;
   ratings_number: number;

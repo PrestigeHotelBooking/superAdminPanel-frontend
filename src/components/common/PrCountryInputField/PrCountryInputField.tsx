@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import countries from '../../../assets/Json/countries.json';
 
 interface PrCountryInputFieldProps {

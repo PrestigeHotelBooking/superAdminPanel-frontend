@@ -5,12 +5,9 @@ import PrInputField from '@/components/common/PrInputField/PrInputField';
 import PrLabel from '@/components/common/PrLabel/PrLabel';
 import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
 import useEnterNavigation from '@/hooks/useEnterNavigation/useEnterNavigation';
-import adminDetail from '../common/adminDetails.json';
 import { useRouter } from 'next/router';
-import Cookies from 'js-cookie';
 import PrCircularProgressIndicator from '@/components/common/Loader/PrCircularProgressIndicator';
-import { BackendGet, BackendPost } from '@/components/services/BackendServices';
-import { ENDPOINTS } from '@/components/lang/EndPoints';
+import { SigninUserService } from './services/signinModalServices';
 
 interface UserLoginT {
     email: string;
@@ -26,7 +23,7 @@ const initialUserLogin: UserLoginT = {
     errorMessage:''
 };
 
-// ...
+
 
 function SignInModal() {
     const [loginData, setLoginData] = useState<UserLoginT>(initialUserLogin);
@@ -42,19 +39,13 @@ function SignInModal() {
     };
 
     const handleLogin = async () => {
-
-
-        const loggedIn=await BackendPost(ENDPOINTS.LOGIN.SIGNIN,{email:loginData.email,password:loginData.password});
-        if(loggedIn.success){
-            console.log(`hello`)
-            router.push('/dashboard')
+        const login=await SigninUserService(loginData.email,loginData.password);
+        if(login){
+            router.push('/dashboard');
         }
-        else if(!loggedIn.success){
-            const message=loggedIn?.errorData;
-            handleFieldChange('errorMessage', message as any);
-
+        else{
+            alert('your not a valid user')
         }
-      
     };
 
     useEnterNavigation([emailInputRef, passwordInputRef], handleLogin);

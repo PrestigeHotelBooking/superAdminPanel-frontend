@@ -1,4 +1,5 @@
 import { API_ENDPOINT } from "@/Global/api/api";
+import { CONSTANTS } from "@/modals/common/constants";
 import Cookies from "js-cookie";
 type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
@@ -35,9 +36,9 @@ const callApi = async <T>(
     },
   };
 
-  const accessToken = Cookies.get('access_token');
+  const accessToken = Cookies.get(CONSTANTS.STORAGE_KEYS.TOKEN);
   if (accessToken) {
-    requestOptions.headers['Authorization'] = `Bearer ${accessToken}`;
+    requestOptions.headers[CONSTANTS.STORAGE_KEYS.TOKEN] = `${accessToken}`;
   }
 
   if (data) {
@@ -71,9 +72,9 @@ const BackendPost = async <T>(endpoint: string, data: any): Promise<ApiResponse<
   }
 };
 
-const BackendGet = async <T>(endpoint: string,data:any): Promise<ApiResponse<T>> => {
+const BackendGet = async <T>(endpoint: string): Promise<ApiResponse<T>> => {
   try {
-    return await callApi<T>('GET', endpoint,data);
+    return await callApi<T>('GET', endpoint);
   } catch (error) {
     console.error(`Error in GET request to ${endpoint}:`, error);
     throw error;

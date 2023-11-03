@@ -1,4 +1,4 @@
-import { OptionT } from '@/modals/dashboard/property/common/property.types';
+import { OptionT } from '@/modals/dashboard/property/common/components/property.types';
 import React, { ChangeEvent } from 'react';
 
 interface PrRadioButtonProps {

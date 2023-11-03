@@ -1,6 +1,6 @@
 
 
-import { PropertyDataT } from '@/modals/dashboard/property/common/property.types';
+import { PropertyDataT } from '@/modals/dashboard/property/common/components/property.types';
 import { PROPERTY_ACTION } from '../action-types/property';
 
 export const setPropertyData = (payload: PropertyDataT[]) => ({
