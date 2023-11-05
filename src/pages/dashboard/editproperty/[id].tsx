@@ -1,3 +1,4 @@
+import privateRoute from "@/Global/authMiddleware/privateRoute";
 import  Layout  from "@/components/sidebar/sidebar";
 import EditPropertyModal from "@/modals/dashboard/property/editPropertyModal";
 
@@ -9,4 +10,4 @@ const EditProperty = () => {
     );
   };
   
-  export default EditProperty;
+  export default privateRoute(EditProperty);

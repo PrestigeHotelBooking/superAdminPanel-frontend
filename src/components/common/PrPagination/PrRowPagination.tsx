@@ -33,7 +33,7 @@ const PrRowPagination: React.FC<PaginationRowProps> = ({
     </div>
     <div>
       <select
-        className="py-1 px-2 mt-2 text-blue-500 font-semibold border-none"
+        className="py-1 px-2 mt-4 text-blue-500 bg-white font-semibold border-none"
         value={itemsPerPage}
         onChange={(e) => onItemsPerPageChange(parseInt(e.target.value, 10))}
       >

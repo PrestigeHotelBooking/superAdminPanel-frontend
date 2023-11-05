@@ -1,8 +1,8 @@
 
-import DashboardModal from '@/modals/dashboard/dashboard/dashboardModal';
 import React from 'react';
 import Layout from '@/components/sidebar/sidebar';
 import BookingModal from '@/modals/dashboard/booking/bookingModal';
+import privateRoute from '@/Global/authMiddleware/privateRoute';
 
 const Booking = () => {
   return (
@@ -12,4 +12,4 @@ const Booking = () => {
   );
 };
 
-export default Booking;
+export default privateRoute(Booking);

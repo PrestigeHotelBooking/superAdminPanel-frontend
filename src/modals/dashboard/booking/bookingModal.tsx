@@ -34,8 +34,9 @@ function BookingModal(){
 
     const [bookingModalData,setBookingModalData]=useState<BookingModalT>(initialBookingModalData);
     const [openModal,setOpenModal]=useState(false);
-    const [itemsPerPage,setItemsPerPage]=useState<number>(10);
+   
     const  [bookingId,setBookingId]=useState('');
+    const [itemsPerPage,setItemsPerPage]=useState<number>(10);
     const {currentPage,visibleData,handlePageChange,totalPages} =useFilteredPagination(products,'',itemsPerPage);
     const DateFilterMemo=useMemo(()=>{
       const filter:FilterCriteria[]=[{
