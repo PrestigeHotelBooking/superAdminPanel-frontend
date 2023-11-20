@@ -7,8 +7,8 @@ import privateRoute from '@/Global/authMiddleware/privateRoute';
 const Booking = () => {
   return (
     <Layout>
-  <BookingModal></BookingModal>
-      </Layout>
+     <BookingModal></BookingModal>
+    </Layout>
   );
 };
 

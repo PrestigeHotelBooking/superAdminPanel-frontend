@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p 8080",
-    "switch:env:dev": "cp .env.development .env.local",
-    "switch:env:prod": "cp .env.production .env.local"
+      "switch:env:dev": "cp .env.development .env.local",
+      "switch:env:prod": "cp .env.production .env.local"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

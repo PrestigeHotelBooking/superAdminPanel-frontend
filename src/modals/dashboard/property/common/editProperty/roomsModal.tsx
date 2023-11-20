@@ -2,6 +2,8 @@ import React, { useState, ReactNode } from 'react';
 import PrButton from '@/components/common/PrButton/PrButton';
 import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
 import { roomDetailsT, initialRoomDetails, RoomsContainers } from '@/components/containers/property/rooms/roomsContainers';
+import { BackendPost } from '@/components/services/BackendServices';
+import { ENDPOINTS } from '@/components/lang/EndPoints';
 
 interface RoomDataMap {
   [id: string]: roomDetailsT;
@@ -62,8 +64,11 @@ function RoomsModal({ id }: RoomModalProps): React.ReactElement {
     }
   };
   
-  const logRoomData = () => {
- console.log(roomDataMap)
+  const logRoomData = async () => {
+    const create={
+      
+    }
+    const data=await BackendPost(`${ENDPOINTS.ROOM.ADD}/${id}`,{})
   };
 
   return (

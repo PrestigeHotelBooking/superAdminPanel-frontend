@@ -1,22 +1,93 @@
+import { OptionT } from "@/components/common/PrSelect/PrSelect";
+import { DateFilterT, SearchFilterT } from "@/modals/common/filter";
+import { commonDateFilterOptions } from "../../content/helper";
+
+
+export const dateFilterUserOption=[
+    {
+        label: 'Joined Date',
+        value: 'created_at',
+    },
+]
+
+export const userDetailDateOption=[
+    {
+        label: 'Joined Date',
+        value: 'created_at',
+    },
+    {
+        label: 'Check In',
+        value: 'check_in'
+
+    },
+    {
+        label: 'Check Out',
+        value: 'check_out',
+    },
+    {
+        label: 'Booking On',
+        value: 'booking_date',
+    },
+];
+
+
+export const searchValueOption: OptionT[] = [{
+    label: 'Customer Id',
+    value:'customer_id'
+},
+{
+    label:'First Name',
+    value:'first_name'
+},
+{
+    label:'Last Name',
+    value: 'last_name'
+},
+{
+    label: 'Phone Number',
+    value: 'phone_number'
+},
+{
+    label:'Email Id',      
+    value: 'email_id'
+}
+]
+
+
 export type userModalInputT={
-    searchText:string;
     pageRows:number;
-    calendarStartDate: Date | null; 
-    calendarEndDate: Date | null;
-    dateFilterColumn:string;
+    datePicker:DateFilterT;
+    searchPicker:SearchFilterT;
     userData:CustomerDataT[];
 }
+
+
+export type userDetailInputT = {
+    searchPicker:SearchFilterT;
+    pageRows: number;
+    datePicker:DateFilterT;
+    userDetailData: any;
+}
+
+
 
 
 
   
 
 export const initialuserModalInput:userModalInputT={
-    searchText:'',
     pageRows:0,
-    calendarStartDate: null,
-    calendarEndDate: null,
-    dateFilterColumn:'',
+    datePicker:{
+        calenderColumn:'',
+        calendarStartDate:null,
+        calendarEndDate:null,
+        calenderColumnOptions:commonDateFilterOptions
+    },
+    searchPicker:{
+        searchOption:searchValueOption,
+        searchText:'',
+        searchOptionValue:'',
+    },
     userData:[]
 
 }
@@ -88,8 +159,3 @@ export interface CustomerDataT {
         property_images: string[];
       }
       
-export const dateFilterUserOption=[
-    {
-        label: 'Joined Date',
-        value: 'created_at',
-    }]

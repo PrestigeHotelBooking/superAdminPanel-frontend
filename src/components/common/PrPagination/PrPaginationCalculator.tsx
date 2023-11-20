@@ -9,7 +9,7 @@ export const useFilteredPagination = (data: any[], searchText: string, rowsPerPa
       ? data.filter((product) => {
           return _.some(product, (value) => {
             if (typeof value === 'string') {
-              return value.toLowerCase().includes(searchText.toLowerCase());
+              return value?.toLowerCase()?.includes(searchText?.toLowerCase());
             }
             return false;
           });
@@ -17,9 +17,10 @@ export const useFilteredPagination = (data: any[], searchText: string, rowsPerPa
       : data;
   }, [searchText, data]);
 
+
   const startIndex = (currentPage - 1) * rowsPerPage;
-  const endIndex = Math.min(startIndex + rowsPerPage, filteredData.length);
-  const visibleData = filteredData.slice(startIndex, endIndex);
+  const endIndex = Math.min(startIndex + rowsPerPage, filteredData?.length);
+  const visibleData = filteredData?.slice(startIndex, endIndex);
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
   const handlePageChange = (page: number) => {

@@ -8,7 +8,7 @@ type DateFormat = 'YYYY-MM-DD' | 'MM/DD/YYYY' | 'DD-MM-YYYY' | 'MMMM D, YYYY' | 
 interface DateFormatterProps {
   date: string;
   format: DateFormat; // Use the defined type
-}
+} 
 
 const DateFormatter: React.FC<DateFormatterProps> = ({ date, format }) => {
   const formattedDate = moment(date).format(format);

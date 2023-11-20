@@ -78,7 +78,6 @@ const BackendPostV2 = async <T>(
 
     if (response.ok) {
       const responseData: T = await response.json();
-      console.log(responseData);
       return { success: true, responseData };
     } else {
       const errorData: ApiError = await response.json();
@@ -94,11 +93,31 @@ const BackendPostV2 = async <T>(
 
 const BackendPatchV2 = async <T>(
   endpoint: string,
-  data: FormData | string = '', // Updated the default value to an empty string
-  customHeaders: { [key: string]: string } = {} // You can pass custom headers for this specific request
+  data: FormData | string = '',
+  customHeaders: { [key: string]: string } = {}
 ): Promise<ApiResponse<T>> => {
   try {
-    return await callApiV2<T>('PATCH', endpoint, data, customHeaders);
+    // Generate a unique boundary string
+    const boundary = '----your-unique-boundary-string-here';
+    const accessToken = Cookies.get(CONSTANTS.STORAGE_KEYS.TOKEN);
+    const requestOptions: RequestOptions = {
+      method: 'PATCH',
+      headers: {
+        'X-Access-Token': `${accessToken}`,
+        ...customHeaders,
+      },
+      body: data,
+    };
+
+    const response = await fetch(API_ENDPOINT + endpoint, requestOptions);
+
+    if (response.ok) {
+      const responseData: T = await response.json();
+      return { success: true, responseData };
+    } else {
+      const errorData: ApiError = await response.json();
+      throw new Error(`API request failed: ${errorData.message}`);
+    }
   } catch (error) {
     console.error(`Error in PATCH request to ${endpoint}:`, error);
     throw error;

@@ -4,6 +4,13 @@ import Nodata from "../../../assets/common/nodatafound.svg";
 import NoDataFound from "../NoDataFound/NoDataFound";
 import PrButtonV2 from "../PrButton/PrButtonV2";
 
+export interface headerComponentProps{
+  id:string;
+  name:string;
+
+}
+
+
 interface TableCellProps {
   data: any;
   renderComponent?: React.FC<{
@@ -15,11 +22,15 @@ interface TableCellProps {
   renderProps?: any;
 }
 
+
+
+
 interface PrTableProps {
   headers: {
     id: string;
     name: string;
     renderComponent?: React.FC<any>;
+    renderHeaderComponent?: React.FC<headerComponentProps>;
     renderProps?: any;
     width?: string;
   }[];
@@ -61,7 +72,7 @@ const PrTable: React.FC<PrTableProps> = ({ headers, data,refreshButton }) => {
   const columnWidth = `${100 / headers.length}%`;
 
   return (
-    <div className="flex flex-col w-full shadow-md rounded-lg bg-blue-600">
+    <div className="flex flex-col w-full shadow-md rounded-lg bg-blue-600 ">
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left text-black dark:text-gray-100 table-fixed">
           <colgroup>
@@ -72,19 +83,26 @@ const PrTable: React.FC<PrTableProps> = ({ headers, data,refreshButton }) => {
             ))}
           </colgroup>
           <thead className="text-md h-16 bg-blue-300 dark:bg-gray-700 dark:text-gray-200 sticky top-0">
-            <tr>
-              {headers?.map((header, index) => (
-                <th
-                  key={header?.id}
-                  scope="col"
-                  className={`px-6 py-3 text-left ${
-                    header?.id === "index" ? "w-8" : ""
-                  }`}
-                >
-                  {header?.name}
-                </th>
-              ))}
-            </tr>
+          <tr>
+          {headers?.map((header, index) => (
+            <th
+              key={header?.id}
+              scope="col"
+              className={`px-6 py-3 text-left ${header?.id === 'index' ? 'w-8' : ''}`}
+            >
+    {header?.renderHeaderComponent ? (
+                    <header.renderHeaderComponent
+                      id={header.id}
+                      name={header.name}
+                    />
+                  ) : (
+                    header?.name
+                  )}
+
+            </th>
+          ))}
+        </tr>
+
           </thead>
         </table>
       </div>

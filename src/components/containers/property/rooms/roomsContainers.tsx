@@ -56,7 +56,7 @@ export const RoomsContainers = ({
     handleState({ id:id })
   },[id]);
 
-  const {loading,bedType,roomType,mealTypes}=useConfigurationData();
+  const {bedType,roomType,mealTypes}=useConfigurationData();
  
 
   const [roomDataDetail, setRoomData] = useState<roomDetailsT>(initialRoomDetails);

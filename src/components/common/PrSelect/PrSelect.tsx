@@ -31,7 +31,7 @@ const PrSelect: React.FC<PrSelectProps> = ({ label, className, options, value, o
                 onChange={handleSelectChange}
                 className={inputFieldStyles}
             >
-                {options.map((option, index) => (
+                {(options || [])?.map((option, index) => (
                     <option key={index} value={option.value}>
                         {option.label}
                     </option>

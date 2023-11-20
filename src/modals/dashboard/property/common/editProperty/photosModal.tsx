@@ -9,7 +9,7 @@ import PhotoCollopser from '../components/photoCollpaser';
 import Image from 'next/image';
 
 
-interface imageObjectT {
+export interface imageObjectT {
   dataURL: string;
   originalName: string;
   mimeType: string;
@@ -78,7 +78,6 @@ function PhotosModal({ id }: { id: string }) {
     }
   };
   const saveMe = async () => {
-    console.log(selectedImagesRoom)
     const formData = new FormData();
     formData.append('propertyID', id);
     formData.append('type', 'room');
@@ -152,7 +151,7 @@ function PhotosModal({ id }: { id: string }) {
         >
           <label
             htmlFor="dropzone-file-property"
-            className="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+            className="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 "
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <PrIcon name={'Upload'} size={28} />

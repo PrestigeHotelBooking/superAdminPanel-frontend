@@ -20,6 +20,7 @@ interface LayoutProps {
 
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+    
     const { selectedOption, updateSelectedOption } = useSelectedSidebarOption();
     const [loader, setLoader] = useState(false); // Step 1: Initialize loading state
   

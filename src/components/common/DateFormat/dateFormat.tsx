@@ -22,13 +22,13 @@ const DateFormat: React.FC<DateFormatProps> = ({ date, formatType, className }) 
 
 const formatDate = (date: Date, formatType: string): string => {
     const options: Intl.DateTimeFormatOptions = {
-        year: formatType.includes('yyyy') ? 'numeric' : undefined,
-        month: formatType.includes('MMM') ? 'short' : undefined,
-        day: formatType.includes('dd') ? '2-digit' : undefined,
+        year: formatType?.includes('yyyy') ? 'numeric' : undefined,
+        month: formatType?.includes('MMM') ? 'short' : undefined,
+        day: formatType?.includes('dd') ? '2-digit' : undefined,
     };
 
     // Set the locale to ensure consistent formatting
-    const formattedDate = date.toLocaleDateString('en-US', options);
+    const formattedDate = date?.toLocaleDateString('en-US', options);
     return formattedDate;
 };
 

@@ -2,10 +2,9 @@ type FilterOperator = "EQUALS" | "GT" | "LT" | "CONTAINS" | "BETWEEN" |'LIKE'; /
 
 type LogicalOperator = "AND" | "OR"; // Uppercase logical operators
 
-interface DateRange {
-  startDate: Date;
-  endDate: Date;
-}
+
+
+
 
 export interface FilterCriteria {
   field: any;
