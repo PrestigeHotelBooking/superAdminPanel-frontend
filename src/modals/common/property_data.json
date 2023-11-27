@@ -1,82 +1,82 @@
 [
-    {
-        "id": 41,
-        "propertyName": "Bridges Inc",
-        "address": {
-            "addressLine1": "18371 Ayala Mount Suite 536",
-            "addressLine2": "Apt. 152",
-            "city": "Brockborough",
-            "state": "WI",
-            "pincode": "95324",
-            "country": "Costa Rica"
-        },
-        "latitude": -51.7926705,
-        "longitude": 154.196815,
-        "noOfRooms": 10,
-        "Available": 0
+  {
+    "id": 41,
+    "propertyName": "Bridges Inc",
+    "address": {
+      "addressLine1": "18371 Ayala Mount Suite 536",
+      "addressLine2": "Apt. 152",
+      "city": "Brockborough",
+      "state": "WI",
+      "pincode": "95324",
+      "country": "Costa Rica"
     },
-    {
-        "id": 78,
-        "propertyName": "Jones-Tran",
-        "address": {
-            "addressLine1": "5082 Sims Ranch",
-            "addressLine2": "Suite 781",
-            "city": "Deborahborough",
-            "state": "SD",
-            "pincode": "69225",
-            "country": "Bahrain"
-        },
-        "latitude": 71.8219505,
-        "longitude": 163.779967,
-        "noOfRooms": 1,
-        "Available": 1
+    "latitude": -51.7926705,
+    "longitude": 154.196815,
+    "noOfRooms": 10,
+    "Available": 0
+  },
+  {
+    "id": 78,
+    "propertyName": "Jones-Tran",
+    "address": {
+      "addressLine1": "5082 Sims Ranch",
+      "addressLine2": "Suite 781",
+      "city": "Deborahborough",
+      "state": "SD",
+      "pincode": "69225",
+      "country": "Bahrain"
     },
-    {
-        "id": 88,
-        "propertyName": "Smith, Gray and Harmon",
-        "address": {
-            "addressLine1": "958 Brian Mountains Suite 873",
-            "addressLine2": "Suite 694",
-            "city": "East Kristen",
-            "state": "MO",
-            "pincode": "33775",
-            "country": "Armenia"
-        },
-        "latitude": -29.5816595,
-        "longitude": -132.529843,
-        "noOfRooms": 10,
-        "Available": 0
+    "latitude": 71.8219505,
+    "longitude": 163.779967,
+    "noOfRooms": 1,
+    "Available": 1
+  },
+  {
+    "id": 88,
+    "propertyName": "Smith, Gray and Harmon",
+    "address": {
+      "addressLine1": "958 Brian Mountains Suite 873",
+      "addressLine2": "Suite 694",
+      "city": "East Kristen",
+      "state": "MO",
+      "pincode": "33775",
+      "country": "Armenia"
     },
-    {
-        "id": 41,
-        "propertyName": "Romero, Ray and Bass",
-        "address": {
-            "addressLine1": "808 Billy Radial Apt. 315",
-            "addressLine2": "Suite 783",
-            "city": "South Jerry",
-            "state": "CO",
-            "pincode": "38121",
-            "country": "Cameroon"
-        },
-        "latitude": 46.6416375,
-        "longitude": -155.908433,
-        "noOfRooms": 2,
-        "Available": 1
+    "latitude": -29.5816595,
+    "longitude": -132.529843,
+    "noOfRooms": 10,
+    "Available": 0
+  },
+  {
+    "id": 41,
+    "propertyName": "Romero, Ray and Bass",
+    "address": {
+      "addressLine1": "808 Billy Radial Apt. 315",
+      "addressLine2": "Suite 783",
+      "city": "South Jerry",
+      "state": "CO",
+      "pincode": "38121",
+      "country": "Cameroon"
     },
-    {
-        "id": 80,
-        "propertyName": "Newman, Murray and Davis",
-        "address": {
-            "addressLine1": "60060 Ward Trail",
-            "addressLine2": "Suite 195",
-            "city": "New Christopherfort",
-            "state": "MO",
-            "pincode": "35449",
-            "country": "Suriname"
-        },
-        "latitude": 65.5779515,
-        "longitude": 72.117346,
-        "noOfRooms": 1,
-        "Available": 1
-    }
+    "latitude": 46.6416375,
+    "longitude": -155.908433,
+    "noOfRooms": 2,
+    "Available": 1
+  },
+  {
+    "id": 80,
+    "propertyName": "Newman, Murray and Davis",
+    "address": {
+      "addressLine1": "60060 Ward Trail",
+      "addressLine2": "Suite 195",
+      "city": "New Christopherfort",
+      "state": "MO",
+      "pincode": "35449",
+      "country": "Suriname"
+    },
+    "latitude": 65.5779515,
+    "longitude": 72.117346,
+    "noOfRooms": 1,
+    "Available": 1
+  }
 ]

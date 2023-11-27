@@ -1,10 +1,10 @@
-import React from 'react';
-import countries from '../../../assets/Json/countries.json';
+import React from 'react'
+import countries from '../../../assets/Json/countries.json'
 
 interface PrCountryInputFieldProps {
-  className?: string;
-  value: string;
-  onChange: (newValue: string) => void;
+  className?: string
+  value: string
+  onChange: (newValue: string) => void
 }
 
 export const PrCountryInputField: React.FC<PrCountryInputFieldProps> = ({ className, value, onChange }) => {
@@ -14,12 +14,12 @@ export const PrCountryInputField: React.FC<PrCountryInputFieldProps> = ({ classN
       value={value}
       onChange={(e) => onChange(e.target.value)}
     >
-      <option value="">Select a country</option>
+      <option value=''>Select a country</option>
       {countries.map((country) => (
         <option key={country.code} value={country.name}>
           {country.name}
         </option>
       ))}
     </select>
-  );
-};
+  )
+}

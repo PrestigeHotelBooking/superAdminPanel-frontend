@@ -18,18 +18,18 @@ export interface BookingT {
   booking_date: string
   check_in: string
   check_out: string
-  refund_status:string
+  refund_status: string
   booking_status: string
   check_in_status: string
   is_deleted: number
-  roomDetails: RoomDetail[]
+  roomDetails: RoomDetailT[]
   customerDetails: CustomerDetails
   propertyDetails: PropertyDetails
 }
 
-export interface RoomDetail {
-  room_id: number
-  property_id: string
+export interface RoomDetailT {
+  room_id: number | string
+  property_id: string | number
   room_type: string
   room_image_urls: string
   smoking_preference: string
@@ -44,16 +44,16 @@ export interface RoomDetail {
   no_Of_Rooms: number
   price_Per_Night: number
   bed_Type: string
-  room_Size: number
+  room_Size: number | string
   no_Of_Adults: number
   no_of_Children: number
-  extra_Bed_Allowed: number
+  extra_Bed_Allowed: number | string
   no_Of_ExtraBeds: number
   price_Per_ExtraBed: number
-  smoke_Free_Room: number
+  smoke_Free_Room: number | string
   meal_Option: string
-  is_deleted: number
-  createdAt: string
+  is_deleted?: number
+  createdAt?: string
 }
 
 export interface CustomerDetails {

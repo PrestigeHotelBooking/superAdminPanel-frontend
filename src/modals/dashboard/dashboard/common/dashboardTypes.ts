@@ -1,12 +1,20 @@
-import { MaterialIconsType } from "@/components/common/PrIcon/PrIconV2";
+import { MaterialIconsType } from '@/components/common/PrIcon/PrIconV2'
 
-export type DashboardCardKey = 'PROPERTY' | 'USERS' | 'BOOKING' | 'CANCELLED_BOOKING' |'REVENUE' | 'AVERAGE_USERS' | 'REGISTERED_USERS' | 'AVERAGE_USERS_BOOKING';
+export type DashboardCardKey =
+  | 'PROPERTY'
+  | 'USERS'
+  | 'BOOKING'
+  | 'CANCELLED_BOOKING'
+  | 'REVENUE'
+  | 'AVERAGE_USERS'
+  | 'REGISTERED_USERS'
+  | 'AVERAGE_USERS_BOOKING'
 
 interface DashboardCardConfiguration {
-  title: string;
-  className: string;
-  iconClassName: string;
-  icon: MaterialIconsType;
+  title: string
+  className: string
+  iconClassName: string
+  icon: MaterialIconsType
 }
 
 export const DashboardConfiguration: Record<DashboardCardKey, DashboardCardConfiguration> = {
@@ -28,7 +36,7 @@ export const DashboardConfiguration: Record<DashboardCardKey, DashboardCardConfi
     iconClassName: 'bg-[#265D3E]',
     icon: 'BookOnlineSharp',
   },
-  CANCELLED_BOOKING:   {
+  CANCELLED_BOOKING: {
     title: 'Total Number Of Cancelled bookings',
     className: 'bg-[#D894A0]',
     iconClassName: 'bg-[#C94D63]',
@@ -59,5 +67,4 @@ export const DashboardConfiguration: Record<DashboardCardKey, DashboardCardConfi
     iconClassName: 'bg-[#BF734B]',
     icon: 'People',
   },
-};
-
+}
