@@ -5,6 +5,6 @@ const nextConfig = {
     domains: ['images.pexels.com'],
     unoptimized: true,
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

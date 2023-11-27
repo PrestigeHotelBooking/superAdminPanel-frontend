@@ -1,33 +1,33 @@
-import React, { useState } from 'react'
-import Popper from '@mui/material/Popper'
-import Paper from '@mui/material/Paper'
-import ClickAwayListener from '@mui/material/ClickAwayListener'
-import IconButton from '@mui/material/IconButton'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import { useRouter } from 'next/router'
-import Cookies from 'js-cookie'
-import Box from '@mui/material/Box'
-import Fade from '@mui/material/Fade'
-import PrIcon from '../common/PrIcon/PrIcon'
-import PrIconV2 from '../common/PrIcon/PrIconV2'
+import React, { useState } from 'react';
+import Popper from '@mui/material/Popper';
+import Paper from '@mui/material/Paper';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import IconButton from '@mui/material/IconButton';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
+import Box from '@mui/material/Box';
+import Fade from '@mui/material/Fade';
+import PrIcon from '../common/PrIcon/PrIcon';
+import PrIconV2 from '../common/PrIcon/PrIconV2';
 
 const ProfileArea = () => {
-  const [isDropdownOpen, setDropdownOpen] = useState(false)
-  const router = useRouter()
-  const anchorRef = React.useRef(null)
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const router = useRouter();
+  const anchorRef = React.useRef(null);
 
   const toggleDropdown = () => {
-    setDropdownOpen((prevOpen) => !prevOpen)
-  }
+    setDropdownOpen((prevOpen) => !prevOpen);
+  };
 
   const handleLogout = () => {
-    Cookies.remove('x-access-token')
-    router.push('/')
-  }
+    Cookies.remove('x-access-token');
+    router.push('/');
+  };
 
   const closeDropdown = () => {
-    setDropdownOpen(false)
-  }
+    setDropdownOpen(false);
+  };
 
   return (
     <div className='w-full h-[7rem] bg-white flex relative'>
@@ -87,7 +87,7 @@ const ProfileArea = () => {
         )}
       </Popper>
     </div>
-  )
-}
+  );
+};
 
-export default ProfileArea
+export default ProfileArea;

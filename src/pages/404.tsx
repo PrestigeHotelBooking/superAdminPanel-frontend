@@ -1,13 +1,13 @@
-import Image from 'next/image'
-import Image_404 from './../assets/Error/Error_404.png'
-import { useRouter } from 'next/router'
+import Image from 'next/image';
+import Image_404 from './../assets/Error/Error_404.png';
+import { useRouter } from 'next/router';
 
 export default function Errorpage() {
-  const router = useRouter()
+  const router = useRouter();
 
   const pageRedirect = () => {
-    router.push('/dashboard')
-  }
+    router.push('/dashboard');
+  };
 
   return (
     <div className='flex flex-col space-y-8 justify-center items-center h-screen bg-gray-100'>
@@ -23,5 +23,5 @@ export default function Errorpage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

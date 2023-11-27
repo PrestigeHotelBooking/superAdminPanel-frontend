@@ -29,4 +29,4 @@ export const Amenities = [
   { label: 'Spa', value: 'SPA' },
   { label: 'Non-Smoking Rooms', value: 'NON-SMOKING ROOMS' },
   { label: 'Golf Course', value: 'GOLF COURSE' },
-]
+];

@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 interface PaginationRowProps {
-  totalRows: number
-  currentPageData: any[] // Replace 'any[]' with your actual data type
-  onPageChange: (pageNumber: number) => void
-  currentPage: number
-  itemsPerPage: number
-  onItemsPerPageChange: (itemsPerPage: number) => void
+  totalRows: number;
+  currentPageData: any[]; // Replace 'any[]' with your actual data type
+  onPageChange: (pageNumber: number) => void;
+  currentPage: number;
+  itemsPerPage: number;
+  onItemsPerPageChange: (itemsPerPage: number) => void;
 }
 
 const PrRowPagination: React.FC<PaginationRowProps> = ({
@@ -17,13 +17,13 @@ const PrRowPagination: React.FC<PaginationRowProps> = ({
   itemsPerPage,
   onItemsPerPageChange,
 }) => {
-  const totalPages = Math.ceil(totalRows / itemsPerPage)
+  const totalPages = Math.ceil(totalRows / itemsPerPage);
 
   const handlePageChange = (pageNumber: number) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
-      onPageChange(pageNumber)
+      onPageChange(pageNumber);
     }
-  }
+  };
 
   return (
     <div className='p-4'>
@@ -43,7 +43,7 @@ const PrRowPagination: React.FC<PaginationRowProps> = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PrRowPagination
+export default PrRowPagination;

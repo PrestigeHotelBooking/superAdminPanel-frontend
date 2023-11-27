@@ -1,29 +1,29 @@
-import PrModal from '@/components/common/PrModalBox/PrModalBox'
-import { useMemo, useState } from 'react'
-import products from '../../../common/booking_data.json'
-import _ from 'lodash'
-import PrLabel from '@/components/common/PrLabel/PrLabel'
-import DateFormat from '@/components/common/DateFormat/dateFormat'
+import PrModal from '@/components/common/PrModalBox/PrModalBox';
+import { useMemo, useState } from 'react';
+import products from '../../../common/booking_data.json';
+import _ from 'lodash';
+import PrLabel from '@/components/common/PrLabel/PrLabel';
+import DateFormat from '@/components/common/DateFormat/dateFormat';
 import {
   BookingComponentStatusColor,
   CheckInStatusComponentColor,
   bookingStatusT,
   checkInStatusT,
-} from './bookingComponent'
-import { ComissionCellComponentColor, PaymentStatusCellComponentColor } from '../../payment/paymentModal'
-import { PaymentStatusT } from '../../payment/common/paymentCommon'
-import PrButtonV2 from '@/components/common/PrButton/PrButtonV2'
-import useBookingData from '@/hooks/useBooking/useBooking'
-import { BookingT } from './booking.types'
-import PrCircularProgressIndicator from '@/components/common/Loader/PrCircularProgressIndicator'
+} from './bookingComponent';
+import { ComissionCellComponentColor, PaymentStatusCellComponentColor } from '../../payment/paymentModal';
+import { PaymentStatusT } from '../../payment/common/paymentCommon';
+import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
+import useBookingData from '@/hooks/useBooking/useBooking';
+import { BookingT } from './booking.types';
+import PrCircularProgressIndicator from '@/components/common/Loader/PrCircularProgressIndicator';
 interface BookingDetailModalProps {
-  bookingId: string
+  bookingId: string;
 }
 
 const RoomsSelectedComponent = (props: string[]) => {
-  const distinctValues: string[] = _.uniq(props)
+  const distinctValues: string[] = _.uniq(props);
 
-  const chunkedValues = _.chunk(distinctValues, 2)
+  const chunkedValues = _.chunk(distinctValues, 2);
 
   return (
     <div>
@@ -40,19 +40,19 @@ const RoomsSelectedComponent = (props: string[]) => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
 function BookingDetailModal({ bookingId }: BookingDetailModalProps) {
-  const [openModal, setOpenModal] = useState(true)
+  const [openModal, setOpenModal] = useState(true);
 
-  const { loading, bookingHashMap } = useBookingData()
+  const { loading, bookingHashMap } = useBookingData();
 
-  const singleBookingData = bookingHashMap[bookingId]
+  const singleBookingData = bookingHashMap[bookingId];
 
-  console.log()
+  console.log();
   const dataMemo = useMemo(() => {
-    if (!singleBookingData) return []
+    if (!singleBookingData) return [];
 
     return {
       booking_id: singleBookingData?.booking_id,
@@ -68,12 +68,12 @@ function BookingDetailModal({ bookingId }: BookingDetailModalProps) {
       guest_count: singleBookingData?.no_of_childrens + singleBookingData?.no_of_adults,
       booking_status: singleBookingData?.booking_status,
       check_in_status: singleBookingData?.check_in_status,
-    }
-  }, [singleBookingData]) as any
+    };
+  }, [singleBookingData]) as any;
 
   const handleModal = () => {
-    setOpenModal(!openModal)
-  }
+    setOpenModal(!openModal);
+  };
 
   return (
     <PrModal
@@ -183,7 +183,7 @@ function BookingDetailModal({ bookingId }: BookingDetailModalProps) {
         )
       }
     />
-  )
+  );
 }
 
-export default BookingDetailModal
+export default BookingDetailModal;

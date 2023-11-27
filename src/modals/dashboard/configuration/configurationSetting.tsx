@@ -1,7 +1,7 @@
-import { H1 } from '@/components/common/Header/header'
-import PrButtonV2 from '@/components/common/PrButton/PrButtonV2'
-import PrIconV2 from '@/components/common/PrIcon/PrIconV2'
-import PrInputField from '@/components/common/PrInputField/PrInputField'
+import { H1 } from '@/components/common/Header/header';
+import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
+import PrIconV2 from '@/components/common/PrIcon/PrIconV2';
+import PrInputField from '@/components/common/PrInputField/PrInputField';
 
 function ConfigurationSetting() {
   return (
@@ -33,7 +33,7 @@ function ConfigurationSetting() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default ConfigurationSetting
+export default ConfigurationSetting;

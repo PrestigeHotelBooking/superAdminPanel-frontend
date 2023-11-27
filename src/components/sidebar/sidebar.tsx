@@ -1,35 +1,35 @@
-import React, { useState } from 'react'
-import logo from '../../assets/Navbar/logo.svg'
-import Image from 'next/image'
-import { SidebarOptionValue, sidebarOptions, sidebarPaths } from './sidebarConstants'
-import { useRouter } from 'next/router'
-import { useSelectedSidebarOption } from '@/context/useSidebarOption/useSidebarOptionContext'
-import PrIcon from '../common/PrIcon/PrIcon'
-import PrIconV2 from '../common/PrIcon/PrIconV2'
-import ProfileArea from './profileArea'
-import PrCircularProgressIndicator from '../common/Loader/PrCircularProgressIndicator'
+import React, { useState } from 'react';
+import logo from '../../assets/Navbar/logo.svg';
+import Image from 'next/image';
+import { SidebarOptionValue, sidebarOptions, sidebarPaths } from './sidebarConstants';
+import { useRouter } from 'next/router';
+import { useSelectedSidebarOption } from '@/context/useSidebarOption/useSidebarOptionContext';
+import PrIcon from '../common/PrIcon/PrIcon';
+import PrIconV2 from '../common/PrIcon/PrIconV2';
+import ProfileArea from './profileArea';
+import PrCircularProgressIndicator from '../common/Loader/PrCircularProgressIndicator';
 
 interface LayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const { selectedOption, updateSelectedOption } = useSelectedSidebarOption()
-  const [loader, setLoader] = useState(false) // Step 1: Initialize loading state
+  const { selectedOption, updateSelectedOption } = useSelectedSidebarOption();
+  const [loader, setLoader] = useState(false); // Step 1: Initialize loading state
 
-  const router = useRouter()
+  const router = useRouter();
 
   const handleOptionClick = async (optionValue: SidebarOptionValue) => {
     try {
-      setLoader(true) // Step 2: Show loader on navigation start
-      await router.push(sidebarPaths[optionValue])
-      updateSelectedOption(optionValue)
+      setLoader(true); // Step 2: Show loader on navigation start
+      await router.push(sidebarPaths[optionValue]);
+      updateSelectedOption(optionValue);
     } catch (error) {
       // Handle error if needed
     } finally {
-      setLoader(false) // Step 3: Hide loader after navigation is complete
+      setLoader(false); // Step 3: Hide loader after navigation is complete
     }
-  }
+  };
 
   return (
     <div className='flex h-screen overflow-hidden'>
@@ -94,7 +94,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         )}
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

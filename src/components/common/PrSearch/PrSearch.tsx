@@ -1,30 +1,30 @@
-import React, { useState, ChangeEvent } from 'react'
-import PrIcon from '../PrIcon/PrIcon' // Replace with your PrIcon component
-import PrSelect, { OptionT } from '../PrSelect/PrSelect'
+import React, { useState, ChangeEvent } from 'react';
+import PrIcon from '../PrIcon/PrIcon'; // Replace with your PrIcon component
+import PrSelect, { OptionT } from '../PrSelect/PrSelect';
 
 interface PrSearchProps {
-  onSearch: (e: ChangeEvent<HTMLInputElement>) => void // Use ChangeEvent<HTMLInputElement>
-  value: string // Add value prop to sync with parent component
-  prSelectOption: OptionT[]
-  prSelectValue: string
-  prOnChange: (value: string) => void
-  onClear: () => void
+  onSearch: (e: ChangeEvent<HTMLInputElement>) => void; // Use ChangeEvent<HTMLInputElement>
+  value: string; // Add value prop to sync with parent component
+  prSelectOption: OptionT[];
+  prSelectValue: string;
+  prOnChange: (value: string) => void;
+  onClear: () => void;
 }
 
 const PrSearch: React.FC<PrSearchProps> = ({ onSearch, value, prOnChange, prSelectValue, prSelectOption, onClear }) => {
-  const [searchQuery, setSearchQuery] = useState(value)
+  const [searchQuery, setSearchQuery] = useState(value);
 
   const handleSearch = () => {
-    const eventObject = { target: { value: searchQuery } } as ChangeEvent<HTMLInputElement>
-    onSearch(eventObject)
-  }
+    const eventObject = { target: { value: searchQuery } } as ChangeEvent<HTMLInputElement>;
+    onSearch(eventObject);
+  };
 
   const handleClear = () => {
-    setSearchQuery('')
-    const eventObject = { target: { value: '' } } as ChangeEvent<HTMLInputElement>
-    onSearch(eventObject)
-    onClear() // Call the onClear prop
-  }
+    setSearchQuery('');
+    const eventObject = { target: { value: '' } } as ChangeEvent<HTMLInputElement>;
+    onSearch(eventObject);
+    onClear(); // Call the onClear prop
+  };
 
   return (
     <div className='flex items-center rounded-full border bg-white w-fit h-[3rem]'>
@@ -54,7 +54,7 @@ const PrSearch: React.FC<PrSearchProps> = ({ onSearch, value, prOnChange, prSele
         </button>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default PrSearch
+export default PrSearch;

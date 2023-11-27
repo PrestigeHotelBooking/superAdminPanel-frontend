@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 interface PrModalProps {
-  isOpen: boolean
-  onClose: () => void
-  title: string
-  children: React.ReactNode
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
+  children: React.ReactNode;
 }
 
 const PrModal: React.FC<PrModalProps> = ({ isOpen, onClose, title, children }) => {
@@ -24,7 +24,7 @@ const PrModal: React.FC<PrModalProps> = ({ isOpen, onClose, title, children }) =
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PrModal
+export default PrModal;

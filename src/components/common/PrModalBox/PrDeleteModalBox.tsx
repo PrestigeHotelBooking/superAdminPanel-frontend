@@ -1,18 +1,18 @@
-import React from 'react'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
-import Button from '@mui/material/Button'
-import PrButton from '../PrButton/PrButton'
-import PrIcon from '../PrIcon/PrIcon'
+import React from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+import PrButton from '../PrButton/PrButton';
+import PrIcon from '../PrIcon/PrIcon';
 
 interface DeleteConfirmModalProps {
-  open: boolean
-  onClose: () => void
-  onDelete: () => void
-  name: string
+  open: boolean;
+  onClose: () => void;
+  onDelete: () => void;
+  name: string;
 }
 
 const PrDeleteModalBox: React.FunctionComponent<DeleteConfirmModalProps> = ({ open, onClose, onDelete, name }) => {
@@ -37,7 +37,7 @@ const PrDeleteModalBox: React.FunctionComponent<DeleteConfirmModalProps> = ({ op
         </Button>
       </DialogActions>
     </Dialog>
-  )
-}
+  );
+};
 
-export default PrDeleteModalBox
+export default PrDeleteModalBox;

@@ -1,12 +1,12 @@
-import React from 'react'
-import PrIcon from '@/components/common/PrIcon/PrIcon'
-import PrButton from '@/components/common/PrButton/PrButton'
-import Image from 'next/image'
-import AddProperty from '../../../../assets/Property/Add_Property.png'
-import PrIconV2 from '../../PrIcon/PrIconV2'
+import React from 'react';
+import PrIcon from '@/components/common/PrIcon/PrIcon';
+import PrButton from '@/components/common/PrButton/PrButton';
+import Image from 'next/image';
+import AddProperty from '../../../../assets/Property/Add_Property.png';
+import PrIconV2 from '../../PrIcon/PrIconV2';
 
 interface AddPropertySuccessFullyProps {
-  closeModal: () => void
+  closeModal: () => void;
 }
 
 const AddPropertySuccessFully: React.FC<AddPropertySuccessFullyProps> = ({ closeModal }) => {
@@ -33,7 +33,7 @@ const AddPropertySuccessFully: React.FC<AddPropertySuccessFullyProps> = ({ close
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AddPropertySuccessFully
+export default AddPropertySuccessFully;

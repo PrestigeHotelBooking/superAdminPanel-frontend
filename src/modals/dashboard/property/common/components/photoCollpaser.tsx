@@ -1,22 +1,22 @@
-import React, { useState } from 'react'
-import { Button, Paper, Typography } from '@mui/material'
-import PrIcon from '@/components/common/PrIcon/PrIcon'
+import React, { useState } from 'react';
+import { Button, Paper, Typography } from '@mui/material';
+import PrIcon from '@/components/common/PrIcon/PrIcon';
 
 interface CollapsibleSectionProps {
-  sections: Array<{ title: string; content: React.ReactNode }>
+  sections: Array<{ title: string; content: React.ReactNode }>;
 }
 
 const PhotoCollopser: React.FC<CollapsibleSectionProps> = ({ sections }) => {
   const [expandedSections, setExpandedSections] = useState<Record<number, boolean>>(
     Object.fromEntries(sections?.map((_, index) => [index, false])),
-  )
+  );
 
   const toggleSection = (index: number) => {
     setExpandedSections((prevExpandedSections) => ({
       ...prevExpandedSections,
       [index]: !prevExpandedSections[index],
-    }))
-  }
+    }));
+  };
 
   return (
     <div>
@@ -37,7 +37,7 @@ const PhotoCollopser: React.FC<CollapsibleSectionProps> = ({ sections }) => {
         </Paper>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default PhotoCollopser
+export default PhotoCollopser;

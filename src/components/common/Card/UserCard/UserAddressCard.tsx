@@ -1,14 +1,14 @@
-import React from 'react'
-import PrIconV2, { MaterialIconsType } from '../../PrIcon/PrIconV2'
+import React from 'react';
+import PrIconV2, { MaterialIconsType } from '../../PrIcon/PrIconV2';
 
 interface UserAddressCardProps {
-  icon: MaterialIconsType
-  title: string
-  subtitle: string
+  icon: MaterialIconsType;
+  title: string;
+  subtitle: string;
   items: {
-    title: string
-    subtitle: string
-  }[]
+    title: string;
+    subtitle: string;
+  }[];
 }
 
 const UserAddressCard: React.FC<UserAddressCardProps> = ({ icon, title, subtitle, items }) => {
@@ -34,7 +34,7 @@ const UserAddressCard: React.FC<UserAddressCardProps> = ({ icon, title, subtitle
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserAddressCard
+export default UserAddressCard;

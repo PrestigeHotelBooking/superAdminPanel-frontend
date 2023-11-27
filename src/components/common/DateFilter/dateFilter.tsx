@@ -1,16 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
-import PrIcon from '../PrIcon/PrIcon'
-import PrSelect, { OptionT } from '../PrSelect/PrSelect'
-import { dateFilterUserOption } from '@/modals/dashboard/user/common/userCommon'
+import React, { useState, useRef, useEffect } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import PrIcon from '../PrIcon/PrIcon';
+import PrSelect, { OptionT } from '../PrSelect/PrSelect';
+import { dateFilterUserOption } from '@/modals/dashboard/user/common/userCommon';
 
 interface ReactDatePickerDateRangePickerProps {
-  onDateRangeChange: (startDate: Date | null, endDate: Date | null) => void
-  options: OptionT[]
-  value: string
-  onChange: (value: any) => void
-  onClear: () => void
+  onDateRangeChange: (startDate: Date | null, endDate: Date | null) => void;
+  options: OptionT[];
+  value: string;
+  onChange: (value: any) => void;
+  onClear: () => void;
 }
 
 const DateFilter: React.FC<ReactDatePickerDateRangePickerProps> = ({
@@ -20,43 +20,43 @@ const DateFilter: React.FC<ReactDatePickerDateRangePickerProps> = ({
   onChange,
   onClear,
 }) => {
-  const [startDate, setStartDate] = useState<Date | null>(null)
-  const [endDate, setEndDate] = useState<Date | null>(null)
-  const [previousStartDate, setPreviousStartDate] = useState<Date | null>(null)
-  const [previousEndDate, setPreviousEndDate] = useState<Date | null>(null)
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [previousStartDate, setPreviousStartDate] = useState<Date | null>(null);
+  const [previousEndDate, setPreviousEndDate] = useState<Date | null>(null);
 
   const handleDateRangeChange = (dates: [Date | null, Date | null]) => {
-    const [newStartDate, newEndDate] = dates
+    const [newStartDate, newEndDate] = dates;
 
-    setPreviousStartDate(startDate)
-    setPreviousEndDate(endDate)
+    setPreviousStartDate(startDate);
+    setPreviousEndDate(endDate);
 
-    setStartDate(newStartDate)
-    setEndDate(newEndDate)
+    setStartDate(newStartDate);
+    setEndDate(newEndDate);
 
-    onDateRangeChange(newStartDate, newEndDate)
-  }
+    onDateRangeChange(newStartDate, newEndDate);
+  };
 
   const formatDate = (date: Date | null) => {
-    return date
-  }
+    return date;
+  };
 
-  const dateRangeDisplay = startDate && endDate ? `${formatDate(startDate)} - ${formatDate(endDate)}` : ''
+  const dateRangeDisplay = startDate && endDate ? `${formatDate(startDate)} - ${formatDate(endDate)}` : '';
 
   const handleIconClick = () => {
     if (datePickerRef.current) {
-      datePickerRef.current.setOpen(true)
+      datePickerRef.current.setOpen(true);
     }
-  }
+  };
 
   const handleClear = () => {
-    setStartDate(null)
-    setEndDate(null)
-    onDateRangeChange(null, null) // Call the onDateRangeChange prop with null dates
-    onClear() // Call the onClear prop
-  }
+    setStartDate(null);
+    setEndDate(null);
+    onDateRangeChange(null, null); // Call the onDateRangeChange prop with null dates
+    onClear(); // Call the onClear prop
+  };
 
-  const datePickerRef = useRef<DatePicker | null>(null)
+  const datePickerRef = useRef<DatePicker | null>(null);
 
   return (
     <div className='flex flex-row rounded-full bg-white h-[3rem] outline-none'>
@@ -95,7 +95,7 @@ const DateFilter: React.FC<ReactDatePickerDateRangePickerProps> = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DateFilter
+export default DateFilter;

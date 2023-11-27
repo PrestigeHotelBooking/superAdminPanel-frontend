@@ -1,5 +1,5 @@
-import Image from 'next/image'
-import Nodata from '../../../assets/common/nodatafound.svg'
+import Image from 'next/image';
+import Nodata from '../../../assets/common/nodatafound.svg';
 
 function NoDataFound() {
   return (
@@ -10,7 +10,7 @@ function NoDataFound() {
 
       <div className='text-[24px] mt-4 font-bold text-blue-800 flex flex-row justify-center items-center'>{`No Data Found`}</div>
     </div>
-  )
+  );
 }
 
-export default NoDataFound
+export default NoDataFound;

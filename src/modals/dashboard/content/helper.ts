@@ -1,11 +1,11 @@
-import { DateFilterT, SearchFilterT } from '@/modals/common/filter'
-import { OptionT } from '../property/common/components/property.types'
-import { ContentT } from '@/hooks/useContentData/useContentData'
+import { DateFilterT, SearchFilterT } from '@/modals/common/filter';
+import { OptionT } from '../property/common/components/property.types';
+import { ContentT } from '@/hooks/useContentData/useContentData';
 
 export interface contentDataT {
-  datePicker: DateFilterT
-  searchPicker: SearchFilterT
-  contentModalData: ContentT[]
+  datePicker: DateFilterT;
+  searchPicker: SearchFilterT;
+  contentModalData: ContentT[];
 }
 
 export const commonDateFilterOptions: OptionT[] = [
@@ -17,7 +17,7 @@ export const commonDateFilterOptions: OptionT[] = [
     label: 'Deleted At',
     value: 'deleted_at',
   },
-]
+];
 
 export const searchFilterOptions: OptionT[] = [
   {
@@ -32,7 +32,7 @@ export const searchFilterOptions: OptionT[] = [
     label: 'Title',
     value: 'content_title',
   },
-]
+];
 
 export const initialContentModal: contentDataT = {
   datePicker: {
@@ -47,4 +47,4 @@ export const initialContentModal: contentDataT = {
     searchOptionValue: '',
   },
   contentModalData: [],
-}
+};

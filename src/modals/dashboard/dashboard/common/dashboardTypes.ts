@@ -1,4 +1,4 @@
-import { MaterialIconsType } from '@/components/common/PrIcon/PrIconV2'
+import { MaterialIconsType } from '@/components/common/PrIcon/PrIconV2';
 
 export type DashboardCardKey =
   | 'PROPERTY'
@@ -8,13 +8,13 @@ export type DashboardCardKey =
   | 'REVENUE'
   | 'AVERAGE_USERS'
   | 'REGISTERED_USERS'
-  | 'AVERAGE_USERS_BOOKING'
+  | 'AVERAGE_USERS_BOOKING';
 
 interface DashboardCardConfiguration {
-  title: string
-  className: string
-  iconClassName: string
-  icon: MaterialIconsType
+  title: string;
+  className: string;
+  iconClassName: string;
+  icon: MaterialIconsType;
 }
 
 export const DashboardConfiguration: Record<DashboardCardKey, DashboardCardConfiguration> = {
@@ -67,4 +67,4 @@ export const DashboardConfiguration: Record<DashboardCardKey, DashboardCardConfi
     iconClassName: 'bg-[#BF734B]',
     icon: 'People',
   },
-}
+};

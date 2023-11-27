@@ -1,34 +1,34 @@
-import React, { useMemo, useState } from 'react'
-import PRInputField from '@/components/common/PrInputField/PrInputField'
-import PrInputFieldV2 from '@/components/common/PrInputField/PrInputFieldV2'
-import PrIcon from '@/components/common/PrIcon/PrIcon'
-import { PrCountryInputField } from '@/components/common/PrCountryInputField/PrCountryInputField'
-import PrMapComponent from '@/components/common/PrMapComponent/PrMapComponent'
-import AddPropertySuccessFully from '@/components/common/Card/PropertyCard/AddPropertySuccessFully'
-import { ENDPOINTS } from '@/components/lang/EndPoints'
-import { BackendPost } from '@/components/services/BackendServices'
-import PrButtonV2 from '@/components/common/PrButton/PrButtonV2'
-import { findFirstEmptyField } from '@/components/helper/validator'
-import { getCurrentDate } from '@/components/common/DateFormat/dateHelper'
+import React, { useMemo, useState } from 'react';
+import PRInputField from '@/components/common/PrInputField/PrInputField';
+import PrInputFieldV2 from '@/components/common/PrInputField/PrInputFieldV2';
+import PrIcon from '@/components/common/PrIcon/PrIcon';
+import { PrCountryInputField } from '@/components/common/PrCountryInputField/PrCountryInputField';
+import PrMapComponent from '@/components/common/PrMapComponent/PrMapComponent';
+import AddPropertySuccessFully from '@/components/common/Card/PropertyCard/AddPropertySuccessFully';
+import { ENDPOINTS } from '@/components/lang/EndPoints';
+import { BackendPost } from '@/components/services/BackendServices';
+import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
+import { findFirstEmptyField } from '@/components/helper/validator';
+import { getCurrentDate } from '@/components/common/DateFormat/dateHelper';
 
 interface AddPropertyProps {
-  closeModal: () => void
+  closeModal: () => void;
 }
 
 interface AddPropertyT {
-  propertyName: string
-  addressLine1: string
-  addressLine2: string
-  city: string
-  state: string
-  pincode: string
-  country: string
-  latitude: number
-  longitude: number
-  totalNoOfRooms: number
-  username: string
-  password: string
-  confirmPassword: string
+  propertyName: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  state: string;
+  pincode: string;
+  country: string;
+  latitude: number;
+  longitude: number;
+  totalNoOfRooms: number;
+  username: string;
+  password: string;
+  confirmPassword: string;
 }
 
 // Define an initial object with default values
@@ -46,30 +46,30 @@ const initialAddProperty: AddPropertyT = {
   username: '',
   password: '',
   confirmPassword: '',
-}
+};
 
 const AddProperty = (props: AddPropertyProps) => {
-  const [modal, setModal] = useState(true)
-  const [successModal, setSuccessModal] = useState(false)
-  const [errorMsg, setErrorMsg] = useState('')
-  const [buttonLoading, setButtonLoading] = useState(false)
-  const [addPropertyData, SetAddPropertyData] = useState<AddPropertyT>(initialAddProperty)
+  const [modal, setModal] = useState(true);
+  const [successModal, setSuccessModal] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [buttonLoading, setButtonLoading] = useState(false);
+  const [addPropertyData, SetAddPropertyData] = useState<AddPropertyT>(initialAddProperty);
 
   const handleState = (data: Partial<AddPropertyT>) => {
     SetAddPropertyData((prevData) => ({
       ...prevData,
       ...data,
-    }))
-  }
+    }));
+  };
 
   const ModalChangeSucess = () => {
-    setSuccessModal(!successModal)
-  }
+    setSuccessModal(!successModal);
+  };
 
   const handleAddproperty = async () => {
-    setButtonLoading(true)
-    setErrorMsg('')
-    const isEmpty = findFirstEmptyField(addPropertyData)
+    setButtonLoading(true);
+    setErrorMsg('');
+    const isEmpty = findFirstEmptyField(addPropertyData);
     if (!isEmpty) {
       try {
         const data = {
@@ -86,25 +86,25 @@ const AddProperty = (props: AddPropertyProps) => {
           propertyuser_username: addPropertyData.username,
           propertyuser_password: addPropertyData.password,
           created_at: getCurrentDate('YYYY-MM-DD'),
-        }
-        const responseData = await BackendPost(ENDPOINTS.PROPERTY.ADD, data)
-        setButtonLoading(!buttonLoading)
+        };
+        const responseData = await BackendPost(ENDPOINTS.PROPERTY.ADD, data);
+        setButtonLoading(!buttonLoading);
         if (responseData.success) {
-          setModal(false)
-          setSuccessModal(true)
+          setModal(false);
+          setSuccessModal(true);
         } else {
-          setButtonLoading(false)
-          setErrorMsg(`Server Error. Unable to add`)
+          setButtonLoading(false);
+          setErrorMsg(`Server Error. Unable to add`);
         }
       } catch (error) {
-        console.error('Error adding property:', error)
-        setButtonLoading(!buttonLoading)
+        console.error('Error adding property:', error);
+        setButtonLoading(!buttonLoading);
       }
     } else {
-      setButtonLoading(false)
-      setErrorMsg(`* ${isEmpty} field is required.`)
+      setButtonLoading(false);
+      setErrorMsg(`* ${isEmpty} field is required.`);
     }
-  }
+  };
 
   const mapProps = useMemo(() => {
     return {
@@ -115,10 +115,10 @@ const AddProperty = (props: AddPropertyProps) => {
         handleState({
           latitude: lat,
           longitude: long,
-        })
+        });
       },
-    }
-  }, [addPropertyData?.latitude, addPropertyData?.longitude])
+    };
+  }, [addPropertyData?.latitude, addPropertyData?.longitude]);
 
   return (
     <div className='fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 '>
@@ -215,7 +215,7 @@ const AddProperty = (props: AddPropertyProps) => {
       )}
       {successModal && <AddPropertySuccessFully closeModal={ModalChangeSucess}></AddPropertySuccessFully>}
     </div>
-  )
-}
+  );
+};
 
-export default AddProperty
+export default AddProperty;

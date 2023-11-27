@@ -1,19 +1,19 @@
-import { H1 } from '@/components/common/Header/header'
-import PrButtonV2 from '@/components/common/PrButton/PrButtonV2'
-import PrInputField from '@/components/common/PrInputField/PrInputField'
-import { ENDPOINTS } from '@/components/lang/EndPoints'
-import { BackendPatch } from '@/components/services/BackendServices'
-import usePropertySingle from '@/hooks/useProperty/usePropertySingle'
-import { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
+import { H1 } from '@/components/common/Header/header';
+import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
+import PrInputField from '@/components/common/PrInputField/PrInputField';
+import { ENDPOINTS } from '@/components/lang/EndPoints';
+import { BackendPatch } from '@/components/services/BackendServices';
+import usePropertySingle from '@/hooks/useProperty/usePropertySingle';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 interface financeModalT {
-  accountHolderName: string
-  accountNumber: string
-  ifscCode: string
-  bankName: string
-  panNumber: string
-  gstNumber: string
+  accountHolderName: string;
+  accountNumber: string;
+  ifscCode: string;
+  bankName: string;
+  panNumber: string;
+  gstNumber: string;
 }
 
 const initialFinanceModal: financeModalT = {
@@ -23,11 +23,11 @@ const initialFinanceModal: financeModalT = {
   bankName: '',
   panNumber: '',
   gstNumber: '',
-}
+};
 
 function FinanceModal({ id }: { id: string }) {
-  const { data } = usePropertySingle(id)
-  const [financeModalData, setFinaceModalData] = useState<financeModalT>(initialFinanceModal)
+  const { data } = usePropertySingle(id);
+  const [financeModalData, setFinaceModalData] = useState<financeModalT>(initialFinanceModal);
 
   useEffect(() => {
     handleState({
@@ -37,15 +37,15 @@ function FinanceModal({ id }: { id: string }) {
       gstNumber: data?.propertyuser_gstNumber || '',
       panNumber: data?.propertyuser_panDetail || '',
       ifscCode: data?.propertyuser_ifscCode || '',
-    })
-  }, [data])
+    });
+  }, [data]);
 
   const handleState = (data: Partial<financeModalT>) => {
     setFinaceModalData((prevState) => ({
       ...prevState,
       ...data,
-    }))
-  }
+    }));
+  };
 
   const financeModalUpdate = async () => {
     const data = {
@@ -59,14 +59,14 @@ function FinanceModal({ id }: { id: string }) {
           propertyuser_ifscCode: financeModalData?.ifscCode,
         },
       ],
-    }
-    const update = await BackendPatch(`${ENDPOINTS.PROPERTY.UPDATE}/${id}`, data)
+    };
+    const update = await BackendPatch(`${ENDPOINTS.PROPERTY.UPDATE}/${id}`, data);
     if (update?.success) {
-      toast.success(`update the finance modal data`)
+      toast.success(`update the finance modal data`);
     } else {
-      toast.error(`unable to update the finance modal`)
+      toast.error(`unable to update the finance modal`);
     }
-  }
+  };
 
   return (
     <div className='overflow-auto flex flex-col space-x-4 mb-64'>
@@ -78,7 +78,7 @@ function FinanceModal({ id }: { id: string }) {
             label={'Account Holder Name'}
             value={financeModalData.accountHolderName}
             onChange={(e) => {
-              handleState({ accountHolderName: e.target.value })
+              handleState({ accountHolderName: e.target.value });
             }}
           />
           <PrInputField
@@ -86,7 +86,7 @@ function FinanceModal({ id }: { id: string }) {
             label={'Account No'}
             value={financeModalData.accountNumber}
             onChange={(e) => {
-              handleState({ accountNumber: e.target.value })
+              handleState({ accountNumber: e.target.value });
             }}
           />
           <PrInputField
@@ -94,7 +94,7 @@ function FinanceModal({ id }: { id: string }) {
             label={'IFSC Code'}
             value={financeModalData.ifscCode}
             onChange={(e) => {
-              handleState({ ifscCode: e.target.value })
+              handleState({ ifscCode: e.target.value });
             }}
           />
           <PrInputField
@@ -102,7 +102,7 @@ function FinanceModal({ id }: { id: string }) {
             label={'Bank Name'}
             value={financeModalData.bankName}
             onChange={(e) => {
-              handleState({ bankName: e.target.value })
+              handleState({ bankName: e.target.value });
             }}
           />
         </div>
@@ -115,7 +115,7 @@ function FinanceModal({ id }: { id: string }) {
             label={'Pan Number'}
             value={financeModalData.panNumber}
             onChange={(e) => {
-              handleState({ panNumber: e.target.value })
+              handleState({ panNumber: e.target.value });
             }}
           />
         </div>
@@ -126,7 +126,7 @@ function FinanceModal({ id }: { id: string }) {
             label={'GST Number'}
             value={financeModalData.gstNumber}
             onChange={(e) => {
-              handleState({ gstNumber: e.target.value })
+              handleState({ gstNumber: e.target.value });
             }}
           />
         </div>
@@ -139,6 +139,6 @@ function FinanceModal({ id }: { id: string }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
-export default FinanceModal
+export default FinanceModal;

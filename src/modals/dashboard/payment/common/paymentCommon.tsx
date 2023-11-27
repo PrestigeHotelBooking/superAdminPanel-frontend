@@ -1,21 +1,21 @@
-import { FilterCriteria } from '@/components/helper/criteriaFilter'
-import { DateFilterT, SearchFilterT } from '@/modals/common/filter'
+import { FilterCriteria } from '@/components/helper/criteriaFilter';
+import { DateFilterT, SearchFilterT } from '@/modals/common/filter';
 
-export type PaymentStatusT = 'PENDING' | 'FAILED' | 'COMPLETE'
-export type RefundStatusT = 'COMPLETED' | 'PROCESSED' | 'FAILED' | 'INITIATED'
+export type PaymentStatusT = 'PENDING' | 'FAILED' | 'COMPLETE';
+export type RefundStatusT = 'COMPLETED' | 'PROCESSED' | 'FAILED' | 'INITIATED';
 
 const getPaymentStatusBackgroundColor = (status: PaymentStatusT): { bgColour: string; label: string } => {
   switch (status) {
     case 'PENDING':
-      return { bgColour: `bg-orange-500`, label: 'Pending' }
+      return { bgColour: `bg-orange-500`, label: 'Pending' };
     case 'FAILED':
-      return { bgColour: 'bg-gray-700', label: 'Failed' }
+      return { bgColour: 'bg-gray-700', label: 'Failed' };
     case 'COMPLETE':
-      return { bgColour: 'bg-green-500', label: 'Complete' }
+      return { bgColour: 'bg-green-500', label: 'Complete' };
     default:
-      return { bgColour: 'bg-black', label: '' } // Default color if status doesn't match any case
+      return { bgColour: 'bg-black', label: '' }; // Default color if status doesn't match any case
   }
-}
+};
 
 export const paymentStatusColour = [
   {
@@ -30,7 +30,7 @@ export const paymentStatusColour = [
     label: 'Complete',
     value: 'COMPLETE',
   },
-]
+];
 
 export const refundStatusCommon = [
   {
@@ -49,21 +49,21 @@ export const refundStatusCommon = [
     label: 'Completed',
     value: 'COMPLETED',
   },
-]
+];
 
 const getRefundStatusColor: Record<RefundStatusT, { textColor: string; backgroundColor: string; label: string }> = {
   INITIATED: { textColor: 'text-blue-500', backgroundColor: 'bg-blue-500', label: 'Initiated' },
   PROCESSED: { textColor: 'text-orange-500', backgroundColor: 'bg-orange-500', label: 'Processed' },
   FAILED: { textColor: 'text-red-500', backgroundColor: 'bg-red-500', label: 'Failed' },
   COMPLETED: { textColor: 'text-green-500', backgroundColor: 'bg-green-500', label: 'Completed' },
-}
+};
 
 export type paymentModalInputT = {
-  pageRows: number
-  datePicker: DateFilterT
-  searchPicker: SearchFilterT
-  userData: any
-}
+  pageRows: number;
+  datePicker: DateFilterT;
+  searchPicker: SearchFilterT;
+  userData: any;
+};
 
 export const generateFilterQueryWithValues = (columns: string, value: any[]) => {
   const data: FilterCriteria[] = value.map((d) => {
@@ -72,10 +72,10 @@ export const generateFilterQueryWithValues = (columns: string, value: any[]) => 
       operator: 'EQUALS',
       value: d,
       logicalOperator: 'OR',
-    }
-  })
-  return data
-}
+    };
+  });
+  return data;
+};
 
 const searchValueOption = [
   {
@@ -86,7 +86,7 @@ const searchValueOption = [
     label: 'Property Name',
     value: 'property_name',
   },
-]
+];
 
 const bookingDateOption = [
   {
@@ -101,7 +101,7 @@ const bookingDateOption = [
     label: 'Check Out',
     value: 'check_out',
   },
-]
+];
 
 export const initialPaymentModalInputT: paymentModalInputT = {
   pageRows: 10,
@@ -117,6 +117,6 @@ export const initialPaymentModalInputT: paymentModalInputT = {
     searchOptionValue: '',
   },
   userData: [],
-}
+};
 
-export { getPaymentStatusBackgroundColor, getRefundStatusColor }
+export { getPaymentStatusBackgroundColor, getRefundStatusColor };

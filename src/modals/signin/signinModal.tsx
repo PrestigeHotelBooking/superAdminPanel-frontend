@@ -1,19 +1,19 @@
-import React, { useState, useRef } from 'react'
-import Image from 'next/image'
-import prestigeImage from '../../assets/signin/LoginImage.png'
-import PrInputField from '@/components/common/PrInputField/PrInputField'
-import PrLabel from '@/components/common/PrLabel/PrLabel'
-import PrButtonV2 from '@/components/common/PrButton/PrButtonV2'
-import useEnterNavigation from '@/hooks/useEnterNavigation/useEnterNavigation'
-import { useRouter } from 'next/router'
-import PrCircularProgressIndicator from '@/components/common/Loader/PrCircularProgressIndicator'
-import { SigninUserService } from './services/signinModalServices'
+import React, { useState, useRef } from 'react';
+import Image from 'next/image';
+import prestigeImage from '../../assets/signin/LoginImage.png';
+import PrInputField from '@/components/common/PrInputField/PrInputField';
+import PrLabel from '@/components/common/PrLabel/PrLabel';
+import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
+import useEnterNavigation from '@/hooks/useEnterNavigation/useEnterNavigation';
+import { useRouter } from 'next/router';
+import PrCircularProgressIndicator from '@/components/common/Loader/PrCircularProgressIndicator';
+import { SigninUserService } from './services/signinModalServices';
 
 interface UserLoginT {
-  email: string
-  password: string
-  errorMessage: string
-  loading: boolean
+  email: string;
+  password: string;
+  errorMessage: string;
+  loading: boolean;
 }
 
 const initialUserLogin: UserLoginT = {
@@ -21,31 +21,31 @@ const initialUserLogin: UserLoginT = {
   password: '',
   loading: false,
   errorMessage: '',
-}
+};
 
 function SignInModal() {
-  const [loginData, setLoginData] = useState<UserLoginT>(initialUserLogin)
-  const emailInputRef = useRef<HTMLInputElement | null>(null)
-  const passwordInputRef = useRef<HTMLInputElement | null>(null)
-  const router = useRouter()
+  const [loginData, setLoginData] = useState<UserLoginT>(initialUserLogin);
+  const emailInputRef = useRef<HTMLInputElement | null>(null);
+  const passwordInputRef = useRef<HTMLInputElement | null>(null);
+  const router = useRouter();
 
   const handleFieldChange = <K extends keyof UserLoginT>(field: K, e: UserLoginT[K]) => {
     setLoginData((prevLoginData) => ({
       ...prevLoginData,
       [field]: e,
-    }))
-  }
+    }));
+  };
 
   const handleLogin = async () => {
-    const login = await SigninUserService(loginData.email, loginData.password)
+    const login = await SigninUserService(loginData.email, loginData.password);
     if (login) {
-      router.push('/dashboard')
+      router.push('/dashboard');
     } else {
-      alert('your not a valid user')
+      alert('your not a valid user');
     }
-  }
+  };
 
-  useEnterNavigation([emailInputRef, passwordInputRef], handleLogin)
+  useEnterNavigation([emailInputRef, passwordInputRef], handleLogin);
 
   return (
     <div>
@@ -88,7 +88,7 @@ function SignInModal() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default SignInModal
+export default SignInModal;

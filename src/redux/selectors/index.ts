@@ -1,2 +1,2 @@
-export * from './property'
-export * from './configuration'
+export * from './property';
+export * from './configuration';

@@ -32,4 +32,4 @@ export const ENDPOINTS = {
     SIGNIN: 'auth/signin',
     CHECK: 'v1/signin',
   },
-}
+};

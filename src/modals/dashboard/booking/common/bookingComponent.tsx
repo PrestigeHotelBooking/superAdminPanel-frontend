@@ -1,30 +1,30 @@
-import React from 'react'
-import { TableCellPropsT } from '@/components/common/PrTable/PrTableCommon'
-import _ from 'lodash'
+import React from 'react';
+import { TableCellPropsT } from '@/components/common/PrTable/PrTableCommon';
+import _ from 'lodash';
 
-export type bookingStatusT = 'UPCOMING' | 'COMPLETED' | 'CANCELLED'
-export type checkInStatusT = 'NO_SHOW' | 'CHECKED_IN'
+export type bookingStatusT = 'UPCOMING' | 'COMPLETED' | 'CANCELLED';
+export type checkInStatusT = 'NO_SHOW' | 'CHECKED_IN';
 
 export const statusColors: Record<bookingStatusT, { textColor: string; backgroundColor: string; label: string }> = {
   UPCOMING: { textColor: 'text-orange-500', backgroundColor: 'bg-orange-500', label: 'Upcoming' },
   COMPLETED: { textColor: 'text-green-500', backgroundColor: 'bg-green-500', label: 'Completed' },
   CANCELLED: { textColor: 'text-black', backgroundColor: 'bg-black', label: 'Cancelled' },
-}
+};
 
 const CheckInStatusColors: Record<checkInStatusT, { bgColor: string; label: string }> = {
   CHECKED_IN: { bgColor: 'bg-green-500', label: 'Checked In' },
   NO_SHOW: { bgColor: 'bg-[#7B7B7B]', label: 'No Show' },
-}
+};
 
 interface BookingComponentStatusColorProps {
-  data: bookingStatusT
+  data: bookingStatusT;
 }
 
 const BookingComponentStatusColor: React.FC<BookingComponentStatusColorProps> = ({ data }) => {
-  const { textColor, backgroundColor, label } = statusColors[data] || {}
+  const { textColor, backgroundColor, label } = statusColors[data] || {};
 
   if (!textColor || !backgroundColor) {
-    return null
+    return null;
   }
 
   return (
@@ -32,33 +32,33 @@ const BookingComponentStatusColor: React.FC<BookingComponentStatusColorProps> = 
       <div className={`rounded-full ${backgroundColor} w-4 h-4`}></div>
       <div className={`font-bold ${textColor}`}>{label}</div>
     </div>
-  )
-}
+  );
+};
 
 const BookingComponentStatus: React.FC<TableCellPropsT> = (props) => {
-  return <BookingComponentStatusColor data={props?.data} />
-}
+  return <BookingComponentStatusColor data={props?.data} />;
+};
 
 interface CheckInStatusComponentProps {
-  data: checkInStatusT
+  data: checkInStatusT;
 }
 
 const CheckInStatusComponentColor: React.FC<CheckInStatusComponentProps> = (props) => {
   const { bgColor, label } = CheckInStatusColors[props?.data]
     ? CheckInStatusColors[props?.data]
-    : { bgColor: 'default-bg-color', label: 'default-label' }
+    : { bgColor: 'default-bg-color', label: 'default-label' };
 
-  return <div className={`${bgColor} w-[90%] text-white p-2 rounded-full text-center`}>{label}</div>
-}
+  return <div className={`${bgColor} w-[90%] text-white p-2 rounded-full text-center`}>{label}</div>;
+};
 
 const CheckInStatusComponent: React.FC<TableCellPropsT> = (props) => {
-  return <CheckInStatusComponentColor data={props?.data}></CheckInStatusComponentColor>
-}
+  return <CheckInStatusComponentColor data={props?.data}></CheckInStatusComponentColor>;
+};
 
 const RoomsSelectedComponent: React.FC<TableCellPropsT> = (props) => {
-  const distinctValues: string[] = _.uniq(props?.data)
+  const distinctValues: string[] = _.uniq(props?.data);
 
-  const chunkedValues = _.chunk(distinctValues, 2)
+  const chunkedValues = _.chunk(distinctValues, 2);
 
   return (
     <div>
@@ -73,8 +73,8 @@ const RoomsSelectedComponent: React.FC<TableCellPropsT> = (props) => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
 export {
   BookingComponentStatus,
@@ -82,4 +82,4 @@ export {
   RoomsSelectedComponent,
   BookingComponentStatusColor,
   CheckInStatusComponentColor,
-}
+};

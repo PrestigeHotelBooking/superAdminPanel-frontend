@@ -1,39 +1,39 @@
-import AmenitiesModal from '@/modals/dashboard/property/common/editProperty/amenitiesModal'
-import BasicInfoModal from '@/modals/dashboard/property/common/editProperty/basicInfoModal'
-import FinanceModal from '@/modals/dashboard/property/common/editProperty/financeModal'
-import PhotosModal from '@/modals/dashboard/property/common/editProperty/photosModal'
-import PolicyModal from '@/modals/dashboard/property/common/editProperty/policyModal'
-import RoomsModal from '@/modals/dashboard/property/common/editProperty/roomsModal'
-import React, { useState } from 'react'
+import AmenitiesModal from '@/modals/dashboard/property/common/editProperty/amenitiesModal';
+import BasicInfoModal from '@/modals/dashboard/property/common/editProperty/basicInfoModal';
+import FinanceModal from '@/modals/dashboard/property/common/editProperty/financeModal';
+import PhotosModal from '@/modals/dashboard/property/common/editProperty/photosModal';
+import PolicyModal from '@/modals/dashboard/property/common/editProperty/policyModal';
+import RoomsModal from '@/modals/dashboard/property/common/editProperty/roomsModal';
+import React, { useState } from 'react';
 
-type tabT = 'BASICINFO' | 'ROOMS' | 'AMENITIES' | 'PHOTOS' | 'FINANCE' | 'POLICY'
+type tabT = 'BASICINFO' | 'ROOMS' | 'AMENITIES' | 'PHOTOS' | 'FINANCE' | 'POLICY';
 
 interface TabProps {
-  tabName: tabT
-  activeTab: tabT
-  onClick: (tabName: tabT) => void
-  children: React.ReactNode
+  tabName: tabT;
+  activeTab: tabT;
+  onClick: (tabName: tabT) => void;
+  children: React.ReactNode;
 }
 
 const TabButton: React.FC<TabProps> = ({ tabName, activeTab, onClick, children }) => {
-  const isActive = tabName === activeTab
+  const isActive = tabName === activeTab;
   const buttonClasses = `flex-grow px-4 py-2 text-left   ${
     isActive ? 'border-b-2 border-blue-600 font-semibold ' : 'bg-white text-gray-600'
-  }`
+  }`;
 
   return (
     <button className={buttonClasses} onClick={() => onClick(tabName)}>
       {children}
     </button>
-  )
-}
+  );
+};
 
 const EditPropertyTabs: React.FC<{ id: string }> = ({ id }) => {
-  const [activeTab, setActiveTab] = useState<tabT>('BASICINFO')
+  const [activeTab, setActiveTab] = useState<tabT>('BASICINFO');
 
   const handleTabClick = (tabName: tabT): void => {
-    setActiveTab(tabName)
-  }
+    setActiveTab(tabName);
+  };
 
   return (
     <div className='flex flex-col h-screen p-2'>
@@ -68,7 +68,7 @@ const EditPropertyTabs: React.FC<{ id: string }> = ({ id }) => {
         {activeTab === 'POLICY' && <PolicyModal id={id}></PolicyModal>}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default EditPropertyTabs
+export default EditPropertyTabs;

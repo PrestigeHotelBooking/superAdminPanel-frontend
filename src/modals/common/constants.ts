@@ -3,4 +3,4 @@ export const CONSTANTS = {
     TOKEN: 'x-access-token',
     REFRESH_TOKEN: 'x-anon-token',
   },
-}
+};

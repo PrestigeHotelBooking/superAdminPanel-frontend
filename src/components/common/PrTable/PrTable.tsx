@@ -1,41 +1,41 @@
-import React from 'react'
-import Image from 'next/image'
-import Nodata from '../../../assets/common/nodatafound.svg'
-import NoDataFound from '../NoDataFound/NoDataFound'
-import PrButtonV2 from '../PrButton/PrButtonV2'
+import React from 'react';
+import Image from 'next/image';
+import Nodata from '../../../assets/common/nodatafound.svg';
+import NoDataFound from '../NoDataFound/NoDataFound';
+import PrButtonV2 from '../PrButton/PrButtonV2';
 
 export interface headerComponentProps {
-  id: string
-  name: string
+  id: string;
+  name: string;
 }
 
 interface TableCellProps {
-  data: any
+  data: any;
   renderComponent?: React.FC<{
-    data: any
-    dataField: string
-    rowIndex: number
-    rowData: any
-  }>
-  renderProps?: any
+    data: any;
+    dataField: string;
+    rowIndex: number;
+    rowData: any;
+  }>;
+  renderProps?: any;
 }
 
 interface PrTableProps {
   headers: {
-    id: string
-    name: string
-    renderComponent?: React.FC<any>
-    renderHeaderComponent?: React.FC<headerComponentProps>
-    renderProps?: any
-    width?: string
-  }[]
-  data: any[]
-  refreshButton?: () => void
+    id: string;
+    name: string;
+    renderComponent?: React.FC<any>;
+    renderHeaderComponent?: React.FC<headerComponentProps>;
+    renderProps?: any;
+    width?: string;
+  }[];
+  data: any[];
+  refreshButton?: () => void;
 }
 
 const TableCell: React.FC<TableCellProps> = ({ data, renderComponent: Component, renderProps }) => {
   if (renderProps?.dataField === 'index') {
-    return <td className='px-6 py-4 text-black font-semibold'>{renderProps.rowIndex + 1}</td>
+    return <td className='px-6 py-4 text-black font-semibold'>{renderProps.rowIndex + 1}</td>;
   }
 
   if (Component) {
@@ -48,15 +48,15 @@ const TableCell: React.FC<TableCellProps> = ({ data, renderComponent: Component,
           rowData={renderProps?.rowData}
         />
       </td>
-    )
+    );
   }
 
-  return <td className='px-6 py-4 text-black font-semibold'>{data}</td>
-}
+  return <td className='px-6 py-4 text-black font-semibold'>{data}</td>;
+};
 
 const PrTable: React.FC<PrTableProps> = ({ headers, data, refreshButton }) => {
   // Calculate the width for each column except the "index" column
-  const columnWidth = `${100 / headers.length}%`
+  const columnWidth = `${100 / headers.length}%`;
 
   return (
     <div className='flex flex-col w-full shadow-md rounded-lg bg-blue-600 '>
@@ -133,7 +133,7 @@ const PrTable: React.FC<PrTableProps> = ({ headers, data, refreshButton }) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PrTable
+export default PrTable;

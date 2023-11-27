@@ -1,14 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { useDebounce } from '@uidotdev/usehooks'
-import _, { filter, has } from 'lodash'
-import DateFilter from '@/components/common/DateFilter/dateFilter'
-import DateFormat from '@/components/common/DateFormat/dateFormat'
-import { H1 } from '@/components/common/Header/header'
-import PrButton from '@/components/common/PrButton/PrButton'
-import PrSearch from '@/components/common/PrSearch/PrSearch'
-import PrTable, { headerComponentProps } from '@/components/common/PrTable/PrTable'
-import { TableCellPropsT } from '@/components/common/PrTable/PrTableCommon'
-import { LANG } from '@/components/lang/Lang'
+import React, { useEffect, useMemo, useState } from 'react';
+import { useDebounce } from '@uidotdev/usehooks';
+import _, { filter, has } from 'lodash';
+import DateFilter from '@/components/common/DateFilter/dateFilter';
+import DateFormat from '@/components/common/DateFormat/dateFormat';
+import { H1 } from '@/components/common/Header/header';
+import PrButton from '@/components/common/PrButton/PrButton';
+import PrSearch from '@/components/common/PrSearch/PrSearch';
+import PrTable, { headerComponentProps } from '@/components/common/PrTable/PrTable';
+import { TableCellPropsT } from '@/components/common/PrTable/PrTableCommon';
+import { LANG } from '@/components/lang/Lang';
 
 import {
   PaymentStatusT,
@@ -20,38 +20,38 @@ import {
   paymentModalInputT,
   paymentStatusColour,
   refundStatusCommon,
-} from './common/paymentCommon'
-import PrPagination from '@/components/common/PrPagination/PrPagination'
-import { useFilteredPagination } from '@/components/common/PrPagination/PrPaginationCalculator'
-import generateExcelFromJSON from '@/components/services/ExcelDownloader'
-import PrRowPagination from '@/components/common/PrPagination/PrRowPagination'
-import useBookingData from '@/hooks/useBooking/useBooking'
-import { BookingT } from '../booking/common/booking.types'
-import PrCircularProgressIndicator from '@/components/common/Loader/PrCircularProgressIndicator'
-import { useDateFilter, useSearchFilter } from '@/components/common/DateFilter/useDateFilter'
-import { BackendPost } from '@/components/services/BackendServices'
-import { ENDPOINTS } from '@/components/lang/EndPoints'
-import { FilterCriteria } from '@/components/helper/criteriaFilter'
-import PrIcon from '@/components/common/PrIcon/PrIcon'
-import PrIconV2 from '@/components/common/PrIcon/PrIconV2'
-import { Popper } from '@mui/material'
-import PrInputField from '@/components/common/PrInputField/PrInputField'
-import { isStringNotEmpty } from '@/components/helper/validator'
+} from './common/paymentCommon';
+import PrPagination from '@/components/common/PrPagination/PrPagination';
+import { useFilteredPagination } from '@/components/common/PrPagination/PrPaginationCalculator';
+import generateExcelFromJSON from '@/components/services/ExcelDownloader';
+import PrRowPagination from '@/components/common/PrPagination/PrRowPagination';
+import useBookingData from '@/hooks/useBooking/useBooking';
+import { BookingT } from '../booking/common/booking.types';
+import PrCircularProgressIndicator from '@/components/common/Loader/PrCircularProgressIndicator';
+import { useDateFilter, useSearchFilter } from '@/components/common/DateFilter/useDateFilter';
+import { BackendPost } from '@/components/services/BackendServices';
+import { ENDPOINTS } from '@/components/lang/EndPoints';
+import { FilterCriteria } from '@/components/helper/criteriaFilter';
+import PrIcon from '@/components/common/PrIcon/PrIcon';
+import PrIconV2 from '@/components/common/PrIcon/PrIconV2';
+import { Popper } from '@mui/material';
+import PrInputField from '@/components/common/PrInputField/PrInputField';
+import { isStringNotEmpty } from '@/components/helper/validator';
 
 export interface dropDownFilterT {
-  label: string
-  value: string
-  index: number
+  label: string;
+  value: string;
+  index: number;
 }
 
-type filteHeaderT = 'REFUND' | 'PAYMENT' | 'PROPERTY'
+type filteHeaderT = 'REFUND' | 'PAYMENT' | 'PROPERTY';
 
 export interface ComissionCellComponentProps {
-  data: any
+  data: any;
 }
 export const ComissionCellComponentColor: React.FC<ComissionCellComponentProps> = ({ data }) => {
   if (data === null) {
-    return null // Render nothing if data is null
+    return null; // Render nothing if data is null
   }
 
   return (
@@ -59,122 +59,122 @@ export const ComissionCellComponentColor: React.FC<ComissionCellComponentProps> 
       <div className='bg-[#3572F4] text-white p-2 w-[12rem] text-center rounded-full'>₹{data?.amount}</div>
       <div className='bg-[#48B549] text-white p-2 rounded-full text-center'>{data?.percentage}%</div>
     </div>
-  )
-}
+  );
+};
 
 export const ComissionCellComponent: React.FC<TableCellPropsT> = (data) => {
-  return <ComissionCellComponentColor data={data?.data} />
-}
+  return <ComissionCellComponentColor data={data?.data} />;
+};
 
 const RefundStatusCellComponent: React.FC<TableCellPropsT> = (data) => {
-  const refundStatusData = data?.data as RefundStatusT
+  const refundStatusData = data?.data as RefundStatusT;
 
   if (!refundStatusData) {
-    return null
+    return null;
   }
 
-  const statusColor = getRefundStatusColor[refundStatusData]
-  const { textColor, backgroundColor, label } = statusColor
+  const statusColor = getRefundStatusColor[refundStatusData];
+  const { textColor, backgroundColor, label } = statusColor;
 
   return (
     <div className='flex'>
       <div className={`w-4 h-4 rounded-full ${backgroundColor}`}></div>
       <div className={`ml-2 font-bold ${textColor}`}>{label}</div>
     </div>
-  )
-}
+  );
+};
 
 interface PaymentStatusCellComponentColorProps {
-  data: PaymentStatusT
+  data: PaymentStatusT;
 }
 
 export const PaymentStatusCellComponentColor: React.FC<PaymentStatusCellComponentColorProps> = ({ data }) => {
-  const { bgColour, label } = getPaymentStatusBackgroundColor(data)
+  const { bgColour, label } = getPaymentStatusBackgroundColor(data);
 
-  return <div className={`${bgColour} rounded-full text-white ml-2 p-2 text-center`}>{label}</div>
-}
+  return <div className={`${bgColour} rounded-full text-white ml-2 p-2 text-center`}>{label}</div>;
+};
 
 const PaymentStatusCellComponent: React.FC<TableCellPropsT> = (data) => {
-  return <PaymentStatusCellComponentColor data={data?.data} />
-}
+  return <PaymentStatusCellComponentColor data={data?.data} />;
+};
 
 export const CheckInCellComponent: React.FC<TableCellPropsT> = (data) => {
-  return <DateFormat date={data?.data} className='text-black' formatType='dd MMM yyyy' />
-}
+  return <DateFormat date={data?.data} className='text-black' formatType='dd MMM yyyy' />;
+};
 
 const checkOutTimeCellComponent: React.FC<TableCellPropsT> = (data) => {
-  return <DateFormat date={data?.data} className='text-black' formatType='dd MMM yyyy' />
-}
+  return <DateFormat date={data?.data} className='text-black' formatType='dd MMM yyyy' />;
+};
 
 const PaymentModal = () => {
-  const [itemsPerPage, setItemsPerPage] = useState<number>(10)
-  const [hashAllTheFilter, setHashAllTheFilter] = useState<Record<string, any>>({})
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  const [hashAllTheFilter, setHashAllTheFilter] = useState<Record<string, any>>({});
 
-  const { data: bookingData, loading } = useBookingData()
+  const { data: bookingData, loading } = useBookingData();
 
-  const [userData, setUserData] = useState<paymentModalInputT>(initialPaymentModalInputT)
+  const [userData, setUserData] = useState<paymentModalInputT>(initialPaymentModalInputT);
 
   const deleteHashKey = (keyToDelete: filteHeaderT) => {
-    const updatedHash = { ...hashAllTheFilter }
-    delete updatedHash[keyToDelete]
-    setHashAllTheFilter(updatedHash)
-  }
+    const updatedHash = { ...hashAllTheFilter };
+    delete updatedHash[keyToDelete];
+    setHashAllTheFilter(updatedHash);
+  };
 
   const getHeaderFilter = async (type: filteHeaderT, data: any) => {
     const valueList = Object.values(data).map((d: any) => {
-      return d?.value
-    })
+      return d?.value;
+    });
 
     setHashAllTheFilter({
       ...hashAllTheFilter,
       [type]: valueList,
-    })
+    });
 
-    const updatedFilter = { ...hashAllTheFilter, [type]: valueList }
+    const updatedFilter = { ...hashAllTheFilter, [type]: valueList };
 
-    let filter: FilterCriteria[][] = []
+    let filter: FilterCriteria[][] = [];
     if (hashAllTheFilter) {
-      const keys = Object.keys(updatedFilter)
-      const value = Object.values(updatedFilter)
+      const keys = Object.keys(updatedFilter);
+      const value = Object.values(updatedFilter);
       for (let i = 0; i < keys.length; i++) {
-        const typeData = keys[i]
-        const valueData = value[i]
-        let typeValue = ''
+        const typeData = keys[i];
+        const valueData = value[i];
+        let typeValue = '';
         if (typeData === 'REFUND') {
-          typeValue = 'refund_status'
+          typeValue = 'refund_status';
         } else if (typeData === 'PAYMENT') {
-          typeValue = 'payment_status'
+          typeValue = 'payment_status';
         } else if (typeData === 'PROPERTY') {
-          typeValue = 'property_name'
+          typeValue = 'property_name';
         }
-        filter.push(generateFilterQueryWithValues(typeValue, valueData))
+        filter.push(generateFilterQueryWithValues(typeValue, valueData));
       }
     }
 
-    const groupType = 'AND'
+    const groupType = 'AND';
     const getTypeFilterData = await BackendPost(`${ENDPOINTS.BOOKING.GET}`, {
       filter,
       groupType,
-    })
+    });
 
     if (getTypeFilterData?.success) {
-      handleState({ userData: getTypeFilterData['responseData']?.message })
+      handleState({ userData: getTypeFilterData['responseData']?.message });
     } else {
-      handleState({ userData: bookingData })
+      handleState({ userData: bookingData });
     }
-  }
+  };
 
   const RefundHeaderComponent: React.FC<headerComponentProps> = ({ name }) => {
-    const [open, setOpen] = useState(false)
-    const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null)
+    const [open, setOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
     const [checkedState, setCheckedState] = useState<{
-      [key: number]: { value: string; check: boolean }
-    }>({})
+      [key: number]: { value: string; check: boolean };
+    }>({});
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-      setAnchorEl(anchorEl ? null : event.currentTarget)
-      setOpen(!open)
-    }
+      setAnchorEl(anchorEl ? null : event.currentTarget);
+      setOpen(!open);
+    };
 
     const handleCheckboxChange = (index: number, value: string) => {
       setCheckedState((prevCheckedState) => ({
@@ -183,8 +183,8 @@ const PaymentModal = () => {
           value: value,
           check: !prevCheckedState[index]?.check,
         },
-      }))
-    }
+      }));
+    };
 
     return (
       <div className='flex flex-row cursor-pointer' onClick={handleClick}>
@@ -206,7 +206,7 @@ const PaymentModal = () => {
                         />
                         <div className='text-md font-semibold'>{d?.label}</div>
                       </div>
-                    )
+                    );
                   })}
                 </div>
               </div>
@@ -214,8 +214,8 @@ const PaymentModal = () => {
                 <button
                   className='rounded-full p-2 w-20 text-white bg-blue-400'
                   onClick={() => {
-                    handleClear()
-                    deleteHashKey('REFUND')
+                    handleClear();
+                    deleteHashKey('REFUND');
                   }}
                 >
                   Reset
@@ -223,7 +223,7 @@ const PaymentModal = () => {
                 <button
                   className='rounded-full p-2 w-20 text-white bg-blue-400'
                   onClick={() => {
-                    getHeaderFilter('REFUND', checkedState)
+                    getHeaderFilter('REFUND', checkedState);
                   }}
                 >
                   Apply
@@ -233,20 +233,20 @@ const PaymentModal = () => {
           </div>
         </Popper>
       </div>
-    )
-  }
+    );
+  };
 
   const PaymentHeaderComponent: React.FC<headerComponentProps> = ({ name }) => {
-    const [open, setOpen] = useState(false)
-    const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null)
+    const [open, setOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
     const [checkedState, setCheckedState] = useState<{
-      [key: number]: { value: string; check: boolean }
-    }>({})
+      [key: number]: { value: string; check: boolean };
+    }>({});
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-      setAnchorEl(anchorEl ? null : event.currentTarget)
-      setOpen(!open)
-    }
+      setAnchorEl(anchorEl ? null : event.currentTarget);
+      setOpen(!open);
+    };
 
     const handleCheckboxChange = (index: number, value: string) => {
       setCheckedState((prevCheckedState) => ({
@@ -255,8 +255,8 @@ const PaymentModal = () => {
           value: value,
           check: !prevCheckedState[index]?.check,
         },
-      }))
-    }
+      }));
+    };
 
     return (
       <div className='flex flex-row cursor-pointer' onClick={handleClick}>
@@ -278,7 +278,7 @@ const PaymentModal = () => {
                         />
                         <div className='text-md font-semibold'>{d?.label}</div>
                       </div>
-                    )
+                    );
                   })}
                 </div>
               </div>
@@ -286,8 +286,8 @@ const PaymentModal = () => {
                 <button
                   className='rounded-full p-2 w-20 text-white bg-blue-400'
                   onClick={() => {
-                    handleClear()
-                    deleteHashKey('PAYMENT')
+                    handleClear();
+                    deleteHashKey('PAYMENT');
                   }}
                 >
                   Reset
@@ -295,7 +295,7 @@ const PaymentModal = () => {
                 <button
                   className='rounded-full p-2 w-20 text-white bg-blue-400'
                   onClick={() => {
-                    getHeaderFilter('PAYMENT', checkedState)
+                    getHeaderFilter('PAYMENT', checkedState);
                   }}
                 >
                   Apply
@@ -305,23 +305,23 @@ const PaymentModal = () => {
           </div>
         </Popper>
       </div>
-    )
-  }
+    );
+  };
 
   const HeaderComponent: React.FC<headerComponentProps> = ({ name }) => {
-    const [open, setOpen] = useState(false)
-    const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null)
-    const [searchText, setSearchText] = useState<string>('')
+    const [open, setOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
+    const [searchText, setSearchText] = useState<string>('');
     const [checkedState, setCheckedState] = useState<{
-      [key: number]: { value: string; check: boolean }
-    }>({})
+      [key: number]: { value: string; check: boolean };
+    }>({});
 
-    const searchMemo = useDebounce(searchText, 300)
+    const searchMemo = useDebounce(searchText, 300);
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-      setAnchorEl(anchorEl ? null : event.currentTarget)
-      setOpen(!open)
-    }
+      setAnchorEl(anchorEl ? null : event.currentTarget);
+      setOpen(!open);
+    };
 
     const handleCheckboxChange = (index: number, value: string) => {
       setCheckedState((prevCheckedState) => ({
@@ -330,18 +330,18 @@ const PaymentModal = () => {
           value: value,
           check: !prevCheckedState[index]?.check,
         },
-      }))
-    }
+      }));
+    };
 
     const originalArray = dataMemo?.map((d: any, index: number) => {
       return {
         label: d?.property_name,
         value: d?.property_name,
         index: index,
-      }
-    })
+      };
+    });
 
-    const uniqueArray = _.uniqBy(originalArray, 'value')
+    const uniqueArray = _.uniqBy(originalArray, 'value');
 
     const headerDataMemo = useMemo(() => {
       if (isStringNotEmpty(searchMemo)) {
@@ -351,11 +351,11 @@ const PaymentModal = () => {
             label: d?.label,
             value: d?.value,
             index: d?.index,
-          }))
+          }));
       }
 
-      return uniqueArray
-    }, [searchMemo, uniqueArray])
+      return uniqueArray;
+    }, [searchMemo, uniqueArray]);
 
     return (
       <div className='flex flex-row cursor-pointer' onClick={handleClick}>
@@ -369,7 +369,7 @@ const PaymentModal = () => {
                 <PrInputField
                   label={''}
                   onChange={(e) => {
-                    setSearchText(e.target.value)
+                    setSearchText(e.target.value);
                   }}
                   className='w-full h-10'
                   placeholder='Search...'
@@ -390,7 +390,7 @@ const PaymentModal = () => {
 
                         <div className='font-bold text-lg'>{d?.label}</div>
                       </div>
-                    )
+                    );
                   })}
                 </div>
               </div>
@@ -398,8 +398,8 @@ const PaymentModal = () => {
                 <button
                   className='rounded-full p-2 w-20 text-white bg-blue-400'
                   onClick={() => {
-                    handleClear()
-                    deleteHashKey('PROPERTY')
+                    handleClear();
+                    deleteHashKey('PROPERTY');
                   }}
                 >
                   Reset
@@ -407,7 +407,7 @@ const PaymentModal = () => {
                 <button
                   className='rounded-full p-2 w-20 text-white bg-blue-400'
                   onClick={() => {
-                    getHeaderFilter('PROPERTY', checkedState)
+                    getHeaderFilter('PROPERTY', checkedState);
                   }}
                 >
                   Apply
@@ -417,21 +417,21 @@ const PaymentModal = () => {
           </div>
         </Popper>
       </div>
-    )
-  }
+    );
+  };
 
   useEffect(() => {
     if (!loading) {
-      handleState({ userData: bookingData })
+      handleState({ userData: bookingData });
     }
-  }, [bookingData, loading])
+  }, [bookingData, loading]);
 
   const handleState = (data: Partial<paymentModalInputT>) => {
     setUserData((prevState) => ({
       ...prevState,
       ...data,
-    }))
-  }
+    }));
+  };
 
   const dataMemo = useMemo(() => {
     return userData?.userData?.map((d: BookingT) => {
@@ -446,9 +446,9 @@ const PaymentModal = () => {
         commission: d?.convenience_charge,
         payment_status: d?.payment_status,
         refund_status: d?.refund_status,
-      }
-    })
-  }, [userData.userData])
+      };
+    });
+  }, [userData.userData]);
 
   const handleDateRangeChange = (startDate: Date | null, endDate: Date | null) => {
     handleState({
@@ -457,8 +457,8 @@ const PaymentModal = () => {
         calendarStartDate: startDate,
         calendarEndDate: endDate,
       },
-    })
-  }
+    });
+  };
 
   const getFilteredData = async () => {
     const filter: FilterCriteria[] = [
@@ -470,14 +470,14 @@ const PaymentModal = () => {
           endDate: userData?.datePicker?.calendarEndDate,
         },
       },
-    ]
-    const data = await BackendPost(`${ENDPOINTS.BOOKING.GET}`, { filter })
+    ];
+    const data = await BackendPost(`${ENDPOINTS.BOOKING.GET}`, { filter });
     if (data.success) {
-      handleState({ userData: data['responseData']['message'] })
+      handleState({ userData: data['responseData']['message'] });
     } else {
-      handleState({ userData: bookingData })
+      handleState({ userData: bookingData });
     }
-  }
+  };
 
   const getSearchFilterData = async () => {
     const filter: FilterCriteria[] = [
@@ -486,23 +486,23 @@ const PaymentModal = () => {
         operator: 'LIKE',
         value: userData['searchPicker']?.searchText,
       },
-    ]
-    const data = await BackendPost(`${ENDPOINTS.BOOKING.GET}`, { filter })
+    ];
+    const data = await BackendPost(`${ENDPOINTS.BOOKING.GET}`, { filter });
     if (data.success) {
-      handleState({ userData: data['responseData']['message'] })
+      handleState({ userData: data['responseData']['message'] });
     } else {
-      handleState({ userData: bookingData })
+      handleState({ userData: bookingData });
     }
-  }
+  };
 
   const handleClear = () => {
-    handleState({ userData: bookingData })
-  }
+    handleState({ userData: bookingData });
+  };
 
-  useDateFilter(getFilteredData, userData['datePicker'])
-  useSearchFilter(getSearchFilterData, userData['searchPicker'])
+  useDateFilter(getFilteredData, userData['datePicker']);
+  useSearchFilter(getSearchFilterData, userData['searchPicker']);
 
-  const { visibleData, totalPages, currentPage, handlePageChange } = useFilteredPagination(dataMemo, '', itemsPerPage)
+  const { visibleData, totalPages, currentPage, handlePageChange } = useFilteredPagination(dataMemo, '', itemsPerPage);
 
   return (
     <div className='p-3 '>
@@ -519,7 +519,7 @@ const PaymentModal = () => {
                   ...userData.datePicker,
                   calenderColumn: value,
                 },
-              })
+              });
             }}
             onClear={handleClear}
           />
@@ -547,7 +547,7 @@ const PaymentModal = () => {
                   ...userData.searchPicker,
                   searchOptionValue: value,
                 },
-              })
+              });
             }}
             onClear={handleClear}
           ></PrSearch>
@@ -558,8 +558,8 @@ const PaymentModal = () => {
             currentPage={currentPage}
             itemsPerPage={itemsPerPage}
             onItemsPerPageChange={(itemsPerPage) => {
-              setItemsPerPage(itemsPerPage)
-              handlePageChange(1)
+              setItemsPerPage(itemsPerPage);
+              handlePageChange(1);
             }}
           />
           <PrPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
@@ -635,7 +635,7 @@ const PaymentModal = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PaymentModal
+export default PaymentModal;

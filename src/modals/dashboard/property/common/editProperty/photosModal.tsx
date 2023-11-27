@@ -1,90 +1,90 @@
-import React, { useState } from 'react'
-import PrIcon from '@/components/common/PrIcon/PrIcon'
-import PrButtonV2 from '@/components/common/PrButton/PrButtonV2'
-import { BackendPostV2 } from '@/components/services/BackendServicesV2'
-import { ENDPOINTS } from '@/components/lang/EndPoints'
-import { ConvertBase64ToFullFileObject } from '@/components/services/MulterConverter'
-import useRoomData from '@/hooks/useRoomData/useRoomData'
-import PhotoCollopser from '../components/photoCollpaser'
-import Image from 'next/image'
-import { toast } from 'react-toastify'
+import React, { useState } from 'react';
+import PrIcon from '@/components/common/PrIcon/PrIcon';
+import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
+import { BackendPostV2 } from '@/components/services/BackendServicesV2';
+import { ENDPOINTS } from '@/components/lang/EndPoints';
+import { ConvertBase64ToFullFileObject } from '@/components/services/MulterConverter';
+import useRoomData from '@/hooks/useRoomData/useRoomData';
+import PhotoCollopser from '../components/photoCollpaser';
+import Image from 'next/image';
+import { toast } from 'react-toastify';
 
 export interface imageObjectT {
-  dataURL: string
-  originalName: string
-  mimeType: string
+  dataURL: string;
+  originalName: string;
+  mimeType: string;
 }
 
 function PhotosModal({ id }: { id: string }) {
-  const { data, loading } = useRoomData(id)
+  const { data, loading } = useRoomData(id);
 
-  const [selectedImages_property, setSelectedImagesProperty] = useState<imageObjectT[]>([])
+  const [selectedImages_property, setSelectedImagesProperty] = useState<imageObjectT[]>([]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files
+    const files = event.target.files;
     if (files) {
-      const newImages: imageObjectT[] = [] // Use an object to store dataURL, originalName, and mimeType
+      const newImages: imageObjectT[] = []; // Use an object to store dataURL, originalName, and mimeType
       for (let i = 0; i < files.length; i++) {
-        const file = files[i]
+        const file = files[i];
         if (file.type.startsWith('image/')) {
-          const reader = new FileReader()
+          const reader = new FileReader();
           reader.onload = (event) => {
             if (event.target?.result) {
-              const dataURL = event.target.result as string
-              const originalName = file.name
-              const mimeType = file.type // Get the MIME type
-              newImages.push({ dataURL, originalName, mimeType }) // Store dataURL, originalName, and mimeType
+              const dataURL = event.target.result as string;
+              const originalName = file.name;
+              const mimeType = file.type; // Get the MIME type
+              newImages.push({ dataURL, originalName, mimeType }); // Store dataURL, originalName, and mimeType
               if (i === files.length - 1) {
-                setSelectedImagesProperty((prevImages) => [...prevImages, ...newImages])
+                setSelectedImagesProperty((prevImages) => [...prevImages, ...newImages]);
               }
             }
-          }
-          reader.readAsDataURL(file)
+          };
+          reader.readAsDataURL(file);
         }
       }
     }
-  }
+  };
 
   const [selectedImagesRoom, setSelectedImagesRoom] = useState<{
-    [roomId: number]: string[]
-  }>({})
+    [roomId: number]: string[];
+  }>({});
 
   const handleFileChangeRoom = (event: React.ChangeEvent<HTMLInputElement>, id: number) => {
-    const files = event.target.files
+    const files = event.target.files;
     if (files) {
-      const newImages: string[] = []
+      const newImages: string[] = [];
       for (let i = 0; i < files.length; i++) {
-        const file = files[i]
+        const file = files[i];
         if (file.type.startsWith('image/')) {
-          const reader = new FileReader()
+          const reader = new FileReader();
           reader.onload = (event) => {
             if (event.target?.result) {
-              newImages.push(event.target.result as string)
+              newImages.push(event.target.result as string);
               if (i === files.length - 1) {
                 setSelectedImagesRoom((prevImages) => ({
                   ...prevImages,
                   [id]: [...(prevImages[id] || []), ...newImages],
-                }))
+                }));
               }
             }
-          }
-          reader.readAsDataURL(file)
+          };
+          reader.readAsDataURL(file);
         }
       }
     }
-  }
+  };
   const saveMe = async () => {
-    const formData = new FormData()
-    formData.append('propertyID', id)
-    formData.append('type', 'room')
-    formData.append('images', JSON.stringify(selectedImagesRoom))
-    const data = await BackendPostV2(ENDPOINTS.PROPERTY.ADD_IMAGES, formData)
+    const formData = new FormData();
+    formData.append('propertyID', id);
+    formData.append('type', 'room');
+    formData.append('images', JSON.stringify(selectedImagesRoom));
+    const data = await BackendPostV2(ENDPOINTS.PROPERTY.ADD_IMAGES, formData);
     if (data.success) {
-      toast.success(`Image has been  updated successfully..........! `)
+      toast.success(`Image has been  updated successfully..........! `);
     } else {
-      toast.error(`Unable to update the image `)
+      toast.error(`Unable to update the image `);
     }
-  }
+  };
 
   const sections = loading
     ? []
@@ -128,8 +128,8 @@ function PhotosModal({ id }: { id: string }) {
               </div>
             </div>
           ),
-        }
-      })
+        };
+      });
 
   return (
     <div className='mb-64'>
@@ -181,7 +181,7 @@ function PhotosModal({ id }: { id: string }) {
         <PrButtonV2 label={'Cancel'} className='rounded-md' dangerLink buttonStyle='danger' />
       </div>
     </div>
-  )
+  );
 }
 
-export default PhotosModal
+export default PhotosModal;

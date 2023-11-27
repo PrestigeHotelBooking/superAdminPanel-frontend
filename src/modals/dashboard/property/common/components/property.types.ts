@@ -1,39 +1,39 @@
 export type PropertyDataT = {
-  property_id: string
-  property_name: string
-  property_city: string
-  property_addressLine1: string
-  property_addressLine2: string
-  property_country: string
-  property_pincode: number
-  property_offer_percentage: number
-  property_latitude: number
-  property_longitude: number
-  property_totalNoOfRooms: number
-  available: number
-  property_policy: string
-  ratings_number: number
-  price_per_night: number
-  special_offer_id: string
-  admin_id: string
-  amenity: string[] // Assuming this should be an array of strings
-  property_images: string[] // Assuming this should be an array of image URLs
+  property_id: string;
+  property_name: string;
+  property_city: string;
+  property_addressLine1: string;
+  property_addressLine2: string;
+  property_country: string;
+  property_pincode: number;
+  property_offer_percentage: number;
+  property_latitude: number;
+  property_longitude: number;
+  property_totalNoOfRooms: number;
+  available: number;
+  property_policy: string;
+  ratings_number: number;
+  price_per_night: number;
+  special_offer_id: string;
+  admin_id: string;
+  amenity: string[]; // Assuming this should be an array of strings
+  property_images: string[]; // Assuming this should be an array of image URLs
   address: {
-    addressLine1: string
-    addressLine2: string
-  }
-}
+    addressLine1: string;
+    addressLine2: string;
+  };
+};
 
 // Define types and interfaces
 export interface OptionT {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
 
 export const yesOrNoOption: OptionT[] = [
   { label: 'Yes', value: 'YES' },
   { label: 'No', value: 'NO' },
-]
+];
 
 export const roomTypes: OptionT[] = [
   { label: 'Single Room', value: 'single' },
@@ -47,7 +47,7 @@ export const roomTypes: OptionT[] = [
   { label: 'Presidential Suite', value: 'presidential_suite' },
   { label: 'Accessible Room', value: 'accessible' },
   // Add more room types as needed
-]
+];
 
 export const bedTypes: OptionT[] = [
   { label: 'Single Bed', value: 'single' },
@@ -61,7 +61,7 @@ export const bedTypes: OptionT[] = [
   { label: 'Trundle Bed', value: 'trundle' },
   { label: 'Murphy Bed', value: 'murphy' },
   // Add more bed types as needed
-]
+];
 
 export const mealTypes: OptionT[] = [
   { label: 'Breakfast Included', value: 'breakfast' },
@@ -75,4 +75,4 @@ export const mealTypes: OptionT[] = [
   { label: 'No Meals', value: 'no_meals' },
   { label: 'Special Diet Options', value: 'special_diet' },
   // Add more meal options as needed
-]
+];

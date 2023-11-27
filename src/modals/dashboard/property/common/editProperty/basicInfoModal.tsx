@@ -1,20 +1,20 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { H1 } from '@/components/common/Header/header'
-import PrInputField from '@/components/common/PrInputField/PrInputField'
-import { PrPhoneNumberInputField } from '@/components/common/PrPhoneNumberInputField/PrPhoneNumberInputField'
-import { CountryIso2 } from 'react-international-phone'
-import PrInputFieldV2 from '@/components/common/PrInputField/PrInputFieldV2'
-import { PrCountryInputField } from '@/components/common/PrCountryInputField/PrCountryInputField'
-import PrMapComponent from '@/components/common/PrMapComponent/PrMapComponent'
-import PrButtonV2 from '@/components/common/PrButton/PrButtonV2'
-import { basicInfoT, initialBasicInfo } from './helper'
-import usePropertySingle from '@/hooks/useProperty/usePropertySingle'
-import { BackendPatch } from '@/components/services/BackendServices'
-import { ENDPOINTS } from '@/components/lang/EndPoints'
-import { toast } from 'react-toastify'
+import React, { useEffect, useMemo, useState } from 'react';
+import { H1 } from '@/components/common/Header/header';
+import PrInputField from '@/components/common/PrInputField/PrInputField';
+import { PrPhoneNumberInputField } from '@/components/common/PrPhoneNumberInputField/PrPhoneNumberInputField';
+import { CountryIso2 } from 'react-international-phone';
+import PrInputFieldV2 from '@/components/common/PrInputField/PrInputFieldV2';
+import { PrCountryInputField } from '@/components/common/PrCountryInputField/PrCountryInputField';
+import PrMapComponent from '@/components/common/PrMapComponent/PrMapComponent';
+import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
+import { basicInfoT, initialBasicInfo } from './helper';
+import usePropertySingle from '@/hooks/useProperty/usePropertySingle';
+import { BackendPatch } from '@/components/services/BackendServices';
+import { ENDPOINTS } from '@/components/lang/EndPoints';
+import { toast } from 'react-toastify';
 
 function BasicInfoModal({ id }: { id: string }) {
-  const { data } = usePropertySingle(id)
+  const { data } = usePropertySingle(id);
 
   useEffect(() => {
     handleState({
@@ -32,17 +32,17 @@ function BasicInfoModal({ id }: { id: string }) {
       userName: data?.propertyuser_username || '',
       newPassword: data?.propertyuser_password || '',
       confirmNewPassword: data?.propertyuser_password || '',
-    })
-  }, [data])
+    });
+  }, [data]);
 
-  const [basicInfoData, SetBasicInfoData] = useState<basicInfoT>(initialBasicInfo)
+  const [basicInfoData, SetBasicInfoData] = useState<basicInfoT>(initialBasicInfo);
 
   const handleState = (data: Partial<basicInfoT>) => {
     SetBasicInfoData((prevData) => ({
       ...prevData,
       ...data,
-    }))
-  }
+    }));
+  };
 
   const mapProps = useMemo(() => {
     return {
@@ -53,12 +53,12 @@ function BasicInfoModal({ id }: { id: string }) {
         handleState({
           latitude: lat,
           longitude: long,
-        })
+        });
       },
-    }
-  }, [basicInfoData?.latitude, basicInfoData?.longitude])
+    };
+  }, [basicInfoData?.latitude, basicInfoData?.longitude]);
 
-  console.log(mapProps)
+  console.log(mapProps);
 
   const updateTheBasicInfo = async () => {
     const data = {
@@ -79,14 +79,14 @@ function BasicInfoModal({ id }: { id: string }) {
           propertyuser_password: basicInfoData.newPassword,
         },
       ],
-    }
-    const update = await BackendPatch(`${ENDPOINTS.PROPERTY.UPDATE}/${id}`, data)
+    };
+    const update = await BackendPatch(`${ENDPOINTS.PROPERTY.UPDATE}/${id}`, data);
     if (update.success) {
-      toast.success(`Updated the property successfully`)
+      toast.success(`Updated the property successfully`);
     } else {
-      toast.error(`Unable to update the property`)
+      toast.error(`Unable to update the property`);
     }
-  }
+  };
 
   return (
     <div className='overflow-auto flex flex-col space-x-4 '>
@@ -98,7 +98,7 @@ function BasicInfoModal({ id }: { id: string }) {
             value={basicInfoData?.propertyName}
             label={'Property Name'}
             onChange={(e) => {
-              handleState({ propertyName: e.target.value })
+              handleState({ propertyName: e.target.value });
             }}
           />
           <PrInputField
@@ -106,20 +106,20 @@ function BasicInfoModal({ id }: { id: string }) {
             value={basicInfoData?.contactPerson}
             label={'Contact Person'}
             onChange={(e) => {
-              handleState({ contactPerson: e.target.value })
+              handleState({ contactPerson: e.target.value });
             }}
           />
           <PrPhoneNumberInputField
             value={basicInfoData?.primaryContactNumber}
             onChange={(phone: string, country: CountryIso2) => {
-              handleState({ primaryContactNumber: phone })
+              handleState({ primaryContactNumber: phone });
             }}
             label={'Primary Contact Number'}
           />
           <PrPhoneNumberInputField
             value={basicInfoData?.secondaryContactNumber}
             onChange={(phone: string, country: CountryIso2) => {
-              handleState({ secondaryContactNumber: phone })
+              handleState({ secondaryContactNumber: phone });
             }}
             label={'Secondary Contact Number'}
           />
@@ -133,7 +133,7 @@ function BasicInfoModal({ id }: { id: string }) {
             value={basicInfoData?.addressLine1}
             label={'Address Line 1'}
             onChange={(e) => {
-              handleState({ addressLine1: e.target.value })
+              handleState({ addressLine1: e.target.value });
             }}
           ></PrInputFieldV2>
           <PrInputFieldV2
@@ -141,7 +141,7 @@ function BasicInfoModal({ id }: { id: string }) {
             label={'Pin/Zip Code/Postal Code'}
             value={basicInfoData?.pinCode}
             onChange={(e) => {
-              handleState({ pinCode: e.target.value })
+              handleState({ pinCode: e.target.value });
             }}
           ></PrInputFieldV2>
           <PrInputFieldV2
@@ -149,7 +149,7 @@ function BasicInfoModal({ id }: { id: string }) {
             label={'Address line 2'}
             value={basicInfoData?.addressLine2}
             onChange={(e) => {
-              handleState({ addressLine2: e.target.value })
+              handleState({ addressLine2: e.target.value });
             }}
           ></PrInputFieldV2>
           <PrCountryInputField
@@ -163,7 +163,7 @@ function BasicInfoModal({ id }: { id: string }) {
           label={'City/Town'}
           value={basicInfoData?.city}
           onChange={(e) => {
-            handleState({ city: e.target.value })
+            handleState({ city: e.target.value });
           }}
         ></PrInputFieldV2>
         <PrInputFieldV2
@@ -171,7 +171,7 @@ function BasicInfoModal({ id }: { id: string }) {
           label={'State/Province/Region'}
           value={basicInfoData?.state}
           onChange={(e) => {
-            handleState({ state: e.target.value })
+            handleState({ state: e.target.value });
           }}
         ></PrInputFieldV2>
       </div>
@@ -189,7 +189,7 @@ function BasicInfoModal({ id }: { id: string }) {
               label={'User Name'}
               value={basicInfoData?.userName}
               onChange={(e) => {
-                handleState({ userName: e.target.value })
+                handleState({ userName: e.target.value });
               }}
             ></PrInputField>
             <PrInputField
@@ -197,7 +197,7 @@ function BasicInfoModal({ id }: { id: string }) {
               label={'Create New Password'}
               value={basicInfoData?.newPassword}
               onChange={(e) => {
-                handleState({ newPassword: e.target.value })
+                handleState({ newPassword: e.target.value });
               }}
             ></PrInputField>
             <PrInputField
@@ -205,7 +205,7 @@ function BasicInfoModal({ id }: { id: string }) {
               label={'Confirm New Password'}
               value={basicInfoData?.confirmNewPassword}
               onChange={(e) => {
-                handleState({ confirmNewPassword: e.target.value })
+                handleState({ confirmNewPassword: e.target.value });
               }}
             ></PrInputField>
           </div>
@@ -217,7 +217,7 @@ function BasicInfoModal({ id }: { id: string }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default BasicInfoModal
+export default BasicInfoModal;

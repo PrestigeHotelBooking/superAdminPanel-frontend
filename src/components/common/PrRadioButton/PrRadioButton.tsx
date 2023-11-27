@@ -1,13 +1,13 @@
-import { OptionT } from '@/modals/dashboard/property/common/components/property.types'
-import React, { ChangeEvent } from 'react'
+import { OptionT } from '@/modals/dashboard/property/common/components/property.types';
+import React, { ChangeEvent } from 'react';
 
 interface PrRadioButtonProps {
-  options: OptionT[]
-  selectedValue: string
-  isMulti?: boolean
-  onChange: (value: string) => void
-  className?: string // New optional prop for class name
-  label?: string // New optional prop for label
+  options: OptionT[];
+  selectedValue: string;
+  isMulti?: boolean;
+  onChange: (value: string) => void;
+  className?: string; // New optional prop for class name
+  label?: string; // New optional prop for label
 }
 
 const PrRadioButton: React.FC<PrRadioButtonProps> = ({
@@ -19,8 +19,8 @@ const PrRadioButton: React.FC<PrRadioButtonProps> = ({
   label,
 }) => {
   const handleRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value)
-  }
+    onChange(e.target.value);
+  };
 
   return (
     <div className={`flex flex-col space-y-2 rounded-lg p-4 ${className}`}>
@@ -54,7 +54,7 @@ const PrRadioButton: React.FC<PrRadioButtonProps> = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default PrRadioButton
+export default PrRadioButton;

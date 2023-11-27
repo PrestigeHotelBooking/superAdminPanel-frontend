@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const PrCircularProgressIndicator = () => {
   return (
@@ -23,7 +23,7 @@ const PrCircularProgressIndicator = () => {
         <span className='sr-only'>Loading...</span>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PrCircularProgressIndicator
+export default PrCircularProgressIndicator;

@@ -1,27 +1,27 @@
-import { API_ENDPOINT } from '@/Global/api/api'
-import Cookies from 'js-cookie'
-import { CONSTANTS } from '@/modals/common/constants'
-type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE'
+import { API_ENDPOINT } from '@/Global/api/api';
+import Cookies from 'js-cookie';
+import { CONSTANTS } from '@/modals/common/constants';
+type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
 interface RequestOptions {
-  method: HttpMethod
+  method: HttpMethod;
   headers?: {
-    'Content-Type'?: string
+    'Content-Type'?: string;
     // Add your custom headers here
-    'X-Access-Token'?: string
+    'X-Access-Token'?: string;
     // More custom headers...
-  }
-  body?: FormData | string // Updated the body type to accept FormData or string
+  };
+  body?: FormData | string; // Updated the body type to accept FormData or string
 }
 
 interface ApiError {
-  message: string
+  message: string;
 }
 
 interface ApiResponse<T> {
-  success: boolean
-  responseData?: T
-  errorData?: ApiError
+  success: boolean;
+  responseData?: T;
+  errorData?: ApiError;
 }
 
 const callApiV2 = async <T>(
@@ -30,7 +30,7 @@ const callApiV2 = async <T>(
   data: FormData | string = '', // Updated the default value to an empty string
   customHeaders: { [key: string]: string } = {}, // You can pass custom headers as an argument
 ): Promise<ApiResponse<T>> => {
-  const url = API_ENDPOINT + endpoint
+  const url = API_ENDPOINT + endpoint;
 
   const requestOptions: RequestOptions = {
     method: method,
@@ -38,22 +38,22 @@ const callApiV2 = async <T>(
       ...customHeaders, // Merge custom headers with default headers
     },
     body: data, // Assign the data directly to the body
-  }
+  };
 
   try {
-    const response = await fetch(url, requestOptions)
+    const response = await fetch(url, requestOptions);
 
     if (response.ok) {
-      const responseData: T = await response.json()
-      return { success: true, responseData }
+      const responseData: T = await response.json();
+      return { success: true, responseData };
     } else {
-      const errorData: ApiError = await response.json()
-      throw new Error(`API request failed: ${errorData.message}`)
+      const errorData: ApiError = await response.json();
+      throw new Error(`API request failed: ${errorData.message}`);
     }
   } catch (error) {
-    throw error // Re-throw the caught error
+    throw error; // Re-throw the caught error
   }
-}
+};
 
 const BackendPostV2 = async <T>(
   endpoint: string,
@@ -62,30 +62,30 @@ const BackendPostV2 = async <T>(
 ): Promise<ApiResponse<T>> => {
   try {
     // Generate a unique boundary string
-    const boundary = '----your-unique-boundary-string-here'
-    const accessToken = Cookies.get(CONSTANTS.STORAGE_KEYS.TOKEN)
+    const boundary = '----your-unique-boundary-string-here';
+    const accessToken = Cookies.get(CONSTANTS.STORAGE_KEYS.TOKEN);
     const requestOptions: RequestOptions = {
       method: 'POST',
       headers: {
         'X-Access-Token': `${accessToken}`,
       },
       body: data,
-    }
+    };
 
-    const response = await fetch(API_ENDPOINT + endpoint, requestOptions)
+    const response = await fetch(API_ENDPOINT + endpoint, requestOptions);
 
     if (response.ok) {
-      const responseData: T = await response.json()
-      return { success: true, responseData }
+      const responseData: T = await response.json();
+      return { success: true, responseData };
     } else {
-      const errorData: ApiError = await response.json()
-      throw new Error(`API request failed: ${errorData.message}`)
+      const errorData: ApiError = await response.json();
+      throw new Error(`API request failed: ${errorData.message}`);
     }
   } catch (error) {
-    console.error(`Error in POST request to ${endpoint}:`, error)
-    throw error
+    console.error(`Error in POST request to ${endpoint}:`, error);
+    throw error;
   }
-}
+};
 
 const BackendPatchV2 = async <T>(
   endpoint: string,
@@ -94,8 +94,8 @@ const BackendPatchV2 = async <T>(
 ): Promise<ApiResponse<T>> => {
   try {
     // Generate a unique boundary string
-    const boundary = '----your-unique-boundary-string-here'
-    const accessToken = Cookies.get(CONSTANTS.STORAGE_KEYS.TOKEN)
+    const boundary = '----your-unique-boundary-string-here';
+    const accessToken = Cookies.get(CONSTANTS.STORAGE_KEYS.TOKEN);
     const requestOptions: RequestOptions = {
       method: 'PATCH',
       headers: {
@@ -103,21 +103,21 @@ const BackendPatchV2 = async <T>(
         ...customHeaders,
       },
       body: data,
-    }
+    };
 
-    const response = await fetch(API_ENDPOINT + endpoint, requestOptions)
+    const response = await fetch(API_ENDPOINT + endpoint, requestOptions);
 
     if (response.ok) {
-      const responseData: T = await response.json()
-      return { success: true, responseData }
+      const responseData: T = await response.json();
+      return { success: true, responseData };
     } else {
-      const errorData: ApiError = await response.json()
-      throw new Error(`API request failed: ${errorData.message}`)
+      const errorData: ApiError = await response.json();
+      throw new Error(`API request failed: ${errorData.message}`);
     }
   } catch (error) {
-    console.error(`Error in PATCH request to ${endpoint}:`, error)
-    throw error
+    console.error(`Error in PATCH request to ${endpoint}:`, error);
+    throw error;
   }
-}
+};
 
-export { BackendPostV2, BackendPatchV2 }
+export { BackendPostV2, BackendPatchV2 };

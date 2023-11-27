@@ -1,13 +1,13 @@
-import 'react-international-phone/style.css'
+import 'react-international-phone/style.css';
 
-import { InputAdornment, MenuItem, Select, TextField, Typography } from '@mui/material'
-import React from 'react'
-import { CountryIso2, defaultCountries, FlagEmoji, parseCountry, usePhoneInput } from 'react-international-phone'
+import { InputAdornment, MenuItem, Select, TextField, Typography } from '@mui/material';
+import React from 'react';
+import { CountryIso2, defaultCountries, FlagEmoji, parseCountry, usePhoneInput } from 'react-international-phone';
 
 interface MuiPhoneProps {
-  value: string
-  label: string
-  onChange: (phone: string, country: CountryIso2) => void
+  value: string;
+  label: string;
+  onChange: (phone: string, country: CountryIso2) => void;
 }
 
 export const PrPhoneNumberInputField = ({ value, label, onChange, ...restProps }: MuiPhoneProps) => {
@@ -17,9 +17,9 @@ export const PrPhoneNumberInputField = ({ value, label, onChange, ...restProps }
     value: value || '',
     countries: defaultCountries,
     onChange: (data) => {
-      onChange(data.phone, data.country)
+      onChange(data.phone, data.country);
     },
-  })
+  });
 
   return (
     <div>
@@ -75,14 +75,14 @@ export const PrPhoneNumberInputField = ({ value, label, onChange, ...restProps }
                   renderValue={(value) => <FlagEmoji iso2={value} style={{ display: 'flex' }} />}
                 >
                   {defaultCountries.map((c) => {
-                    const country = parseCountry(c)
+                    const country = parseCountry(c);
                     return (
                       <MenuItem key={country.iso2} value={country.iso2}>
                         <FlagEmoji iso2={country.iso2} style={{ marginRight: '8px' }} />
                         <Typography marginRight='8px'>{country.name}</Typography>
                         <Typography color='gray'>+{country.dialCode}</Typography>
                       </MenuItem>
-                    )
+                    );
                   })}
                 </Select>
               </InputAdornment>
@@ -92,5 +92,5 @@ export const PrPhoneNumberInputField = ({ value, label, onChange, ...restProps }
         />
       </div>
     </div>
-  )
-}
+  );
+};

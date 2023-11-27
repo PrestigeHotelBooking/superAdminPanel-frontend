@@ -1,11 +1,11 @@
-import PrButtonV2 from '@/components/common/PrButton/PrButtonV2'
-import PrInputField from '@/components/common/PrInputField/PrInputField'
-import PrRadioButton from '@/components/common/PrRadioButton/PrRadioButton'
-import PrSelect from '@/components/common/PrSelect/PrSelect'
-import useConfigurationData from '@/hooks/useConfigurationData/useConfigurationData'
-import { RoomDetailT } from '@/modals/dashboard/booking/common/booking.types'
-import { yesOrNoOption } from '@/modals/dashboard/property/common/components/property.types'
-import { useEffect, useState } from 'react'
+import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
+import PrInputField from '@/components/common/PrInputField/PrInputField';
+import PrRadioButton from '@/components/common/PrRadioButton/PrRadioButton';
+import PrSelect from '@/components/common/PrSelect/PrSelect';
+import useConfigurationData from '@/hooks/useConfigurationData/useConfigurationData';
+import { RoomDetailT } from '@/modals/dashboard/booking/common/booking.types';
+import { yesOrNoOption } from '@/modals/dashboard/property/common/components/property.types';
+import { useEffect, useState } from 'react';
 
 export const initialRoomDetails: RoomDetailT = {
   room_id: 0,
@@ -32,7 +32,7 @@ export const initialRoomDetails: RoomDetailT = {
   price_Per_ExtraBed: 0,
   smoke_Free_Room: 0,
   meal_Option: '',
-}
+};
 
 export const RoomsContainers = ({
   id,
@@ -40,29 +40,29 @@ export const RoomsContainers = ({
   onDelete,
   onSave,
 }: {
-  id: string
-  propertyId: number | string
-  onDelete: () => void
-  onSave: (id: string, data: RoomDetailT) => void
+  id: string;
+  propertyId: number | string;
+  onDelete: () => void;
+  onSave: (id: string, data: RoomDetailT) => void;
 }) => {
   useEffect(() => {
-    handleState({ room_id: id, property_id: propertyId })
-  }, [id])
+    handleState({ room_id: id, property_id: propertyId });
+  }, [id]);
 
-  const { bedType, roomType, mealTypes } = useConfigurationData()
+  const { bedType, roomType, mealTypes } = useConfigurationData();
 
-  const [roomDataDetail, setRoomData] = useState<RoomDetailT>(initialRoomDetails)
+  const [roomDataDetail, setRoomData] = useState<RoomDetailT>(initialRoomDetails);
 
   const handleState = (data: Partial<RoomDetailT>) => {
     setRoomData((prevState) => ({
       ...prevState,
       ...data,
-    }))
-  }
+    }));
+  };
 
   const handleSave = () => {
-    onSave(id, roomDataDetail)
-  }
+    onSave(id, roomDataDetail);
+  };
 
   return (
     <div className='mt-8 space-y-6'>
@@ -194,7 +194,7 @@ export const RoomsContainers = ({
             label='Save'
             buttonStyle='success'
             onClick={() => {
-              handleSave()
+              handleSave();
             }}
             className='rounded-md'
           />
@@ -202,5 +202,5 @@ export const RoomsContainers = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

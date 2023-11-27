@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from 'react'
-import PrButtonV2 from '@/components/common/PrButton/PrButtonV2'
-import PrCheckbox from '@/components/common/PrCheckBox/PrCheckbox'
-import { BackendPatch, BackendPost } from '@/components/services/BackendServices'
-import { ENDPOINTS } from '@/components/lang/EndPoints'
-import { toast } from 'react-toastify'
-import useConfigurationData from '@/hooks/useConfigurationData/useConfigurationData'
-import PrCircularProgressIndicator from '@/components/common/Loader/PrCircularProgressIndicator'
-import useRoomData from '@/hooks/useRoomData/useRoomData'
-import _ from 'lodash'
+import React, { useEffect, useState } from 'react';
+import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
+import PrCheckbox from '@/components/common/PrCheckBox/PrCheckbox';
+import { BackendPatch, BackendPost } from '@/components/services/BackendServices';
+import { ENDPOINTS } from '@/components/lang/EndPoints';
+import { toast } from 'react-toastify';
+import useConfigurationData from '@/hooks/useConfigurationData/useConfigurationData';
+import PrCircularProgressIndicator from '@/components/common/Loader/PrCircularProgressIndicator';
+import useRoomData from '@/hooks/useRoomData/useRoomData';
+import _ from 'lodash';
 
 type amenitiesValueT = {
-  check: boolean
-  value: string
-}
-type CheckedValues = Record<string, amenitiesValueT>
+  check: boolean;
+  value: string;
+};
+type CheckedValues = Record<string, amenitiesValueT>;
 
 function AmenitiesModal({ id }: { id: string }) {
-  const { data: roomData } = useRoomData(id)
-  const [checkedValuesByRoomId, setCheckedValuesByRoomId] = useState<Record<string, CheckedValues>>({})
-  const [selectedRoomId, setSelectedRoomId] = useState('')
-  const { loading, amenities } = useConfigurationData()
+  const { data: roomData } = useRoomData(id);
+  const [checkedValuesByRoomId, setCheckedValuesByRoomId] = useState<Record<string, CheckedValues>>({});
+  const [selectedRoomId, setSelectedRoomId] = useState('');
+  const { loading, amenities } = useConfigurationData();
 
-  const columnCount = 3
-  const chunkSize = Math.ceil(amenities.length / columnCount)
-  const amenitiesChunks: any = []
+  const columnCount = 3;
+  const chunkSize = Math.ceil(amenities.length / columnCount);
+  const amenitiesChunks: any = [];
 
   for (let i = 0; i < amenities.length; i += chunkSize) {
-    const chunk = amenities.slice(i, i + chunkSize)
-    amenitiesChunks.push(chunk)
+    const chunk = amenities.slice(i, i + chunkSize);
+    amenitiesChunks.push(chunk);
   }
 
   const handleChange = (label: string, isChecked: amenitiesValueT, checkId: string) => {
@@ -37,33 +37,33 @@ function AmenitiesModal({ id }: { id: string }) {
         ...prevValues[checkId],
         [label]: isChecked,
       },
-    }))
-  }
+    }));
+  };
 
   useEffect(() => {
     if (roomData?.length) {
       _.forEach(roomData, (e) => {
         _.forEach(JSON.parse(e?.room_amenities), (d) => {
-          handleChange(d, { check: true, value: d }, e?.room_id?.toString())
-        })
-      })
+          handleChange(d, { check: true, value: d }, e?.room_id?.toString());
+        });
+      });
     }
-  }, [roomData])
+  }, [roomData]);
 
   const handleSaveClick = async () => {
     const update = _.map(checkedValuesByRoomId, (values, id) => ({
       room_id: id,
       room_amenities: _.chain(values).pickBy('check').map('value').value(),
-    }))
+    }));
 
-    const data = await BackendPost(`${ENDPOINTS.ROOM.UPDATE_AMENITIES}`, { update })
+    const data = await BackendPost(`${ENDPOINTS.ROOM.UPDATE_AMENITIES}`, { update });
 
     if (data.success) {
-      toast.success('Update the amenities Successfully')
+      toast.success('Update the amenities Successfully');
     } else {
-      toast.error(`Unable to update the amenity`)
+      toast.error(`Unable to update the amenity`);
     }
-  }
+  };
 
   const AmenitiesCheckBoxModal = (room_id: string) => {
     return (
@@ -91,8 +91,8 @@ function AmenitiesModal({ id }: { id: string }) {
           </div>
         ))}
       </div>
-    )
-  }
+    );
+  };
 
   return loading ? (
     <PrCircularProgressIndicator></PrCircularProgressIndicator>
@@ -120,7 +120,7 @@ function AmenitiesModal({ id }: { id: string }) {
         <PrButtonV2 label={'Cancel'} className='rounded-md' dangerLink buttonStyle='danger' />
       </div>
     </div>
-  )
+  );
 }
 
-export default AmenitiesModal
+export default AmenitiesModal;

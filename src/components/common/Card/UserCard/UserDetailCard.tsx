@@ -1,15 +1,15 @@
-import React from 'react'
-import PrIcon, { FeatherIconType, IconTypeT } from '../../PrIcon/PrIcon'
-import * as FeatherIcons from 'react-feather'
-import PrIconV2, { MaterialIconsType } from '../../PrIcon/PrIconV2'
+import React from 'react';
+import PrIcon, { FeatherIconType, IconTypeT } from '../../PrIcon/PrIcon';
+import * as FeatherIcons from 'react-feather';
+import PrIconV2, { MaterialIconsType } from '../../PrIcon/PrIconV2';
 
 interface UserDetailCardProps {
   items: {
-    icon: FeatherIconType | MaterialIconsType
-    iconType: IconTypeT // Use the IconTypeT type from your PrIcon component
-    title: string
-    subtitle: string
-  }[]
+    icon: FeatherIconType | MaterialIconsType;
+    iconType: IconTypeT; // Use the IconTypeT type from your PrIcon component
+    title: string;
+    subtitle: string;
+  }[];
 }
 
 const UserDetailCard: React.FC<UserDetailCardProps> = ({ items }) => {
@@ -31,7 +31,7 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({ items }) => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default UserDetailCard
+export default UserDetailCard;

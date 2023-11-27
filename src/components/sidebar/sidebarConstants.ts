@@ -7,11 +7,11 @@ export type SidebarOptionValue =
   | 'REPORT AND ANALYSIS'
   | 'NOTIFICATION MANAGEMENT'
   | 'CONTENT MANAGEMENT'
-  | 'CONFIGURATION MANAGEMENT'
+  | 'CONFIGURATION MANAGEMENT';
 
 interface SidebarOptionsT {
-  label: string
-  value: SidebarOptionValue
+  label: string;
+  value: SidebarOptionValue;
 }
 
 export const sidebarOptions: SidebarOptionsT[] = [
@@ -51,7 +51,7 @@ export const sidebarOptions: SidebarOptionsT[] = [
     label: 'Configuration Settings',
     value: 'CONFIGURATION MANAGEMENT',
   },
-]
+];
 
 export const sidebarPaths: Record<SidebarOptionValue, string> = {
   DASHBOARD: '/dashboard',
@@ -63,4 +63,4 @@ export const sidebarPaths: Record<SidebarOptionValue, string> = {
   'NOTIFICATION MANAGEMENT': '/dashboard/notification',
   'CONTENT MANAGEMENT': '/dashboard/content',
   'CONFIGURATION MANAGEMENT': '/dashboard/configure',
-}
+};

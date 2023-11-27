@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 interface PrTextAreaProps {
-  label: string
-  value: string // Add value prop
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void // Add onChange prop
+  label: string;
+  value: string; // Add value prop
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void; // Add onChange prop
 }
 
 const PrTextArea: React.FC<PrTextAreaProps> = ({ label, value, onChange, ...props }) => {
@@ -19,7 +19,7 @@ const PrTextArea: React.FC<PrTextAreaProps> = ({ label, value, onChange, ...prop
         {...props}
       />
     </div>
-  )
-}
+  );
+};
 
-export default PrTextArea
+export default PrTextArea;

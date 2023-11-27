@@ -8,4 +8,4 @@ export const LANG = {
     PAYMENTMANAGEMENT: 'Payment Management',
     REPORTANDANALYSISMANAGEMENT: 'Report and Analysis Management',
   },
-}
+};

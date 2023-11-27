@@ -1,19 +1,19 @@
 export interface basicInfoT {
-  propertyName: string
-  contactPerson: string
-  primaryContactNumber: string
-  secondaryContactNumber: string
-  addressLine1: string
-  pinCode: string
-  addressLine2: string
-  country: string
-  city: string
-  state: string
-  userName: string
-  newPassword: string
-  confirmNewPassword: string
-  latitude: number
-  longitude: number
+  propertyName: string;
+  contactPerson: string;
+  primaryContactNumber: string;
+  secondaryContactNumber: string;
+  addressLine1: string;
+  pinCode: string;
+  addressLine2: string;
+  country: string;
+  city: string;
+  state: string;
+  userName: string;
+  newPassword: string;
+  confirmNewPassword: string;
+  latitude: number;
+  longitude: number;
 }
 
 export const initialBasicInfo: basicInfoT = {
@@ -32,4 +32,4 @@ export const initialBasicInfo: basicInfoT = {
   confirmNewPassword: '',
   latitude: 0,
   longitude: 0,
-}
+};

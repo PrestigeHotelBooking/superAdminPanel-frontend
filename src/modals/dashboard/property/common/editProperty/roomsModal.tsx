@@ -1,35 +1,35 @@
-import React, { useState, ReactNode } from 'react'
-import PrButton from '@/components/common/PrButton/PrButton'
-import PrButtonV2 from '@/components/common/PrButton/PrButtonV2'
-import { initialRoomDetails, RoomsContainers } from '@/components/containers/property/rooms/roomsContainers'
-import { RoomDetailT } from '@/modals/dashboard/booking/common/booking.types'
-import { ENDPOINTS } from '@/components/lang/EndPoints'
-import { BackendPost } from '@/components/services/BackendServices'
-import { toast } from 'react-toastify'
+import React, { useState, ReactNode } from 'react';
+import PrButton from '@/components/common/PrButton/PrButton';
+import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
+import { initialRoomDetails, RoomsContainers } from '@/components/containers/property/rooms/roomsContainers';
+import { RoomDetailT } from '@/modals/dashboard/booking/common/booking.types';
+import { ENDPOINTS } from '@/components/lang/EndPoints';
+import { BackendPost } from '@/components/services/BackendServices';
+import { toast } from 'react-toastify';
 
 interface RoomDataMap {
-  [id: string]: RoomDetailT
+  [id: string]: RoomDetailT;
 }
 
 interface RoomModalProps {
-  id: string
+  id: string;
 }
 
 function RoomsModal({ id }: RoomModalProps): React.ReactElement {
-  const [roomComponents, setRoomComponents] = useState<ReactNode[]>([])
-  const [roomDataMap, setRoomDataMap] = useState<RoomDataMap>({})
+  const [roomComponents, setRoomComponents] = useState<ReactNode[]>([]);
+  const [roomDataMap, setRoomDataMap] = useState<RoomDataMap>({});
 
   const generateUniqueId = (): string => {
-    return `room_${Math.random().toString(36).substr(2, 9)}`
-  }
+    return `room_${Math.random().toString(36).substr(2, 9)}`;
+  };
 
   const addRoomComponent = () => {
-    const newId = generateUniqueId()
-    const newRoomData: RoomDetailT = { ...initialRoomDetails, room_id: newId }
+    const newId = generateUniqueId();
+    const newRoomData: RoomDetailT = { ...initialRoomDetails, room_id: newId };
     setRoomDataMap((prevRoomDataMap) => ({
       ...prevRoomDataMap,
       [newId]: newRoomData,
-    }))
+    }));
 
     const newComponent = (
       <RoomsContainers
@@ -39,41 +39,41 @@ function RoomsModal({ id }: RoomModalProps): React.ReactElement {
         onDelete={deleteRoomComponent(newId)}
         onSave={saveRoomData}
       />
-    )
+    );
 
-    setRoomComponents((prevComponents) => [...prevComponents, newComponent])
-  }
+    setRoomComponents((prevComponents) => [...prevComponents, newComponent]);
+  };
 
   const deleteRoomComponent = (idToDelete: string) => () => {
     setRoomComponents((prevComponents) =>
       prevComponents.filter((component) => (component as React.ReactElement).key !== idToDelete),
-    )
+    );
 
     setRoomDataMap((prevRoomDataMap) => {
-      const updatedDataMap: RoomDataMap = { ...prevRoomDataMap }
-      delete updatedDataMap[idToDelete]
-      return updatedDataMap
-    })
-  }
+      const updatedDataMap: RoomDataMap = { ...prevRoomDataMap };
+      delete updatedDataMap[idToDelete];
+      return updatedDataMap;
+    });
+  };
 
   const saveRoomData = (id: string, data: RoomDetailT) => {
     if (data.room_Name !== '' || data.room_type !== '' || data.no_Of_Rooms !== 0) {
       setRoomDataMap((prevRoomDataMap) => ({
         ...prevRoomDataMap,
         [id]: data,
-      }))
+      }));
     }
-  }
+  };
 
   const logRoomData = async () => {
-    const create = Object.values(roomDataMap)
-    const data = await BackendPost(`${ENDPOINTS.ROOM.ADD}/${id}`, { create })
+    const create = Object.values(roomDataMap);
+    const data = await BackendPost(`${ENDPOINTS.ROOM.ADD}/${id}`, { create });
     if (data.success) {
-      toast.success(`Data has been added successfully !`)
+      toast.success(`Data has been added successfully !`);
     } else {
-      toast.error(`Unable to add the data . Something went wrong !`)
+      toast.error(`Unable to add the data . Something went wrong !`);
     }
-  }
+  };
 
   return (
     <div className='mb-64'>
@@ -94,7 +94,7 @@ function RoomsModal({ id }: RoomModalProps): React.ReactElement {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default RoomsModal
+export default RoomsModal;
