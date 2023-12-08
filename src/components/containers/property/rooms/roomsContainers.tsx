@@ -11,7 +11,7 @@ export const initialRoomDetails: RoomDetailT = {
   room_id: 0,
   property_id: '',
   room_type: '',
-  room_image_urls: '',
+  room_image_urls: [],
   smoking_preference: '',
   max_adult: 0,
   max_child: 0,
@@ -37,11 +37,13 @@ export const initialRoomDetails: RoomDetailT = {
 export const RoomsContainers = ({
   id,
   propertyId,
+  roomData,
   onDelete,
   onSave,
 }: {
   id: string;
   propertyId: number | string;
+  roomData?: RoomDetailT;
   onDelete: () => void;
   onSave: (id: string, data: RoomDetailT) => void;
 }) => {
@@ -52,6 +54,24 @@ export const RoomsContainers = ({
   const { bedType, roomType, mealTypes } = useConfigurationData();
 
   const [roomDataDetail, setRoomData] = useState<RoomDetailT>(initialRoomDetails);
+
+  useEffect(() => {
+    handleState({
+      ...roomDataDetail,
+      room_Name: roomData?.room_Name,
+      room_Size: roomData?.room_Size,
+      room_type: roomData?.room_type,
+      no_of_Children: roomData?.no_of_Children,
+      no_Of_Rooms: roomData?.no_Of_Rooms,
+      bed_Type: roomData?.bed_Type,
+      breakfast_included:roomData?.breakfast_included,
+      price_Per_Night: roomData?.price_Per_Night,
+      price_Per_ExtraBed: roomData?.price_Per_ExtraBed,
+      meal_Option: roomData?.meal_Option,
+      no_Of_Adults: roomData?.no_Of_Adults,
+      no_Of_ExtraBeds: roomData?.no_Of_ExtraBeds,
+    });
+  }, [roomData]);
 
   const handleState = (data: Partial<RoomDetailT>) => {
     setRoomData((prevState) => ({
@@ -176,9 +196,9 @@ export const RoomsContainers = ({
         <PrRadioButton
           options={yesOrNoOption}
           label='Smoke Free Room'
-          selectedValue={roomDataDetail.smoke_Free_Room as string}
+          selectedValue={roomDataDetail.smoke_Free_Room}
           className='w-full'
-          onChange={(value) => handleState({ smoke_Free_Room: value })}
+          onChange={(value) => handleState({ smoke_Free_Room: Number(value) })}
         />
         <div className='m-auto w-[74%]'>
           <PrSelect

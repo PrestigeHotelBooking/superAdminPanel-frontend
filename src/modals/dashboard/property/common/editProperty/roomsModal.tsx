@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState, ReactNode, useEffect } from 'react';
 import PrButton from '@/components/common/PrButton/PrButton';
 import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
 import { initialRoomDetails, RoomsContainers } from '@/components/containers/property/rooms/roomsContainers';
@@ -6,6 +6,7 @@ import { RoomDetailT } from '@/modals/dashboard/booking/common/booking.types';
 import { ENDPOINTS } from '@/components/lang/EndPoints';
 import { BackendPost } from '@/components/services/BackendServices';
 import { toast } from 'react-toastify';
+import useRoomDataHook from '@/hooks/useRoomDataHook/useRoomDataHook';
 
 interface RoomDataMap {
   [id: string]: RoomDetailT;
@@ -16,12 +17,45 @@ interface RoomModalProps {
 }
 
 function RoomsModal({ id }: RoomModalProps): React.ReactElement {
+
+
+  const {data:roomData} = useRoomDataHook(id);
+
+
+  const apiLoadRoomData = () =>{
+
+    if(roomData){
+      roomData?.map((d)=>{
+        const newId=d?.room_id.toString();
+                const newComponent = (
+          <RoomsContainers
+            key={newId}
+            id={newId}
+            roomData={d as any} 
+            propertyId={id as string}
+            onDelete={deleteRoomComponent(newId)}
+            onSave={saveRoomData}
+          />
+        );
+        setRoomComponents((prevComponents) => [...prevComponents, newComponent]);
+      });
+    }
+  }
+
+  useEffect(()=>{
+    apiLoadRoomData()
+  },[roomData])
+
   const [roomComponents, setRoomComponents] = useState<ReactNode[]>([]);
   const [roomDataMap, setRoomDataMap] = useState<RoomDataMap>({});
 
   const generateUniqueId = (): string => {
     return `room_${Math.random().toString(36).substr(2, 9)}`;
   };
+
+
+
+
 
   const addRoomComponent = () => {
     const newId = generateUniqueId();
@@ -64,6 +98,7 @@ function RoomsModal({ id }: RoomModalProps): React.ReactElement {
       }));
     }
   };
+
 
   const logRoomData = async () => {
     const create = Object.values(roomDataMap);

@@ -6,7 +6,7 @@ interface RoomDetailsT {
   room_id: number;
   property_id: number;
   room_type: string;
-  room_image_urls: string[];
+  room_image_urls: string;
   smoking_preference: number;
   max_adult: number;
   max_child: number;
@@ -44,7 +44,7 @@ export interface RoomHookResult {
   fetchRoom: () => Promise<void>;
 }
 
-const useRoomData = (id: string): RoomHookResult => {
+const useRoomDataHook = (id: string): RoomHookResult => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<Error | null>(null);
@@ -69,4 +69,4 @@ const useRoomData = (id: string): RoomHookResult => {
   return { loading, data, error, fetchRoom };
 };
 
-export default useRoomData;
+export default useRoomDataHook;

@@ -31,5 +31,6 @@ export const ENDPOINTS = {
   LOGIN: {
     SIGNIN: 'auth/signin',
     CHECK: 'v1/signin',
+    NEW_TOKEN:'auth/new_token'
   },
 };

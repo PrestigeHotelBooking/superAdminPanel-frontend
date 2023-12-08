@@ -2,11 +2,13 @@ import { combineReducers } from 'redux';
 import { propertyReducer, PropertyReducerState } from './reducers/property';
 import { ROOT_ACTION } from './action-types';
 import { configurationReducer, ConfigurationReducerState, CustomerReducerState } from '.';
+import { RoomReducerState } from './reducers/room';
 
 export interface rootReducersI {
   property: PropertyReducerState;
   customer: CustomerReducerState;
   configuration: ConfigurationReducerState;
+  room:RoomReducerState;
 }
 
 export const reducers = {

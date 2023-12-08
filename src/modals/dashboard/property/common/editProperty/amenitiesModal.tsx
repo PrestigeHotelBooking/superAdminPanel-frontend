@@ -6,7 +6,7 @@ import { ENDPOINTS } from '@/components/lang/EndPoints';
 import { toast } from 'react-toastify';
 import useConfigurationData from '@/hooks/useConfigurationData/useConfigurationData';
 import PrCircularProgressIndicator from '@/components/common/Loader/PrCircularProgressIndicator';
-import useRoomData from '@/hooks/useRoomData/useRoomData';
+import useRoomData from '@/hooks/useRoomDataHook/useRoomDataHook';
 import _ from 'lodash';
 
 type amenitiesValueT = {
@@ -40,15 +40,6 @@ function AmenitiesModal({ id }: { id: string }) {
     }));
   };
 
-  useEffect(() => {
-    if (roomData?.length) {
-      _.forEach(roomData, (e) => {
-        _.forEach(JSON.parse(e?.room_amenities), (d) => {
-          handleChange(d, { check: true, value: d }, e?.room_id?.toString());
-        });
-      });
-    }
-  }, [roomData]);
 
   const handleSaveClick = async () => {
     const update = _.map(checkedValuesByRoomId, (values, id) => ({

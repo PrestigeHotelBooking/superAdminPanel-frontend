@@ -8,7 +8,7 @@ interface CollapsibleSectionProps {
 
 const PhotoCollopser: React.FC<CollapsibleSectionProps> = ({ sections }) => {
   const [expandedSections, setExpandedSections] = useState<Record<number, boolean>>(
-    Object.fromEntries(sections?.map((_, index) => [index, false])),
+    Object?.fromEntries(sections?.map((_, index) => [index, false])),
   );
 
   const toggleSection = (index: number) => {
@@ -20,7 +20,7 @@ const PhotoCollopser: React.FC<CollapsibleSectionProps> = ({ sections }) => {
 
   return (
     <div>
-      {sections.map((section, index) => (
+      {sections?.map((section, index) => (
         <Paper key={index} className='p-6 cursor-pointer'>
           <div className='flex flex-row items-center justify-between' onClick={() => toggleSection(index)}>
             <Typography variant='h6' className='flex flex-row space-x-4'>

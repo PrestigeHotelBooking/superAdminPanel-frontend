@@ -9,9 +9,10 @@ type AuthMiddlewareResult = NextRequest | userAuthT | null;
 export function authMiddleware(request: NextRequest): AuthMiddlewareResult {
   const pathname = request.url;
   const userToken = Cookies.get('x-access-token');
-
+ 
   if (userToken) {
     const decoded = jwtDecode(userToken) as { exp: number };
+
     const currentTimeInSeconds = Math.floor(Date.now() / 1000);
 
     if (decoded.exp && decoded.exp < currentTimeInSeconds) {

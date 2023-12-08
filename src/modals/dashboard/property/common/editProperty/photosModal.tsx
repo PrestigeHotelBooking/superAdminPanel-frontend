@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PrIcon from '@/components/common/PrIcon/PrIcon';
 import PrButtonV2 from '@/components/common/PrButton/PrButtonV2';
 import { BackendPostV2 } from '@/components/services/BackendServicesV2';
 import { ENDPOINTS } from '@/components/lang/EndPoints';
-import { ConvertBase64ToFullFileObject } from '@/components/services/MulterConverter';
-import useRoomData from '@/hooks/useRoomData/useRoomData';
+import useRoomDataHook from '@/hooks/useRoomDataHook/useRoomDataHook';
 import PhotoCollopser from '../components/photoCollpaser';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
@@ -15,10 +14,36 @@ export interface imageObjectT {
   mimeType: string;
 }
 
+
+
 function PhotosModal({ id }: { id: string }) {
-  const { data, loading } = useRoomData(id);
+
+
+
+  const { data, loading } = useRoomDataHook(id);
 
   const [selectedImages_property, setSelectedImagesProperty] = useState<imageObjectT[]>([]);
+
+   useEffect(() => {
+    if (data) {
+      const updatedSelectedImages: { [roomId: number]: imageObjectT[] } = {};
+      data.forEach((d) => {
+        const newImages: imageObjectT[] = JSON.parse(d?.room_image_urls)?.map((imageUrl:any) => ({
+          dataURL: imageUrl,
+          originalName: '',
+          mimeType: '',
+        }));
+        updatedSelectedImages[d.room_id] = newImages;
+      });
+      setSelectedImagesRoom((prevImages) => ({
+        ...prevImages,
+        ...updatedSelectedImages,
+      }));
+    }
+  }, [data]);
+
+
+ 
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -46,20 +71,27 @@ function PhotosModal({ id }: { id: string }) {
   };
 
   const [selectedImagesRoom, setSelectedImagesRoom] = useState<{
-    [roomId: number]: string[];
+    [roomId: number]: imageObjectT[];
   }>({});
+
+
 
   const handleFileChangeRoom = (event: React.ChangeEvent<HTMLInputElement>, id: number) => {
     const files = event.target.files;
     if (files) {
-      const newImages: string[] = [];
+      const newImages: imageObjectT[] = [];
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         if (file.type.startsWith('image/')) {
           const reader = new FileReader();
           reader.onload = (event) => {
             if (event.target?.result) {
-              newImages.push(event.target.result as string);
+              const dataURL = event.target.result as string;
+              const originalName = file.name;
+              const mimeType = file.type;
+     
+              newImages.push({ dataURL, originalName, mimeType });
+  
               if (i === files.length - 1) {
                 setSelectedImagesRoom((prevImages) => ({
                   ...prevImages,
@@ -73,6 +105,9 @@ function PhotosModal({ id }: { id: string }) {
       }
     }
   };
+  
+
+
   const saveMe = async () => {
     const formData = new FormData();
     formData.append('propertyID', id);
@@ -85,6 +120,8 @@ function PhotosModal({ id }: { id: string }) {
       toast.error(`Unable to update the image `);
     }
   };
+
+
 
   const sections = loading
     ? []
@@ -101,7 +138,7 @@ function PhotosModal({ id }: { id: string }) {
                     index % 5 === 4 ? 'mr-3' : ''
                   }`}
                 >
-                  <Image src={image} alt={'image=data'} width={100} height={100}></Image>
+                  <Image src={image?.dataURL} alt={'image=data'} width={100} height={100}></Image>
                 </div>
               ))}
               <div

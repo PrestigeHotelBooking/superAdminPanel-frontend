@@ -1,11 +1,11 @@
-import { OptionT } from '@/modals/dashboard/property/common/components/property.types';
+import { YesOrNoT } from '@/modals/dashboard/property/common/components/property.types';
 import React, { ChangeEvent } from 'react';
 
 interface PrRadioButtonProps {
-  options: OptionT[];
-  selectedValue: string;
+  options: YesOrNoT[];
+  selectedValue: string | number;
   isMulti?: boolean;
-  onChange: (value: string) => void;
+  onChange: (value: string | number) => void;
   className?: string; // New optional prop for class name
   label?: string; // New optional prop for label
 }

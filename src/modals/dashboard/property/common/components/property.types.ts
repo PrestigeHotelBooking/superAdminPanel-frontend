@@ -30,9 +30,14 @@ export interface OptionT {
   value: string;
 }
 
-export const yesOrNoOption: OptionT[] = [
-  { label: 'Yes', value: 'YES' },
-  { label: 'No', value: 'NO' },
+export interface YesOrNoT{
+  label:string;
+  value:number;
+}
+
+export const yesOrNoOption: YesOrNoT[] = [
+  { label: 'Yes', value: 1 },
+  { label: 'No', value: 0 },
 ];
 
 export const roomTypes: OptionT[] = [
@@ -46,7 +51,6 @@ export const roomTypes: OptionT[] = [
   { label: 'Connecting Room', value: 'connecting' },
   { label: 'Presidential Suite', value: 'presidential_suite' },
   { label: 'Accessible Room', value: 'accessible' },
-  // Add more room types as needed
 ];
 
 export const bedTypes: OptionT[] = [
