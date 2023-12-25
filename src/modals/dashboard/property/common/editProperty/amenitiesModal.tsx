@@ -40,7 +40,6 @@ function AmenitiesModal({ id }: { id: string }) {
     }));
   };
 
-
   const handleSaveClick = async () => {
     const update = _.map(checkedValuesByRoomId, (values, id) => ({
       room_id: id,

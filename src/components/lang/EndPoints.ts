@@ -29,8 +29,8 @@ export const ENDPOINTS = {
     SINGLE_CUSTOMER_BOOKING: 'v1/customer/booking',
   },
   LOGIN: {
-    SIGNIN: 'auth/signin',
+    SIGNIN: 'auth/superadmin-signin',
     CHECK: 'v1/signin',
-    NEW_TOKEN:'auth/new_token'
+    NEW_TOKEN: 'auth/new_token',
   },
 };

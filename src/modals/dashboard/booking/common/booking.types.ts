@@ -31,7 +31,7 @@ export interface RoomDetailT {
   room_id: number | string;
   property_id: string | number;
   room_type: string;
-  room_image_urls: string[];
+  room_image_urls: string[] | string;
   smoking_preference: string;
   max_adult: number;
   max_child: number;
@@ -50,7 +50,7 @@ export interface RoomDetailT {
   extra_Bed_Allowed: number | string;
   no_Of_ExtraBeds: number;
   price_Per_ExtraBed: number;
-  smoke_Free_Room: number ;
+  smoke_Free_Room: number;
   meal_Option: string;
   is_deleted?: number;
   createdAt?: string;

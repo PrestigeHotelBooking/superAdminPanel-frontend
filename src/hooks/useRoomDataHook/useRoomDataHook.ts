@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { BackendGet } from '@/components/services/BackendServices';
 import { ENDPOINTS } from '@/components/lang/EndPoints';
+import { useDispatch } from 'react-redux';
+import { ROOM_ACTIONS } from '@/redux';
 
 interface RoomDetailsT {
   room_id: number;
@@ -48,12 +50,15 @@ const useRoomDataHook = (id: string): RoomHookResult => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<Error | null>(null);
+  const dispatch = useDispatch();
 
   const fetchRoom = async () => {
     try {
       const data = await BackendGet<RoomApiResponse>(`${ENDPOINTS.ROOM.GET}/${id}`);
       if (data.success) {
-        setData(data.responseData['message']);
+        const response = data.responseData['message'];
+        setData(response);
+        dispatch(ROOM_ACTIONS.setRoomData(response));
       }
       setLoading(false);
     } catch (error) {

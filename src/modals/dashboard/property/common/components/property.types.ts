@@ -30,9 +30,9 @@ export interface OptionT {
   value: string;
 }
 
-export interface YesOrNoT{
-  label:string;
-  value:number;
+export interface YesOrNoT {
+  label: string;
+  value: number;
 }
 
 export const yesOrNoOption: YesOrNoT[] = [

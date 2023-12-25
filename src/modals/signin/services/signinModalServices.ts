@@ -7,7 +7,7 @@ export const SigninUserService = async (email: string, password: string) => {
   const loggedIn = await BackendPost(ENDPOINTS.LOGIN.SIGNIN, { email: email, password: password });
 
   if (loggedIn.success) {
-    const {token,refresh_token }= loggedIn.responseData;
+    const { token, refresh_token } = loggedIn.responseData;
     Cookies.set(CONSTANTS.STORAGE_KEYS.TOKEN, token);
     Cookies.set(CONSTANTS.STORAGE_KEYS.REFRESH_TOKEN, refresh_token);
     return true;

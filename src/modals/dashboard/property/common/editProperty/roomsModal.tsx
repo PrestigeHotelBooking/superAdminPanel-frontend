@@ -17,21 +17,17 @@ interface RoomModalProps {
 }
 
 function RoomsModal({ id }: RoomModalProps): React.ReactElement {
+  const { data: roomData } = useRoomDataHook(id);
 
-
-  const {data:roomData} = useRoomDataHook(id);
-
-
-  const apiLoadRoomData = () =>{
-
-    if(roomData){
-      roomData?.map((d)=>{
-        const newId=d?.room_id.toString();
-                const newComponent = (
+  const apiLoadRoomData = () => {
+    if (roomData) {
+      roomData?.map((d) => {
+        const newId = d?.room_id.toString();
+        const newComponent = (
           <RoomsContainers
             key={newId}
             id={newId}
-            roomData={d as any} 
+            roomData={d as any}
             propertyId={id as string}
             onDelete={deleteRoomComponent(newId)}
             onSave={saveRoomData}
@@ -40,11 +36,11 @@ function RoomsModal({ id }: RoomModalProps): React.ReactElement {
         setRoomComponents((prevComponents) => [...prevComponents, newComponent]);
       });
     }
-  }
+  };
 
-  useEffect(()=>{
-    apiLoadRoomData()
-  },[roomData])
+  useEffect(() => {
+    apiLoadRoomData();
+  }, [roomData]);
 
   const [roomComponents, setRoomComponents] = useState<ReactNode[]>([]);
   const [roomDataMap, setRoomDataMap] = useState<RoomDataMap>({});
@@ -52,10 +48,6 @@ function RoomsModal({ id }: RoomModalProps): React.ReactElement {
   const generateUniqueId = (): string => {
     return `room_${Math.random().toString(36).substr(2, 9)}`;
   };
-
-
-
-
 
   const addRoomComponent = () => {
     const newId = generateUniqueId();
@@ -98,7 +90,6 @@ function RoomsModal({ id }: RoomModalProps): React.ReactElement {
       }));
     }
   };
-
 
   const logRoomData = async () => {
     const create = Object.values(roomDataMap);

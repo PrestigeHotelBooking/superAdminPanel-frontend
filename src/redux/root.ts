@@ -8,7 +8,7 @@ export interface rootReducersI {
   property: PropertyReducerState;
   customer: CustomerReducerState;
   configuration: ConfigurationReducerState;
-  room:RoomReducerState;
+  room: RoomReducerState;
 }
 
 export const reducers = {

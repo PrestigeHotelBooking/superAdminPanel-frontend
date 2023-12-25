@@ -64,11 +64,13 @@ export const RoomsContainers = ({
       no_of_Children: roomData?.no_of_Children,
       no_Of_Rooms: roomData?.no_Of_Rooms,
       bed_Type: roomData?.bed_Type,
-      breakfast_included:roomData?.breakfast_included,
+      breakfast_included: roomData?.breakfast_included,
       price_Per_Night: roomData?.price_Per_Night,
       price_Per_ExtraBed: roomData?.price_Per_ExtraBed,
       meal_Option: roomData?.meal_Option,
       no_Of_Adults: roomData?.no_Of_Adults,
+      property_id:propertyId,
+      room_image_urls:'',
       no_Of_ExtraBeds: roomData?.no_Of_ExtraBeds,
     });
   }, [roomData]);

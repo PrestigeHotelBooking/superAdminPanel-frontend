@@ -4,10 +4,9 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 
 export default function HomePage() {
-
   const userToken = Cookies.get(`x-access-token`);
   const router = useRouter();
-  
+
   useEffect(() => {
     if (userToken) {
       router.push('/dashboard');

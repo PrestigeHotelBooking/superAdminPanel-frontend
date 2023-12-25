@@ -9,7 +9,7 @@ type AuthMiddlewareResult = NextRequest | userAuthT | null;
 export function authMiddleware(request: NextRequest): AuthMiddlewareResult {
   const pathname = request.url;
   const userToken = Cookies.get('x-access-token');
- 
+
   if (userToken) {
     const decoded = jwtDecode(userToken) as { exp: number };
 

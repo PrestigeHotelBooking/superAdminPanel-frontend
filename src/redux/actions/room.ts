@@ -1,4 +1,3 @@
-
 import { RoomDetailT } from '@/modals/dashboard/booking/common/booking.types';
 import { ROOM_ACTION } from '../action-types';
 

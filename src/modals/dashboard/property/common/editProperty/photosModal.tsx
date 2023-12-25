@@ -12,27 +12,24 @@ export interface imageObjectT {
   dataURL: string;
   originalName: string;
   mimeType: string;
+  create: boolean;
 }
 
-
-
 function PhotosModal({ id }: { id: string }) {
-
-
-
   const { data, loading } = useRoomDataHook(id);
 
   const [selectedImages_property, setSelectedImagesProperty] = useState<imageObjectT[]>([]);
 
-   useEffect(() => {
+  useEffect(() => {
     if (data) {
       const updatedSelectedImages: { [roomId: number]: imageObjectT[] } = {};
       data.forEach((d) => {
-        const newImages: imageObjectT[] = JSON.parse(d?.room_image_urls)?.map((imageUrl:any) => ({
+        const newImages: imageObjectT[] = d?.room_image_urls ? JSON?.parse(d?.room_image_urls)?.map((imageUrl: any) => ({
           dataURL: imageUrl,
           originalName: '',
           mimeType: '',
-        }));
+          create: false,
+        })) : [];
         updatedSelectedImages[d.room_id] = newImages;
       });
       setSelectedImagesRoom((prevImages) => ({
@@ -41,9 +38,6 @@ function PhotosModal({ id }: { id: string }) {
       }));
     }
   }, [data]);
-
-
- 
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -58,7 +52,7 @@ function PhotosModal({ id }: { id: string }) {
               const dataURL = event.target.result as string;
               const originalName = file.name;
               const mimeType = file.type; // Get the MIME type
-              newImages.push({ dataURL, originalName, mimeType }); // Store dataURL, originalName, and mimeType
+              newImages.push({ dataURL, originalName, mimeType, create: true }); // Store dataURL, originalName, and mimeType
               if (i === files.length - 1) {
                 setSelectedImagesProperty((prevImages) => [...prevImages, ...newImages]);
               }
@@ -74,8 +68,6 @@ function PhotosModal({ id }: { id: string }) {
     [roomId: number]: imageObjectT[];
   }>({});
 
-
-
   const handleFileChangeRoom = (event: React.ChangeEvent<HTMLInputElement>, id: number) => {
     const files = event.target.files;
     if (files) {
@@ -89,9 +81,9 @@ function PhotosModal({ id }: { id: string }) {
               const dataURL = event.target.result as string;
               const originalName = file.name;
               const mimeType = file.type;
-     
-              newImages.push({ dataURL, originalName, mimeType });
-  
+
+              newImages.push({ dataURL, originalName, mimeType, create: true });
+
               if (i === files.length - 1) {
                 setSelectedImagesRoom((prevImages) => ({
                   ...prevImages,
@@ -105,8 +97,6 @@ function PhotosModal({ id }: { id: string }) {
       }
     }
   };
-  
-
 
   const saveMe = async () => {
     const formData = new FormData();
@@ -120,8 +110,6 @@ function PhotosModal({ id }: { id: string }) {
       toast.error(`Unable to update the image `);
     }
   };
-
-
 
   const sections = loading
     ? []
