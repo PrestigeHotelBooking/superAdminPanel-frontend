@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import countries from '../../../assets/Json/countries.json';
 
 interface PrCountryInputFieldProps {
@@ -14,7 +14,7 @@ export const PrCountryInputField: React.FC<PrCountryInputFieldProps> = ({ classN
       value={value}
       onChange={(e) => onChange(e.target.value)}
     >
-      <option value="">Select a country</option>
+      <option value=''>Select a country</option>
       {countries.map((country) => (
         <option key={country.code} value={country.name}>
           {country.name}

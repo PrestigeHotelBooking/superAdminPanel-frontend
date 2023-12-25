@@ -1,4 +1,3 @@
 export const ROOT_ACTION = {
-    RESET: 'ROOT_RESET',
-  };
-  
+  RESET: 'ROOT_RESET',
+};

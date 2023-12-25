@@ -18,7 +18,7 @@ interface PrButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   buttonType?: ButtonType;
   buttonStyle?: ButtonStyle;
-  loading?:boolean;
+  loading?: boolean;
 }
 
 const PrButton: React.FC<PrButtonProps> = ({
@@ -29,11 +29,9 @@ const PrButton: React.FC<PrButtonProps> = ({
   label,
   buttonType = 'button',
   buttonStyle = 'primary',
-  loading=false,
+  loading = false,
   ...props
 }) => {
-
-
   const getButtonClassName = () => {
     switch (buttonStyle) {
       case 'danger':
@@ -73,11 +71,14 @@ const PrButton: React.FC<PrButtonProps> = ({
       className={`w-[8rem] h-[3rem] ${getButtonClassName()} ${alignClass} ${props.className}`}
     >
       {iconName && (
-        <span className="pr-icon" style={iconStyles}>
+        <span className='pr-icon' style={iconStyles}>
           <PrIcon name={iconName} size={iconSize} color={iconColor} />
         </span>
       )}
-      <span style={labelStyles}>{loading ? <CircularProgress></CircularProgress> :null}{label}</span>
+      <span style={labelStyles}>
+        {loading ? <CircularProgress></CircularProgress> : null}
+        {label}
+      </span>
     </button>
   );
 };

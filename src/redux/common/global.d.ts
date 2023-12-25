@@ -7,7 +7,11 @@ export interface GlobalUploadfileModalI {
   type: 'IMAGE' | 'FILE' | '';
   open: boolean;
   downloadModal?: boolean;
-  metaData?: { getUpdatedUrls?: (urls: string[], metaData?: Record<string, any>) => void; [key: string]: any; singleFile?: boolean };
+  metaData?: {
+    getUpdatedUrls?: (urls: string[], metaData?: Record<string, any>) => void;
+    [key: string]: any;
+    singleFile?: boolean;
+  };
   formatsAllowed?: 'IMAGE' | 'EXCEL' | 'ALL' | '';
 }
 

@@ -6,11 +6,7 @@ interface PrLabelProps {
 }
 
 const PrLabel: React.FC<PrLabelProps> = ({ text, className }) => {
-  return (
-    <span className={`font-bold ${className}`}>
-      {text}
-    </span>
-  );
+  return <span className={`font-bold ${className}`}>{text}</span>;
 };
 
 export default PrLabel;

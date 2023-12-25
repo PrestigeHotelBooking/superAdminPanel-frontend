@@ -1,22 +1,19 @@
-import PrCircularProgressIndicator from "@/components/common/Loader/PrCircularProgressIndicator";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import PrCircularProgressIndicator from '@/components/common/Loader/PrCircularProgressIndicator';
+import { useEffect } from 'react';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 
-export default function Home() {
-    const router=useRouter();
+export default function HomePage() {
+  const userToken = Cookies.get(`x-access-token`);
+  const router = useRouter();
 
-    useEffect(() => {
-        const token = Cookies.get('x-access-token');
-        if (!token) {
-            router.push('/signin')
-        }
-        else{
-          router.push('/dashboard')
-        }
-    }, []);
+  useEffect(() => {
+    if (userToken) {
+      router.push('/dashboard');
+    } else {
+      router.push('/signin');
+    }
+  }, []);
 
-  return (
-    <PrCircularProgressIndicator></PrCircularProgressIndicator>
-  )
+  return <PrCircularProgressIndicator />;
 }

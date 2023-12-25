@@ -15,15 +15,11 @@ function PrCheckbox({ id, label, onClick, value }: PrCheckboxProps) {
   };
 
   return (
-    <div className="flex items-center space-x-2 mb-2 p-2">
-      <input
-        type="checkbox"
-        id={id}
-        className="form-checkbox h-6 w-6"
-        onChange={handleChange}
-        checked={value}
-      />
-      <label className='font-semibold text-md' htmlFor={id}>{label}</label>
+    <div className='flex items-center space-x-2 mb-2 p-2'>
+      <input type='checkbox' id={id} className='form-checkbox h-6 w-6' onChange={handleChange} checked={value} />
+      <label className='font-semibold text-md' htmlFor={id}>
+        {label}
+      </label>
     </div>
   );
 }

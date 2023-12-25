@@ -1,4 +1,11 @@
-import { authReducerI, entitiesReducerI, FpTableReducerI, profileDataI, teamsDataReducerI, usersDataReducerI } from '../../redux';
+import {
+  authReducerI,
+  entitiesReducerI,
+  FpTableReducerI,
+  profileDataI,
+  teamsDataReducerI,
+  usersDataReducerI,
+} from '../../redux';
 import { GlobalReducerI } from './globalReducer';
 
 declare interface Selector {

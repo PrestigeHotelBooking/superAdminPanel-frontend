@@ -14,9 +14,9 @@ export default function generateExcelAndDownload(data: AnyObject[], filename: st
   const downloadLink = document.createElement('a');
   downloadLink.href = URL.createObjectURL(excelFileContent);
   const currentDate = new Date();
-const formattedDate = currentDate.toISOString().split('T')[0].replace(/-/g, '_');
-const currentTimestamp = currentDate.getTime();
-const fullFilename = `${formattedDate}_${currentTimestamp}`;
+  const formattedDate = currentDate.toISOString().split('T')[0].replace(/-/g, '_');
+  const currentTimestamp = currentDate.getTime();
+  const fullFilename = `${formattedDate}_${currentTimestamp}`;
   downloadLink.download = `${filename}${fullFilename}.xlsx`;
   downloadLink.style.display = 'none';
   document.body.appendChild(downloadLink);

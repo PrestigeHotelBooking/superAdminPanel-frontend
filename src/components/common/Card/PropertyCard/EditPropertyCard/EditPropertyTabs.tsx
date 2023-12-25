@@ -6,10 +6,12 @@ import PolicyModal from '@/modals/dashboard/property/common/editProperty/policyM
 import RoomsModal from '@/modals/dashboard/property/common/editProperty/roomsModal';
 import React, { useState } from 'react';
 
+type tabT = 'BASICINFO' | 'ROOMS' | 'AMENITIES' | 'PHOTOS' | 'FINANCE' | 'POLICY';
+
 interface TabProps {
-  tabName: string;
-  activeTab: string;
-  onClick: (tabName: string) => void;
+  tabName: tabT;
+  activeTab: tabT;
+  onClick: (tabName: tabT) => void;
   children: React.ReactNode;
 }
 
@@ -27,45 +29,43 @@ const TabButton: React.FC<TabProps> = ({ tabName, activeTab, onClick, children }
 };
 
 const EditPropertyTabs: React.FC<{ id: string }> = ({ id }) => {
+  const [activeTab, setActiveTab] = useState<tabT>('BASICINFO');
 
-
-  const [activeTab, setActiveTab] = useState<string>('basicinfo'); // Set the default active tab
-
-  const handleTabClick = (tabName: string): void => {
+  const handleTabClick = (tabName: tabT): void => {
     setActiveTab(tabName);
   };
 
   return (
-    <div className="flex flex-col h-screen p-2">
-      <div className="p-4 w-full bg-white">
-        <div className="flex space-x-4 w-full ">
-          <TabButton tabName="basicinfo" activeTab={activeTab} onClick={handleTabClick}>
+    <div className='flex flex-col h-screen p-2'>
+      <div className='p-4 w-full bg-white'>
+        <div className='flex space-x-4 w-full '>
+          <TabButton tabName='BASICINFO' activeTab={activeTab} onClick={handleTabClick}>
             Basic Info
           </TabButton>
-          <TabButton tabName="rooms" activeTab={activeTab} onClick={handleTabClick}>
+          <TabButton tabName='ROOMS' activeTab={activeTab} onClick={handleTabClick}>
             Rooms
           </TabButton>
-          <TabButton tabName="amenities" activeTab={activeTab} onClick={handleTabClick}>
+          <TabButton tabName='AMENITIES' activeTab={activeTab} onClick={handleTabClick}>
             Amenities
           </TabButton>
-          <TabButton tabName="photos" activeTab={activeTab} onClick={handleTabClick}>
+          <TabButton tabName='PHOTOS' activeTab={activeTab} onClick={handleTabClick}>
             Photos
           </TabButton>
-          <TabButton tabName="finance" activeTab={activeTab} onClick={handleTabClick}>
+          <TabButton tabName='FINANCE' activeTab={activeTab} onClick={handleTabClick}>
             Finance
           </TabButton>
-          <TabButton tabName="policy" activeTab={activeTab} onClick={handleTabClick}>
+          <TabButton tabName='POLICY' activeTab={activeTab} onClick={handleTabClick}>
             Policy
           </TabButton>
         </div>
       </div>
-      <div className="flex-1  w-full max-h-[100vh] overflow-auto p-4 mb-4  ">
-        {activeTab === 'basicinfo' && <BasicInfoModal id={id}></BasicInfoModal>}
-        {activeTab === 'rooms' && <RoomsModal id={id}></RoomsModal>}
-        {activeTab === 'amenities' &&<AmenitiesModal id={id}></AmenitiesModal>}
-        {activeTab === 'photos' && <PhotosModal id={id}></PhotosModal>}
-        {activeTab === 'finance' && <FinanceModal id={id}></FinanceModal>}
-        {activeTab === 'policy' &&<PolicyModal id={id}></PolicyModal>}
+      <div className='flex-1  w-full max-h-[100vh] overflow-auto p-4 mb-4  '>
+        {activeTab === 'BASICINFO' && <BasicInfoModal id={id}></BasicInfoModal>}
+        {activeTab === 'ROOMS' && <RoomsModal id={id}></RoomsModal>}
+        {activeTab === 'AMENITIES' && <AmenitiesModal id={id}></AmenitiesModal>}
+        {activeTab === 'PHOTOS' && <PhotosModal id={id}></PhotosModal>}
+        {activeTab === 'FINANCE' && <FinanceModal id={id}></FinanceModal>}
+        {activeTab === 'POLICY' && <PolicyModal id={id}></PolicyModal>}
       </div>
     </div>
   );

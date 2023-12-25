@@ -19,9 +19,7 @@ const PrIconV2: React.FC<PrMaterialIconProps> = ({ name, size = 'medium', color 
 
   const iconClasses = `cursor-pointer ${onClick ? 'hover:cursor-pointer' : ''}`;
 
-  return (
-    <IconComponent className={iconClasses} fontSize={size} style={{ color }} onClick={onClick} />
-  );
+  return <IconComponent className={iconClasses} fontSize={size} style={{ color }} onClick={onClick} />;
 };
 
 export default PrIconV2;
