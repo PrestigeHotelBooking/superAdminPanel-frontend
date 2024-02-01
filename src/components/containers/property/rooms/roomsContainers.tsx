@@ -170,9 +170,9 @@ export const RoomsContainers = ({
         <PrRadioButton
           options={yesOrNoOption}
           label='Extra Bed Allowed'
-          selectedValue={roomDataDetail.extra_Bed_Allowed as string}
+          selectedValue={roomDataDetail.extra_Bed_Allowed}
           className='w-full'
-          onChange={(value) => handleState({ extra_Bed_Allowed: value })}
+          onChange={(value) => handleState({ extra_Bed_Allowed: Number(value) })}
         />
         <div className='m-auto w-[74%]'>
           <PrInputField

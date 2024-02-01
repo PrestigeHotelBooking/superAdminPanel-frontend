@@ -28,6 +28,7 @@ interface AddPropertyT {
   totalNoOfRooms: number;
   username: string;
   password: string;
+  email:string;
   confirmPassword: string;
 }
 
@@ -44,6 +45,7 @@ const initialAddProperty: AddPropertyT = {
   longitude: 0,
   totalNoOfRooms: 0,
   username: '',
+  email:'',
   password: '',
   confirmPassword: '',
 };
@@ -84,6 +86,7 @@ const AddProperty = (props: AddPropertyProps) => {
           property_latitude: addPropertyData.latitude,
           property_longitude: addPropertyData.longitude,
           propertyuser_username: addPropertyData.username,
+          propertyuser_email:addPropertyData.email,
           propertyuser_password: addPropertyData.password,
           created_at: getCurrentDate('YYYY-MM-DD'),
         };
@@ -185,7 +188,14 @@ const AddProperty = (props: AddPropertyProps) => {
                 label='Username'
                 value={addPropertyData.username}
                 onChange={(e: any) => handleState({ username: e.target.value })}
-                placeholder='The Country Resort I'
+                placeholder='Enter your username'
+              />
+                <PRInputField
+                label='Email'
+                value={addPropertyData.email}
+                type='email'
+                onChange={(e: any) => handleState({ email: e.target.value })}
+                placeholder='Enter your Email'
               />
               <PRInputField
                 label='Create Password'
